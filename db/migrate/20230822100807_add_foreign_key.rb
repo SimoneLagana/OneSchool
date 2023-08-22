@@ -19,5 +19,6 @@ class AddForeignKey < ActiveRecord::Migration[7.0]
     add_foreign_key :absences, :users, column: :CFprof, primary_key: :CF
     add_foreign_key :homeworks, :users, column: :CFprof, primary_key: :CF
     #add_index :subjects, [:school_code, :class_code, :name,:weekday, :time ], unique: true
+    add_index :subjects, [:school_code, :class_code, :weekday, :time], unique: true, name: 'index2'
   end
 end

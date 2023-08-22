@@ -146,6 +146,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_100807) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["school_code", "class_code", "weekday", "time"], name: "chiave_primaria_subjects", unique: true
+    t.index ["school_code", "class_code", "weekday", "time"], name: "index2", unique: true
   end
 
   create_table "teachers", id: false, force: :cascade do |t|

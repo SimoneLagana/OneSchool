@@ -1,0 +1,7 @@
+Teacher related to Teacher Model
+
+get 'teacher/login', to: 'teacher#login'
+get 'teacher/home', to: 'teacher#home'
+cambio password -> teacher#edit
+
+

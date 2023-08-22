@@ -1,0 +1,3 @@
+class Communication < ApplicationRecord
+
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_100807) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
   create_table "absences", id: false, force: :cascade do |t|
     t.string "CFprof"
     t.string "CFstudent"

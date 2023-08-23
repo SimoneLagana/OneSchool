@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <%= stylesheet_link_tag "login.css" %>
      <%# <%= javascript_include_tag('admin.js') %>
-    <title>Login teacher</title>
+    <title>Login student</title>
 </head>
 <body>
     <nav class="navbar">
@@ -17,8 +17,8 @@
         </div>
       </nav>
     <div class="home">
-        <label class="title"> Login as Teacher</label>
-        <%= form_with url: "teacher/checklogin", class: 'form-login', method: :post do |form| %>
+        <label class="title"> Login as student</label>
+        <%= form_with url: "student/checklogin", class: 'form-login', method: :post do |form| %>
             <label class="label-field"> Email</label>
             <%= form.email_field :mail, class: 'text-field' %>
             <label class="label-field"> Password</label>

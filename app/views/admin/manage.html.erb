@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "admin_manage.css" %>
+    <%= javascript_include_tag('admin.js') %>
+
+    <title>Document</title>
+</head>
+<body>
+      <div id="popupContainer"></div>
+    <nav class="navbar">
+        <label class="writ">
+          name
+        </label>
+        <div class="profile">
+          Profile
+        </div>
+      </nav>
+    <div class="inner-home">
+        <div class="upper-bottons">
+            <div class="up-botton" id="first-botton" onclick="show_panel('first-panel');">
+                school
+            </div>
+            <div class="up-botton" id="second-botton" onclick="show_panel('second-panel');">
+                staff
+            </div>
+        </div> 
+        <div class="main-panel">
+
+        <%# School Panel %>
+            <div class="panel" id="first-panel" style="display:flex;">
+                <!-- barra di ricerca con bootstrap
+                <div class="input-group">
+                    <div class="form-outline">
+                      <input type="search" id="form1" class="form-control" />
+                      <label class="form-label" for="form1">Search</label>
+                    </div>
+                    <button type="button" class="btn btn-primary">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                barra di ricerca con rails (poi vediamo quale usare)-->
+                <%= form_with url: "/search", method: :get do |form| %>
+                    <%= form.label :query, "Search for:" %>
+                    <%= form.text_field :query %>
+                    <%= form.submit "Search" %>
+                <% end %> 
+                search bar
+                <button id="addSchoolButton" onclick="openSchoolForm();"> Add a New School</button>
+                <table>
+  <thead>
+    <tr>
+      <th>Address</th>
+      <th>Name</th>
+      <th>Code</th>
+      <th>School Type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @schools= School.all%>
+    <% @schools.each do |school| %>
+      <tr>
+        <td><%= school.address %></td>
+        <td><%= school.name %></td>
+        <td><%= school.code %></td>
+        <td><%= school.school_type %></td>
+<td><button onclick="editSchoolForm(<%= json_string= school.to_json %>);">Edit</button></td>
+<td><%= link_to 'Delete', admin_deleteSchool_path(code: "school.code"), method: :delete,
+  form: {data: {turbo_confirm: 'Are you sure?'}} %>
+    </td></tr>
+    <% end %>
+  </tbody>
+</table>
+                <%# <div class="list">
+
+                    <div class="item">
+                        <label class="field">
+                            schola
+                        </label>
+                        <label class="field">
+                            roma
+                        </label>
+                        <div class="modify">
+                            <label class="edit">
+                                edit
+                            </label>
+                            <label class="delete">
+                                delete
+                            </label>
+                        </div>
+                        
+                    </div>
+                    <div class="item">
+                        <label class="field">
+                            schola
+                        </label>
+                        <label class="field">
+                            roma
+                        </label>
+                        <div class="modify">
+                            <label class="edit">
+                                edit
+                            </label>
+                            <label class="delete">
+                                delete
+                            </label>
+                        </div>
+                        
+                    </div>
+                </div> %>
+            </div>
+
+            <%# STAFF PANEL %>
+            <div class="panel" id="second-panel" style="display:none;" >
+                <!-- barra di ricerca con bootstrap
+                <div class="input-group">
+                    <div class="form-outline">
+                      <input type="search" id="form1" class="form-control" />
+                      <label class="form-label" for="form1">Search</label>
+                    </div>
+                    <button type="button" class="btn btn-primary">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                barra di ricerca con rails (poi vediamo quale usare)-->
+                <%= form_with url: "/search", method: :get do |form| %>
+                    <%= form.label :query, "Search for:" %>
+                    <%= form.text_field :query %>
+                    <%= form.submit "Search" %>
+                <% end %> 
+                search bar
+                <button id="addStaffButton" onclick="openStaffForm();"> Add a New Schoolstaff Account</button>
+                <div class="list">
+                    <div class="item" id="">
+                        <label class="field">
+                            name
+                        </label>
+                        <label class="field">
+                            school
+                        </label>
+                        <div class="modify">
+                            <label class="edit">
+                                edit
+                            </label>
+                            <label class="delete">
+                                delete
+                            </label>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+            </div>
+
+        </div>
+    </div> 
+
+    
+</body>
+</html>

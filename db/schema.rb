@@ -40,7 +40,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.string "school_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["school_code", "class_code"], name: "index_class_rooms_on_school_code_and_class_code", unique: true
   end
 
   create_table "commitments", id: false, force: :cascade do |t|
@@ -50,6 +49,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.string "CFprof"
     t.string "CFfamily"
     t.string "link"
+    t.string "school_code"
     t.index ["date", "CFprof"], name: "chiave_primaria_commitments", unique: true
   end
 
@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.string "title"
     t.text "text"
     t.datetime "date"
+    t.string "school_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -69,6 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
   create_table "family_students", force: :cascade do |t|
     t.string "CFfamily"
     t.string "CFstudent"
+    t.string "school_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -114,6 +116,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.string "CFstudent"
     t.datetime "date"
     t.text "description"
+    t.string "school_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -163,6 +166,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.string "type", null: false
     t.datetime "birthdate"
     t.string "student_class_code"
+    t.string "student_school_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

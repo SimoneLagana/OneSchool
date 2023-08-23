@@ -1,2 +1,36 @@
-<h1>SchoolStaff#login</h1>
-<p>Find me in app/views/school_staff/login.html.erb</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <%= stylesheet_link_tag "login.css" %>
+     <%# <%= javascript_include_tag('admin.js') %>
+    <title>Login School Staff</title>
+</head>
+<body>
+    <nav class="navbar">
+        <label class="writ">
+          name
+        </label>
+        <div class="profile">
+          Profile
+        </div>
+      </nav>
+    <div class="home">
+        <label class="title"> Login as school staff</label>
+        <%= form_with url: school_staff_checklogin_url, class: 'form-login', method: :post do |form| %>
+            <label class="label-field"> Email</label>
+            <%= form.email_field :mail, class: 'text-field' %>
+            <label class="label-field"> Password</label>
+            <%= form.password_field :password, class: 'text-field' %>
+            <%= form.submit "login", class: 'button-field' %>
+        <% end %>
+        <% flash.each do |key, message| %>
+            <div class="flash <%= key %>">
+                <%= message %>
+            </div>
+        <% end %>
+    </div>
+    
+</body>
+</html>

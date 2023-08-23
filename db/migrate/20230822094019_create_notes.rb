@@ -5,6 +5,7 @@ class CreateNotes < ActiveRecord::Migration[7.0]
       t.string :CFstudent
       t.datetime :date
       t.text :description
+      t.string :school_code
       t.timestamps
     end
   end

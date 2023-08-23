@@ -18,7 +18,7 @@
       </nav>
     <div class="home">
         <label class="title"> Login as student</label>
-        <%= form_with url: "student/checklogin", class: 'form-login', method: :post do |form| %>
+        <%= form_with url: student_checklogin_url, class: 'form-login', method: :post do |form| %>
             <label class="label-field"> Email</label>
             <%= form.email_field :mail, class: 'text-field' %>
             <label class="label-field"> Password</label>

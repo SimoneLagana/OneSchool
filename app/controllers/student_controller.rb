@@ -18,6 +18,6 @@ class StudentController < ApplicationController
 
   def checklogout
     cookies.delete(:student_info)
-    redirect_to teacher_meeting_url
+    redirect_to root_path
   end
 end

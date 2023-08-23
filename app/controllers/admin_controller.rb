@@ -4,8 +4,6 @@ class AdminController < ApplicationController
     end
     def signup       
     end
-    def login
-    end
     def manage        
     end
 
@@ -38,7 +36,28 @@ class AdminController < ApplicationController
         if @school_staff.save
             redirect_to "/admin/manage"
         end
-    end    
+    end
+    def edit_staff
+        @school_staff = SchoolStaff.find(params[:key])
+    end
+    def update_staff
+        @school_staff = SchoolStaff.find(params[:key])
+        staff_params = {name: params[:name], surname: params[:surname], CF: params[:CF],mail: params[:mail],
+            password: params[:password], school_code: params[:school_code]}
+        if @school_staff.update(staff_params)
+          redirect_to "/admin/manage"
+        else
+          render 'edit'
+        end
+    end
+    def delete_staff
+        @school_staff = SchoolStaff.find(params[:CF])
+        if @school_staff.destroy
+            redirect_to "/admin/manage"
+          else
+            render 'delete'
+        end
+    end      
     def edit_school
         @school = School.find(params[:key])
     end
@@ -53,6 +72,22 @@ class AdminController < ApplicationController
     end
     def delete_school
         @school = School.find(params[:code])
+        @commitment = Commitment.where(school_code: @school.code)
+        @commitment.delete_all
+        @homework = Homework.where(school_code: @school.code)
+        @homework.delete_all
+        @grade = Grade.where(school_code: @school.code)
+        @grade.delete_all
+        @absence = Absence.where(school_code: @school.code)
+        @absence.delete_all
+        @note = Note.where(school_code: @school.code)
+        @note.delete_all
+        @subject = Subject.where(school_code: @school.code)
+        @subject.delete_all
+        @communication = Communication.where(school_code: @school.code)
+        @communication.delete_all
+        @familystudent = FamilyStudent.where(school_code: @school.code)
+        @familystudent.delete_all
         if @school.destroy
             redirect_to "/admin/manage"
           else
@@ -61,10 +96,8 @@ class AdminController < ApplicationController
     end    
     def school_params
         params.require(:school).permit(:address, :name, :code, :school_type)
-    end    
-    def checklogin
     end
-    def checklogout
-    end
+        
+
 
 end

@@ -49,15 +49,16 @@ post 'school_staff/checklogin', to: 'school_staff#checklogin', as: 'school_staff
   get "/oneschool", to: "oneschool#index"
 
   #admin
-  get "/admin/signup", to: "admin#signup", as: "admin_signup"
-  get "admin/manage", to: "admin#manage", as: "admin_manage"
-  get "admin/login", to: "admin#login", as: "admin_login"
-  post "/admin/create", to: "admin#create", as: "admin_create"
-  post "/admin/createSchool", to: "admin#create_school", as: "admin_create_school"
-  post "/admin/createStaff", to: "admin#create_staff", as: "admin_create_staff"
-  post "/admin/editSchool", to: "admin#edit_school", as: "admin_edit_school"
-  post "/admin/updateSchool", to: "admin#update_school", as: "admin_update_school"
-  post "/admin/deleteSchool", to: "admin#delete_school", as: "admin_delete_school"
+  get "/admin/signup", to: "admin#signup"
+  get "admin/manage", to: "admin#manage"
+  post "/admin/create", to: "admin#create" 
+  post "/admin/createSchool", to: "admin#create_school"
+  post "/admin/createStaff", to: "admin#create_staff"
+  post "/admin/editSchool", to: "admin#edit_school"
+  post "/admin/updateSchool", to: "admin#update_school"
+  delete "/admin/deleteSchool", to: "admin#delete_school", as: "admin_deleteschool"
+  post "/admin/updateStaff", to: "admin#update_staff", as: "admin_updatestaff"
+  delete "/admin/deleteStaff", to: "admin#delete_staff", as: "admin_deletestaff"
 
   delete "admin/checklogout", to: "admin#checklogout", as: 'admin_checklogout'
   post 'admin/checklogin', to: 'admin#checklogin', as: 'admin_checklogin'

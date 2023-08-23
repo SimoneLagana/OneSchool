@@ -42,7 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "commitments", id: false, force: :cascade do |t|
+  create_table "commitments", primary_key: ["date", "CFprof"], force: :cascade do |t|
     t.string "title"
     t.datetime "date"
     t.string "type", null: false

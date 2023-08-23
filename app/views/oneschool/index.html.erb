@@ -12,37 +12,35 @@
       </label>
     
     <%= link_to "/admin/signup" do %>
-
       <div class="profile">
         Profile
       </div>
       <% end %>
     </nav>
-   
     
     <div class="home">
         <label class="title">OneSchool</label>
         <div class="panel-container">
-            <%#= link_to "/login_schoolstaff" do %>
+            <% link_to "/schoolstaff/login" do %>
             <div class="panel">
                 Schoolstaff
             </div>
-            <%#= end %> 
-            <%#= link_to "/login_parent" do %>
+            <% end %> 
+            <% link_to "/family/login" do %>
             <div class="panel">
                 Parent
             </div>
-            <%#= end %>
-            <%#= link_to "/login_teacher" do %>
+            <% end %>
+            <% link_to "/teacher/login" do %>
             <div class="panel ">
                 Teacher
             </div>
-             <%#= end %> 
-            <%#= link_to "/login_student" do %>
+             <% end %> 
+            <%= link_to "/student/login" do %>
             <div class="panel">
                 Student
             </div>
-            <%#= end %> 
+            <% end %> 
 
         </div>
     </div>

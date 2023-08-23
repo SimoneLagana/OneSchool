@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <%= stylesheet_link_tag "login.css" %>
+     <%# <%= javascript_include_tag('admin.js') %>
+    <title>Login admin</title>
+</head>
+<body>
+    <nav class="navbar">
+        <label class="writ">
+          name
+        </label>
+        <div class="profile">
+          Profile
+        </div>
+      </nav>
+    <div class="home">
+        <label class="title"> Login as Admin</label>
+        <%= form_with url: "admin/checklogin", class: 'form-login', method: :post do |form| %>
+            <label class="label-field"> Email</label>
+            <%= form.email_field :mail, class: 'text-field' %>
+            <label class="label-field"> Password</label>
+            <%= form.password_field :password, class: 'text-field' %>
+            <%= form.submit "login", class: 'button-field' %>
+        <% end %>
+        <% if flash.now[:alert] %>
+            <div class="alert alert-danger">
+                <%= flash.now[:alert] %>
+            </div>
+        <% end %>
+    </div>
+    
+</body>
+</html>

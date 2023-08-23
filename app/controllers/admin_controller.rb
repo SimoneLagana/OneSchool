@@ -4,6 +4,8 @@ class AdminController < ApplicationController
     end
     def signup       
     end
+    def login
+    end
     def manage        
     end
 
@@ -60,6 +62,9 @@ class AdminController < ApplicationController
     def school_params
         params.require(:school).permit(:address, :name, :code, :school_type)
     end    
-
+    def checklogin
+    end
+    def checklogout
+    end
 
 end

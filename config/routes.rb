@@ -12,9 +12,12 @@ Rails.application.routes.draw do
   get 'teacher/meeting', to: 'teacher#meeting', as: 'teacher_meeting'
   get 'teacher/grade', to: 'teacher#grade', as: 'teacher_grade'
 
- 
+  get 'teacher/profile', to: 'teacher#profile', as: 'teacher_profile'
+  get 'teacher/classroom', to: 'teacher#ClassRoom', as: 'teacher_classroom'
   delete "teacher/checklogout", to: "teacher#checklogout", as: 'teacher_checklogout'
   post 'teacher/checklogin', to: 'teacher#checklogin', as: 'teacher_checklogin'
+  post 'teacher/changepassword', to: 'teacher#changepassword', as: 'teacher_changepassword'
+  #post 'teacher/accessclass', to: 'teacher#accessclass', as: 'teacher_accessclass'
 
   
 

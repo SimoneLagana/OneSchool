@@ -12,18 +12,28 @@ body{
     justify-content: center;
     height:100vh;
 }
+.home{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height:100%;
+    margin-top: 70px;
+}
 
-/*Navbar*/
+
 .navbar{
     background-color: skyblue;
     height: 70px;
-    position: fixed;
     top: 0;
     display: flex;
     flex-direction: row;
     width: 100%;
     flex-wrap: nowrap;
     justify-content: space-between;
+    z-index: 10;
+    position: fixed;
 }
 
 .writ{
@@ -48,61 +58,18 @@ body{
     margin-right: 100px;
 }
 
-/*Home*/
-.home{
-    width:100%;
+.main-panel{
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height:100%;
-    gap: 60px;
+    align-items: flex-start;
+    gap: 10px;
 }
 
-.form-login{
+.button-container{
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
     gap: 20px;
-}
-.form-field{
-    display: flex;
-    flex-direction: column;
-    text-align: left;
     width: 100%;
 }
-
-.text-field{
-    height: 24px;
-    width: 240px;
-    font-size: 18px;
-    padding-left: 4px;
-    padding-right: 6px;
-}
-
-.title{
-    font-size: 28px;
-}
-
-.button-field{
-    width: 80px;
-    height: 30px;
-    font-size: 18px;
-}
-
-.flash{
-    padding: 10px;
-    margin-bottom: 5px;
-    border-radius: 4px;
-}
-
- .alert {
-    background-color: #ff0000;
-    color: #ffffff;
-  }
-
-  .notice {
-    background-color: #00ff00;
-    color: #000000;
-  }

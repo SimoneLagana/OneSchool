@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= stylesheet_link_tag "admin_manage.css" %>
     <%= javascript_include_tag('admin.js') %>
-    import "@hotwired/turbo-rails"
-import "controllers"
+
     <title>Document</title>
 </head>
 <body>
@@ -70,7 +69,7 @@ import "controllers"
         <td><%= school.code %></td>
         <td><%= school.school_type %></td>
 <td><button onclick="editSchoolForm(<%= json_string= school.to_json %>);">Edit</button></td>
-<td><%= link_to 'Sign Out', admin_deleteSchool_path(code: "school.code"), method: :post,
+<td><%= link_to 'Delete', admin_deleteSchool_path(code: "school.code"), method: :delete,
   form: {data: {turbo_confirm: 'Are you sure?'}} %>
     </td></tr>
     <% end %>

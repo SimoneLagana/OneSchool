@@ -65,7 +65,6 @@ function openStaffForm() {
 }
 
 function editSchoolForm(school) {
-    console.log(school);
     popupContainer = document.getElementById("popupContainer");
   
     popupContainer.innerHTML = `

@@ -4,7 +4,7 @@ class AddForeignKey < ActiveRecord::Migration[7.0]
     #add_index :users, [:student_class_code, :student_school_code]
     #add_foreign_key :users, :class_rooms, column: :student_school_code, primary_key: [:class_code,:school_code]
     #add_foreign_key :users, :class_rooms, column: :student_class_code, primary_key: [:class_code, :school_code]
-    add_index :class_rooms, [:school_code, :class_code], unique: true
+    #add_index :class_rooms, [:school_code, :class_code], unique: true
     add_foreign_key :class_rooms, :schools, column: :school_code, primary_key: :code
     add_foreign_key :family_students, :users, column: :CFfamily, primary_key: :CF
     add_foreign_key :family_students, :users, column: :CFstudent, primary_key: :CF

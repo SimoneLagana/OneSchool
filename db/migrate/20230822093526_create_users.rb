@@ -8,10 +8,11 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :password
       t.string :school_code
       t.string :type, null: false
-      
+
       #student
       t.datetime :birthdate
       t.string :student_class_code
+      t.string :student_school_code
 
       t.timestamps
     end
@@ -19,5 +20,3 @@ class CreateUsers < ActiveRecord::Migration[7.0]
     #add_foreign_key :users, :schools, column: :school_code, primary_key: :code
   end
 end
-
-

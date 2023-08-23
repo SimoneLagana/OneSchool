@@ -8,9 +8,12 @@ Rails.application.routes.draw do
   get 'teacher/login', to: 'teacher#login', as: 'teacher_login'
   get 'teacher/home', to: 'teacher#home', as: 'teacher_home'
   get 'teacher/meeting', to: 'teacher#meeting', as: 'teacher_meeting'
- 
+  get 'teacher/profile', to: 'teacher#profile', as: 'teacher_profile'
+  get 'teacher/classroom', to: 'teacher#ClassRoom', as: 'teacher_classroom'
   delete "teacher/checklogout", to: "teacher#checklogout", as: 'teacher_checklogout'
   post 'teacher/checklogin', to: 'teacher#checklogin', as: 'teacher_checklogin'
+  post 'teacher/changepassword', to: 'teacher#changepassword', as: 'teacher_changepassword'
+  #post 'teacher/accessclass', to: 'teacher#accessclass', as: 'teacher_accessclass'
 
   
 

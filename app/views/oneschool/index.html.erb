@@ -21,22 +21,22 @@
     <div class="home">
         <label class="title">OneSchool</label>
         <div class="panel-container">
-            <% link_to "/schoolstaff/login" do %>
+            <%= link_to "schoolstaff/login" do %>
             <div class="panel">
                 Schoolstaff
             </div>
             <% end %> 
-            <% link_to "/family/login" do %>
+            <%= link_to "family/login" do %>
             <div class="panel">
                 Parent
             </div>
             <% end %>
-            <% link_to "/teacher/login" do %>
+            <%= link_to teacher_login_url do %>
             <div class="panel ">
                 Teacher
             </div>
              <% end %> 
-            <%= link_to "/student/login" do %>
+            <%= link_to "student/login" do %>
             <div class="panel">
                 Student
             </div>

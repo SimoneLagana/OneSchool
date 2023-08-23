@@ -18,16 +18,17 @@
       </nav>
     <div class="home">
         <label class="title"> Login as Teacher</label>
-        <%= form_with url: "teacher/checklogin", class: 'form-login', method: :post do |form| %>
+        <%= form_with url: teacher_checklogin_url, class: 'form-login', method: :post do |form| %>
             <label class="label-field"> Email</label>
             <%= form.email_field :mail, class: 'text-field' %>
             <label class="label-field"> Password</label>
             <%= form.password_field :password, class: 'text-field' %>
             <%= form.submit "login", class: 'button-field' %>
         <% end %>
-        <% if flash.now[:alert] %>
-            <div class="alert alert-danger">
-                <%= flash.now[:alert] %>
+
+        <% flash.each do |key, message| %>
+            <div class="flash <%= key %>">
+                <%= message %>
             </div>
         <% end %>
     </div>

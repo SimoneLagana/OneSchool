@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag "teacher_home.css" %>
-    <%= javascript_include_tag('teacher.js') %>
+    <link rel="stylesheet" href="teacher_home.css">
     <title>Home</title>
 </head>
 <body>
@@ -12,58 +11,39 @@
         <label class="writ">
           name
         </label>
-        <div class="profile">
-          Profile
-        </div>
-
-        <%= form_tag teacher_checklogout_path, method: :delete do %>
-            <%= submit_tag 'Logout', class: 'profile' %>
+        <%= link_to teacher_profile_url(CF: params[:CF]) do %>
+            <div class="profile">
+                Profile
+            </div>
         <% end %>
+        <%= form_tag teacher_checklogout_path, method: :delete do %>
+            <%= submit_tag 'Logout', class: 'profile' %> 
+        <% end %>  
       </nav>
     <div class="home">
-        <div class="panel-container">
-            <%= link_to "/login_schoolstaff" do %>
-            <div class="panel">
-                grades
+        <div class="whole-panel">
+            <div class="right-panel">
+                <%= link_to "/teacher/calendar" do %>
+                    <div class="calendar">
+                        Agenda personale
+                    </div>
+                <% end %>
+                <%= link_to teacher_meeting_url do %>
+                    <div class="meeting">
+                        Link meeting
+                    </div>
+                <% end %>
             </div>
-             <% end %>
-            <%= link_to "/login_schoolstaff" do %>
-            <div class="panel">
-                absences
+            <div class="left-panel">
+                <label class="label-panel"> </label>
+                <%# <%= form_with url: "/class", method: :get do |form|, class: "form-class" %>
+                   <%# <%= form.select :city, ["Berlin", "Chicago", "Madrid"], class: "select-class"%>
+                   <%# <%= form.submit "vai alla classe", class: "submit-button" %>
+                   <%# <% end %>
+            
+                
             </div>
-             <% end %>
-            <%= link_to "/login_schoolstaff" do %>
-            <div class="panel">
-                classes
-            </div>
-             <% end %>
-            <%= link_to "/teacher/meeting" do %>
-            <div class="panel">
-                meeting
-            </div>
-             <% end %>
-            <%= link_to "/login_schoolstaff" do %>
-            <div class="panel">
-                assignments
-            </div>
-             <% end %>
-            <%= link_to "/login_schoolstaff" do %>
-            <div class="panel">
-                agenda
-            </div>
-             <% end %>
-            <%= link_to "/login_schoolstaff" do %>
-            <div class="panel">
-                news
-            </div>
-             <% end %>
-            <%= link_to "/login_schoolstaff" do %>
-            <div class="panel">
-                personal notes
-            </div>
-             <% end %>
         </div>
     </div>
-    
 </body>
 </html>

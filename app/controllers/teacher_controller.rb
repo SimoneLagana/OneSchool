@@ -10,6 +10,11 @@ class TeacherController < ApplicationController
   end
 
   def changepassword
+    @teacher =Teacher.find_by(mail: params[:mail])
+    if(@teacher) && @teacher.password == params[:old_password]
+      @teacher.password = params[:password]
+    else
+      flash[:alert] = 'Credenziali non valide.'
   end
   
   def home
@@ -49,7 +54,6 @@ class TeacherController < ApplicationController
   
 def ClassRoom
     puts "susine"
-
 end
 
   #def accessclass

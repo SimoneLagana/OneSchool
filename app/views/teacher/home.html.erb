@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= stylesheet_link_tag "teacher_home.css" %>
-    <%= javascript_include_tag('teacher.js') %>
+    <%#= javascript_include_tag('teacher.js') %>
     <title>Home</title>
 </head>
 <body>
@@ -22,7 +22,7 @@
       </nav>
     <div class="home">
         <div class="panel-container">
-            <%= link_to "/login_schoolstaff" do %>
+            <%= link_to teacher_grade_url do %>
             <div class="panel">
                 grades
             </div>

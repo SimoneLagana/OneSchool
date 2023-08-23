@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'school/home'
+  get 'school/login'
 
 
   get 'oneschool/index'
@@ -8,6 +10,8 @@ Rails.application.routes.draw do
   get 'teacher/login', to: 'teacher#login', as: 'teacher_login'
   get 'teacher/home', to: 'teacher#home', as: 'teacher_home'
   get 'teacher/meeting', to: 'teacher#meeting', as: 'teacher_meeting'
+  get 'teacher/grade', to: 'teacher#grade', as: 'teacher_grade'
+
  
   delete "teacher/checklogout", to: "teacher#checklogout", as: 'teacher_checklogout'
   post 'teacher/checklogin', to: 'teacher#checklogin', as: 'teacher_checklogin'
@@ -30,6 +34,12 @@ Rails.application.routes.draw do
   post 'family/checklogin', to: 'family#checklogin', as: 'family_checklogin'
 
 
+#school_staff
+get 'school_staff/login', to: 'school_staff#login', as: 'school_staff_login'
+get 'school_staff/home', to: 'school_staff#home', as: 'school_staff_home'
+
+delete "school_staff/checklogout", to: "school_staff#checklogout", as: 'school_staff_checklogout'
+post 'school_staff/checklogin', to: 'school_staff#checklogin', as: 'school_staff_checklogin'
 
   
 

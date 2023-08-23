@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "teacher_home.css" %>
+    <%# <%= javascript_include_tag('teacher.js') %> 
+    <title>Home</title>
+</head>
+<body>
+    <nav class="navbar">
+        <label class="writ">
+          name
+        </label>
+        <div class="profile">
+          Profile
+        </div>
+
+        <%= form_tag family_checklogout_path, method: :delete do %>
+            <%= submit_tag 'Logout', class: 'profile' %>
+        <% end %>
+      </nav>
+    <div class="home">
+        <div class="panel-container">
+
+            <%= link_to "/login_schoolstaff" do %>
+            <div class="panel">
+                grades
+            </div>
+             <% end %>
+
+            <%= link_to "/login_schoolstaff" do %>
+            <div class="panel">
+                absences
+            </div>
+             <% end %>
+            
+            <%= link_to "/login_schoolstaff" do %>
+                <div class="panel">
+                    meeting
+                </div>
+             <% end %>
+
+            <%= link_to "/login_schoolstaff" do %>
+            <div class="panel">
+                assignments
+            </div>
+             <% end %>
+
+            <%= link_to "/login_schoolstaff" do %>
+            <div class="panel">
+                agenda
+            </div>
+             <% end %>
+
+            <%= link_to "/login_schoolstaff" do %>
+            <div class="panel">
+                news
+            </div>
+             <% end %>
+
+            <%= link_to "/login_schoolstaff" do %>
+            <div class="panel">
+                personal notes
+            </div>
+             <% end %>
+        </div>
+    </div>
+    
+</body>
+</html>

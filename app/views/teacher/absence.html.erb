@@ -6,7 +6,7 @@
     <%= stylesheet_link_tag "teacher_absence.css" %>
     <%= javascript_include_tag('teacher.js') %>
 
-    <title>Grades</title>
+    <title>Absences</title>
 </head>
 <body>
     <nav class="navbar">
@@ -22,9 +22,9 @@
         <% end %>     
     </nav>
     <div class="home">
-        <label class="title"> Grades </label>
+        <label class="title"> Absences </label>
         <div class="insert-container">
-            <%= form_tag teacher_grade_url, class: 'form-subject', method: :get do %>
+            <%= form_tag teacher_absence_url, class: 'form-subject', method: :get do %>
                 <%= select_tag :subject, options_for_select(@subjects), class: "form-field", onchange: "this.form.submit()" %>
                 <%= select_tag :weekday, options_for_select(@weekdays),  class: "form-field", onchange: "this.form.submit()" %>
                 <%= select_tag :time, options_for_select(@times),  class: "form-field", onchange: "this.form.submit()" %>
@@ -32,27 +32,29 @@
                 <%= hidden_field_tag :CF, @teacher.CF %>
             <% end %>
 
-            <%= form_with model: @teacher, url: teacher_insertgrade_url, class: 'form-subject', method: :post do |form| %>
+            <%= form_with url: teacher_insertabsence_url, class: 'form-subject', method: :post do |form| %>
                 <%= hidden_field_tag :class_code, @classname %>
                 <%= hidden_field_tag :CFprof, @teacher.CF %>
                 <%= hidden_field_tag :school_code, @teacher.school_code %>
                 <%= hidden_field_tag :subject_name, @subjects %>
                 <%= hidden_field_tag :weekday, @weekdays %>
                 <%= hidden_field_tag :time, @times %>
-                <%= number_field_tag :value, nil, class: "form-field", step: "0.1" %>
+                <%= hidden_field_tag :justified, false %>
                 <%= date_field_tag :date, value: Date.today, class: 'form-field'%>
                 <%= select_tag :CFstudent, options_for_select(@students.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
                 <%= form.submit "Save absence", class: "button-submit" %>
             <% end %>
-        </div>
+        </div> 
         
-         <% @grades.each do |grade| %>
+         <% @absences.each do |absence| %>
             <tr class="table">
-                <td> <%= grade.date %></td>
-                <td> <%= grade.value %></td>
-                <td> <%= grade.subject_name %></td>
-                <td> <%= name=Student.where(student_class_code: grade.class_code, CF: grade.CFstudent).pluck(:name).uniq.join %></td>
-                <td> <%= surname=Student.where(student_class_code: grade.class_code, CF: grade.CFstudent).pluck(:surname).uniq.join %></td>
+                <td> <%= absence.date %></td>
+                <td> <%= absence.weekday %></td>
+                <td> <%= absence.time %></td>
+                <td> <%= absence.subject_name %></td>
+                <td> <%= name=Student.where(student_class_code: absence.class_code, CF: absence.CFstudent).pluck(:name).uniq.join %></td>
+                <td> <%= surname=Student.where(student_class_code: absence.class_code, CF: absence.CFstudent).pluck(:surname).uniq.join %></td>
+                <td> <%= absence.justified %></td>
                 <br>
             </tr>
         <% end %> 

@@ -1,11 +1,12 @@
 
-function editpassword(email) {
+function editpassword(CF, email) {
     popupcontainer = document.getElementById("popupcontainer");
   
     popupcontainer.innerHTML = `
       <div class="popupMenu">
         <div id="closePopup">&times;</div>
           <form action="/teacher/changepassword" method="post">
+            <input type="text" id="CF" name="CF" value=${CF}>
             <label for="email">Email</label>
             <input type="email" id="email" name="email" value=${email}>
 

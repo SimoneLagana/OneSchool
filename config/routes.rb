@@ -10,16 +10,23 @@ Rails.application.routes.draw do
   get 'teacher/login', to: 'teacher#login', as: 'teacher_login'
   get 'teacher/home', to: 'teacher#home', as: 'teacher_home'
   get 'teacher/meeting', to: 'teacher#meeting', as: 'teacher_meeting'
+  get 'teacher/commitment', to: 'teacher#commitment', as: 'teacher_commitment'
   get 'teacher/grade', to: 'teacher#grade', as: 'teacher_grade'
-
+  post 'teacher/insertgrade', to: 'teacher#insertgrade', as: 'teacher_insertgrade'
   get 'teacher/profile', to: 'teacher#profile', as: 'teacher_profile'
-  get 'teacher/classroom', to: 'teacher#ClassRoom', as: 'teacher_classroom'
+  get 'teacher/classroom', to: 'teacher#classroom', as: 'teacher_classroom'
   delete "teacher/checklogout", to: "teacher#checklogout", as: 'teacher_checklogout'
   post 'teacher/checklogin', to: 'teacher#checklogin', as: 'teacher_checklogin'
   post 'teacher/changepassword', to: 'teacher#changepassword', as: 'teacher_changepassword'
-  #post 'teacher/accessclass', to: 'teacher#accessclass', as: 'teacher_accessclass'
+  get 'teacher/upgradepassword', to: 'teacher#upgradepassword', as: 'teacher_upgradepassword'
+  get 'teacher/absence', to: 'teacher#absence', as: 'teacher_absence'
+  post 'teacher/insertabsence', to: 'teacher#insertabsence', as: 'teacher_insertabsence'
+  get 'teacher/note', to: 'teacher#note', as: 'teacher_note'
+  post 'teacher/insertnote', to: 'teacher#insertnote', as: 'teacher_insertnote'
+  get 'teacher/homework', to: 'teacher#homework', as: 'teacher_homework'
+  post 'teacher/managehomework', to: 'teacher#managehomework', as: 'teacher_managehomework'
 
-  
+ 
 
   #student
   get 'student/login', to: 'student#login', as: 'student_login'
@@ -37,14 +44,16 @@ Rails.application.routes.draw do
   post 'family/checklogin', to: 'family#checklogin', as: 'family_checklogin'
 
 
+
 #school_staff
 get 'school_staff/login', to: 'school_staff#login', as: 'school_staff_login'
 get 'school_staff/home', to: 'school_staff#home', as: 'school_staff_home'
 get 'school_staff/staffManage', to: 'school_staff#staff_manage', as: 'school_staff_manage'
 get 'school_staff/staffInsert', to: 'school_staff#insert', as: 'school_staff_insert'
 
-delete "school_staff/checklogout", to: "school_staff#checklogout", as: 'school_staff_checklogout'
-post 'school_staff/checklogin', to: 'school_staff#checklogin', as: 'school_staff_checklogin'
+
+  delete "school_staff/checklogout", to: "school_staff#checklogout", as: 'school_staff_checklogout'
+  post 'school_staff/checklogin', to: 'school_staff#checklogin', as: 'school_staff_checklogin'
 
   
 

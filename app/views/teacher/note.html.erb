@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "profile.css" %>
+    <%= javascript_include_tag('teacher.js') %>
+    <title>Note</title>
+</head>
+<body>
+    <nav class="navbar">
+        <%= link_to teacher_classroom_url(CF: params[:CF], classroom: @classname) do %>
+            <label class="writ">
+            <%= @classname %>
+            </label>
+        <% end %>
+        <%= link_to teacher_profile_url(CF: params[:CF]) do %>
+            <div class="profile">
+                Profile
+            </div>
+        <% end %>     
+    </nav>
+    <div class="home">
+        <div class="insert-panel">
+            <%= form_with url: teacher_insertnote_url, class: 'form-note', method: :post do |form| %>
+            <label class="label-field"> Select student </label>
+            <%= form.hidden_field :CFprof, value: @teacher.CF %>
+            <%= form.hidden_field :school_code, value: @teacher.school_code %>
+            <%= form.hidden_field :classroom, value: @classname %>
+            <%= form.select :CFstudent, options_for_select(@students.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }),  class: "select-class"%>
+            <%= date_field_tag :date, value: Date.today, class: 'form-field'%>
+            <label class="label-field"> Text</label>
+            <%= form.text_area :description, size: "70x5" %>
+            <%= form.submit "submit", class: 'button-field' %>
+        <% end %>
+        </div>
+        <div class= "show-panel">
+            <% @notes.each do |note| %>
+            <tr class="table">
+                <td> <%= note.date %></td>
+                <td> <%= name=Student.where(CF: note.CFstudent).pluck(:name).uniq.join %></td>
+                <td> <%= surname=Student.where(CF: note.CFstudent).pluck(:surname).uniq.join %></td>
+                <td> <%= note.description %></td>
+                <br>
+            </tr>
+        <% end %> 
+        </div>
+    </div>
+    
+</body>
+</html>

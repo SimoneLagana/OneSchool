@@ -11,8 +11,7 @@ class Absence < ApplicationRecord
     validates :CFprof, presence: true
     validates :subject_name, presence: true
     validates :CFstudent, presence: true
-    validates :justified, presence: true
-
+    
     def valid_foreign_key
         return false, unless (class_code.present? && school_code.present? && weekday.present? && time.present? && subject_name.present?)
 

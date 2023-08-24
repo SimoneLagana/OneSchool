@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   delete "family/checklogout", to: "family#checklogout", as: 'family_checklogout'
   post 'family/checklogin', to: 'family#checklogin', as: 'family_checklogin'
 
+  get 'family/choose_student', to: 'family#choose_student', as: 'family_choose'
+  get 'family/grades', to: 'family#grades', as: 'family_grades'
 
 #school_staff
 get 'school_staff/login', to: 'school_staff#login', as: 'school_staff_login'

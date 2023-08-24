@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar">
+        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+            <div class="profile">
+                home
+            </div>
+        <% end %>
+
+        <%= link_to family_choose_url(CF: params[:CF]) do %>
+            <div class="profile">
+                Change student
+            </div>
+        <% end %>
+
+        <%= form_tag family_checklogout_path, method: :delete do %>
+            <%= submit_tag 'Logout', class: 'profile' %>
+        <% end %>
+    </nav>
+
+    <div class="panel">
+          
+        <table>
+            <thead>
+                <tr>
+                <th>Media complessiva</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <% @family = Family.find_by(CF: params[:CF]) %>
+                <% @student = Student.find_by(CF: params[:CFstudent])%>
+                <% @grades = Grade.where(CFstudent: @student.CF)%>
+
+
+                <% @grades.each do |grade| %>
+                    <tr>
+                        <td>
+                        <%= grade.value %>
+                        <br>
+                        </td>
+                        
+                        <td><%= grade.subject_name %></td>
+                    </tr>
+                    <td><%= grade.date.strftime("%Y-%m-%d") %></td>
+                    
+                <% end %>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

@@ -62,6 +62,10 @@ post 'school_staff/checklogin', to: 'school_staff#checklogin', as: 'school_staff
 
   delete "admin/checklogout", to: "admin#checklogout", as: 'admin_checklogout'
   post 'admin/checklogin', to: 'admin#checklogin', as: 'admin_checklogin'
+
+  get "admin/searchSchool", to: "admin#search_school", as: "admin_searchschool"
+  get "admin/searchStaff", to: "admin#search_staff", as: "admin_searchstaff"
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

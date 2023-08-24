@@ -17,98 +17,55 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-.whole-panel{
-    display: flex;
-    flex-direction: row;
-    gap: 70px;
-    justify-content: center;
-    margin-top: 110px;
+    padding-top: 40px;
 }
 
-.right-panel{
+.title{
+    font-size: 18px;
+    width: 100%;
+    text-align: center;
+}
+.insert-container{
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 40px;
+}
+.form-subject{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-field{
+    width: 220px;
+    height: 20px;
+    font-size: 18px;
+    display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 500px;
-    height: 400px;
-    gap: 50px;
-}
-
-.calendar{
-    width: 100%;
-    height: 80%;
-    background-color: aquamarine;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     text-align: center;
-    font-size: 20px;
 }
-
-.calendar:link, .calendar:link:visited{
-    color:black;
-    text-decoration: none;
-}
-
-.meeting:link, .meeting:link:visited{
-    color:black;
-    text-decoration: none;
-}
-
-
-
-.meeting{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    height: 20%;
-    background-color: aqua;
-    text-align: center;
-    border-radius: 10px;
-    font-size: 20px;
-}
-
-.left-panel{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 30px;
-    
-}
-
-.form-class{
+.table{
     display:flex;
     flex-direction: column;
-    align-items: end;
-    gap: 20px;
 }
 
-.label-class{
-    width: 240px;
-    height: 30px;
-    padding-left: 4px;
+.student-field{
+    width: 220px;
+    height: 100px;
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.button-submit{
     font-size: 18px;
 }
-
-.select-class{
-    width: 240px;
-    height: 30px;
-    padding-left: 4px;
-    font-size: 18px;
-}
-
-.submit-button{
-    width: 130px;
-    height: 40px;
-    font-size: 18px;
-
-
-}
-
 
 .navbar{
     background-color: skyblue;
@@ -151,10 +108,6 @@ body{
     font-size: 22px;
     margin-right: 100px;
 }
-
-
-
-
 
 .flash {
     padding: 10px;

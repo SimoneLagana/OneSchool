@@ -3,13 +3,13 @@
     padding:0;
     background-color: white;
 }
-
+ 
 body{
     display:flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height:100vh;
+    height:100%;
 }
 .home{
     width:100%;
@@ -17,66 +17,19 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height:100%;
-    margin-top: 70px;
 }
 
-.upper-section{
-    display: flex;
-    justify-content: flex-end;
-    padding-left: 40px;
-}
-
-.form-subject{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 20px;
-    align-items: center;
-}
-.label-subject{
-    font-size: 18px;
-}
-
-.select-subject{
-    width: 120px;
-    font-size: 18px;
-}
-
-.panel-container{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    
-
-    width: 90%;
-}
-
-.panel{
-    display:flex;
-    flex-direction: column;
-    width: 240px;
-    height: 200px;
-    background-color: aqua;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    font-size: 18px;
-}
 
 .navbar{
     background-color: skyblue;
     height: 70px;
+    position: fixed;
     top: 0;
     display: flex;
     flex-direction: row;
     width: 100%;
     flex-wrap: nowrap;
     justify-content: space-between;
-    z-index: 10;
-    position: fixed;
 }
 
 .writ{
@@ -90,6 +43,14 @@ body{
     margin-left: 100px;
 }
 
+.form-profile{
+    border-width: 0;
+    width: 100px;
+    height: 70px;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
 .profile{
     width: 100px;
     height: 70px;
@@ -100,3 +61,19 @@ body{
     font-size: 22px;
     margin-right: 100px;
 }
+
+.flash {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+  }
+  
+  .alert {
+    background-color: #ff0000;
+    color: #ffffff;
+  }
+  
+  .notice {
+    background-color: #00ff00;
+    color: #000000;
+  }

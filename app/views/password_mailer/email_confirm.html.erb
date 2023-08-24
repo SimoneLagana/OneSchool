@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Conferma Cambio Password</h2>
+  <p>Hai richiesto un cambio password. Clicca sul link sottostante per confermare:</p>
+  <% if @user.type=='Teacher' %>
+  <%= link_to 'Conferma cambio password', { controller: 'teacher', action: 'upgradepassword', CF: @user.CF, success: 'success'}, method: :get %>
+   <% elsif @user.type=='Student' %>
+  <%= link_to 'Conferma Cambio Password', confirm_password_reset_url(@user.reset_token) %>
+  <% elsif @user.type=='SchoolStaff' %>
+  <%= link_to 'Conferma Cambio Password', confirm_password_reset_url(@user.reset_token) %>
+  <% elsif @user.type=='Family' %>
+  <%= link_to 'Conferma Cambio Password', confirm_password_reset_url(@user.reset_token) %>
+  <% else %>
+  <% end %> 
+</body>
+</html>

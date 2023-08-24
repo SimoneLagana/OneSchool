@@ -9,26 +9,24 @@
 <body>
     <nav class="navbar">
         <label class="writ">
-          name
+          <%= @teacher.name %>
         </label>
         <%= link_to teacher_profile_url(CF: params[:CF]) do %>
             <div class="profile">
                 Profile
             </div>
         <% end %>
-        <%= form_tag teacher_checklogout_path, method: :delete do %>
-            <%= submit_tag 'Logout', class: 'profile' %> 
-        <% end %>  
+         
       </nav>
     <div class="home">
         <div class="whole-panel">
             <div class="right-panel">
-                <%= link_to "/teacher/calendar" do %>
+                <%= link_to "/teacher/calendar", class: "calendar" do %>
                     <div class="calendar">
                         Agenda personale
                     </div>
                 <% end %>
-                <%= link_to teacher_meeting_url do %>
+                <%= link_to teacher_meeting_url(CF: params[:CF]), class: "meeting" do %>
                     <div class="meeting">
                         Link meeting
                     </div>
@@ -36,11 +34,13 @@
             </div>
             <div class="left-panel">
                 <label class="label-panel"> </label>
-                <%# <%= form_with url: "/class", method: :get do |form|, class: "form-class" %>
-                   <%# <%= form.select :city, ["Berlin", "Chicago", "Madrid"], class: "select-class"%>
-                   <%# <%= form.submit "vai alla classe", class: "submit-button" %>
-                   <%# <% end %>
-                
+                <%= form_with url: teacher_classroom_url, class: 'form-class', method: :get do |form| %>
+                    <label class="label-class">Seleziona una classe </label>
+                    <%= form.select :classroom, options_for_select(@classrooms), {},  class: "select-class"%>
+                    <%= form.hidden_field :CF, value: @teacher.CF %>
+                    <%= form.submit "vai alla classe", class: "submit-button" %>
+                    <% end %>
+
                 
             </div>
         </div>

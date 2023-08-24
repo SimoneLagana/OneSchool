@@ -11,17 +11,13 @@
     <div id="popupcontainer"></div>
     <nav class="navbar">
         <label class="writ">
-          name
+          <%= @teacher.name %>
         </label>
         <%= link_to teacher_profile_url(CF: params[:CF]) do %>
             <div class="profile">
                 Profile
             </div>
         <% end %>
-        <%= form_tag teacher_checklogout_path, method: :delete do %>
-            <%= submit_tag 'Logout', class: 'profile' %> 
-        <% end %> 
-
       </nav>
     <div class="home">
         <div class="main-panel">
@@ -31,8 +27,10 @@
             <label class="profile-field"><%= @teacher.mail %> </label>
             <label class="profile-field"><%= @teacher.school_code %> </label>
             <div class="button-container">
-                <button class="profile-button" onclick="editpassword()">Modifica password</button>
-                <button class="profile-button" onclick="deleteAccount()">Elimina Account</button>
+                <button class="profile-button" onclick="editpassword('<%= @teacher.CF%>', '<%= @teacher.mail%>')">Modifica password</button>
+                <%= form_tag teacher_checklogout_path, method: :delete do %>
+                    <%= submit_tag 'Logout', class: 'profile-button' %> 
+                <% end %> 
             </div>
             
         </div>

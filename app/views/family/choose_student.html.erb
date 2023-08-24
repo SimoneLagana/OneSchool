@@ -25,20 +25,8 @@
 
     <label for="scelta">Seleziona un'opzione:</label>
     <% @family = Family.find_by(CF: params[:CF]) %>
-    <% @family_students = FamilyStudent.where(CFfamily: @family.CF) %>
-    <select id="choose_student">
-        <option value="Choose student"> Choose student </option>
-        <% @family_students.each do |family_student| %>
-            <% @student = Student.find_by(CF: family_student[:CFstudent]) %>
-            <option value=<%= @student.CF %>> <%= "#{@student.name}  #{@student.surname}" %> </option>
-        <% end %>
-    </select>
-
-    <%= link_to family_home_url(CF: params[:CF]) do %>
-        <div >
-            Select
-        </div>
-    <% end %>
+    <% @family_students = FamilyStudent.select(:CFstudent, :CFfamily).where(CFfamily: @family.CF).distinct %>
+    
     
 
     

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= javascript_include_tag('family.js') %>
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar">
+        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+            <div class="profile">
+                home
+            </div>
+        <% end %>
+
+        <div class="profile">
+          Profile
+        </div>
+
+        <%= form_tag family_checklogout_path, method: :delete do %>
+            <%= submit_tag 'Logout', class: 'profile' %>
+        <% end %>
+    </nav>
+
+    <table>
+            <thead>
+                <tr>
+                <th>Teacher</th>
+                <th>Subject</th>
+                <th>Select</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <% @family = Family.find_by(CF: params[:CF]) %>
+                <% @student = Student.find_by(CF: params[:CFstudent])%>
+                <% @classrooms = ClassRoom.find_by(class_code: @student.student_class_code, school_code: @student.school_code)%>
+                <% @unique_subjects = Subject.where(class_code: @classrooms.class_code, school_code: @classrooms.school_code).distinct.pluck(:name, :CFprof)%>
+                
+
+
+
+                <% @unique_subjects.each do |unique_subject| %>
+                    
+                    <tr>
+                        <td>
+                            <% @teacher = Teacher.find_by(CF: unique_subject[1]) %>
+                            <%= @teacher.name%>
+                            <%= @teacher.surname%>
+                        </td>
+
+                        <td>
+                            <%= unique_subject[0]%>
+                        </td>
+
+                        <td>
+                            <%= link_to family_meeting_manage_url(CF: params[:CF], CFstudent: params[:CFstudent], CFprof:@teacher.CF) do %>
+                                <div class="profile">
+                                    meeting
+                                </div>
+                            <% end %>
+                        </td>
+                        
+                        <td></td>
+                    </tr>
+                    <td></td>
+                    
+                <% end %>
+            </tbody>
+        </table>
+    
+    
+</body>
+</html>

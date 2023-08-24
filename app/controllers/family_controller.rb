@@ -30,11 +30,6 @@ class FamilyController < ApplicationController
   def home
     @family=Family.find_by(CF: params[:CF])
     @student=Student.find_by(CF: params[:CFstudent])
-    puts "home"
-    puts params[:CF]
-    puts params[:CFstudent]
-
-    
   end
 
   def choose_student
@@ -42,18 +37,91 @@ class FamilyController < ApplicationController
     puts "choose"
   end
 
+  def meeting_choice
+    @family=Family.find_by(CF: params[:CF])
+    @student=Student.find_by(CF: params[:CFstudent])
+    puts "home"
+    puts params[:CF]
+    puts params[:CFstudent]
+  end
 
+
+
+  def meeting_manage
+    @family=Family.find_by(CF: params[:CF])
+    @student=Student.find_by(CF: params[:CFstudent])
+    @teacher=Teacher.find_by(CF: params[:CFteacher])
+    
+    @start_hour = 16
+    @end_hour = 19
+    @today = Date.today
+    @time_slots = []
+
+    # Crea un elenco di tutti i giorni della prossima settimana per ogni ora nell'intervallo
+    (@today..@today + 6).each do |day|
+      (@start_hour..@end_hour).each do |hour|
+        @iso = DateTime.new(day.year, day.month, day.day, hour, 0, 0, '+00:00')
+        @utc_time = @iso.strftime("%Y-%m-%d %H:%M:%S %z")
+        @time_slots << @utc_time
+      end
+    end
+
+    @commit_datetime = Commitment.where(CFprof: params[:CFprof]).pluck(:date)
+    @iso_commit = []
+
+    @commit_datetime.each do |toiso|
+        @iso = toiso.strftime("%Y-%m-%d %H:%M:%S %z")
+        @iso_commit << @iso
+    end
+
+    @free_slots = @time_slots - @iso_commit
+    @iso_meeting =[]
+
+    @my_meeting = Meeting.where(CFprof: params[:CFprof]).where(CFfamily: params[:CF]).pluck(:date)
+    @my_meeting.each do |toiso|
+      @my_iso = toiso.strftime("%Y-%m-%d %H:%M:%S %z")
+      puts @my_iso
+      @iso_meeting << @my_iso
+  end
+  end
+
+
+
+  def add_family_meeting
+    # @day = params[:day]
+    # @month = params[:month]
+    # @time = params[:time]
+    @teacher = Teacher.find_by(CF: params[:CFprof])
+    @title = "Meeting con " + @teacher.name + " " + @teacher.surname
+    @free = params[:free]
+    @date = DateTime.parse(@free)
+    @school_code = Teacher.find_by(CF: params[:CFprof]).school_code
+    puts @nameSurname
+    @meeting_par = {CFfamily: params[:CF], date: @date, CFprof: params[:CFprof], title: @title, link: "meeting.com"}
+
+        @meeting = Meeting.new(@meeting_par)
+        if @meeting.save
+            redirect_to family_meeting_manage_url(CF: params[:CF], CFstudent: params[:CFstudent], CFprof: params[:CFprof])
+        end
+    end
 
   def check_cookies_login
     unless cookies[:family_info].present?
         redirect_to family_login_url, alert: "Effettua l'accesso per continuare."
     end
-    
   end
 
   def grades
     @family=Family.find_by(CF: params[:CF])
     @student=Student.find_by(CF: params[:CFstudent])
+    puts "grades"
+    puts @family.CF
+  end
+
+  def absences
+    @family=Family.find_by(CF: params[:CF])
+    @student=Student.find_by(CF: params[:CFstudent])
+    @absences=Absence.where(CFstudent: @student.CF)
     puts "grades"
     puts @family.CF
   end

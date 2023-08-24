@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar">
+        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+            <div class="profile">
+                home
+            </div>
+        <% end %>
+
+        <%= link_to family_choose_url(CF: params[:CF]) do %>
+            <div class="profile">
+                Change student
+            </div>
+        <% end %>
+
+        <%= form_tag family_checklogout_path, method: :delete do %>
+            <%= submit_tag 'Logout', class: 'profile' %>
+        <% end %>
+    </nav>
+
+    <div class="panel">
+          
+        <table>
+            <thead>
+                <tr>
+                <th> Date</th>
+                <th> Subject</th>
+                <th> Teacher</th>
+                <th> Justified</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <% @absences.each do |absence| %>
+                    <tr>
+                        <td><%= absence.date %></td>
+
+                        <td><%= absence.subject_name %></td>
+
+                        <% @teacher = Teacher.find_by(CF: absence.CFprof)%>
+                        <td>
+                        <%= @teacher.name %>
+                        <%= @teacher.surname %>
+                        <br>
+                        </td>
+
+                        <td>
+                        <%= absence.justified.to_s%>
+                        <br>
+                        </td>
+
+                        <td>
+                        <%= form_with model: @family, url: family_home_url, class: 'form-booked', method: :get do |form| %>
+                            <%= hidden_field_tag :CF, params[:CF] %>
+                            <%= hidden_field_tag :CFprof, params[:CFprof] %>
+                            <%= hidden_field_tag :CFstudent, params[:CFstudent] %>
+
+                            <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
+                            <%= form.submit "Justify", class: "button-submit" %>
+                        <% end %>
+                        <br>
+                        </td>
+                  
+                    
+                    </tr>
+
+                <% end %>
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

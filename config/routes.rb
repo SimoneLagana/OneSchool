@@ -27,6 +27,8 @@ Rails.application.routes.draw do
 
   delete "student/checklogout", to: "student#checklogout", as: 'student_checklogout'
   post 'student/checklogin', to: 'student#checklogin', as: 'student_checklogin'
+  get 'student/grades', to: 'student#grades', as: 'student_grades'
+
 
 
   #family
@@ -38,6 +40,11 @@ Rails.application.routes.draw do
 
   get 'family/choose_student', to: 'family#choose_student', as: 'family_choose'
   get 'family/grades', to: 'family#grades', as: 'family_grades'
+  get 'family/meeting_choice', to: 'family#meeting_choice', as: 'family_meeting_choice'
+  get 'family/meeting_manage', to: 'family#meeting_manage', as: 'family_meeting_manage'
+  post 'family/add_family_meeting', to: 'family#add_family_meeting', as: 'add_family_meeting'
+  get 'family/absences', to: 'family#absences', as: 'family_absences'
+
 
 #school_staff
 get 'school_staff/login', to: 'school_staff#login', as: 'school_staff_login'

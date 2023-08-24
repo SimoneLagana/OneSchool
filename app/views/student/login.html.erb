@@ -9,9 +9,12 @@
 </head>
 <body>
     <nav class="navbar">
-        <label class="writ">
-          name
-        </label>
+        <%= link_to root_path do %>
+            <div class="profile">
+                Home
+            </div>
+        <% end %>
+        
         <div class="profile">
           Profile
         </div>
@@ -25,9 +28,9 @@
             <%= form.password_field :password, class: 'text-field' %>
             <%= form.submit "login", class: 'button-field' %>
         <% end %>
-        <% if flash.now[:alert] %>
-            <div class="alert alert-danger">
-                <%= flash.now[:alert] %>
+         <% flash.each do |key, message| %>
+            <div class="flash <%= key %>">
+                <%= message %>
             </div>
         <% end %>
     </div>

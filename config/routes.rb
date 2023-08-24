@@ -40,6 +40,8 @@ Rails.application.routes.draw do
 #school_staff
 get 'school_staff/login', to: 'school_staff#login', as: 'school_staff_login'
 get 'school_staff/home', to: 'school_staff#home', as: 'school_staff_home'
+get 'school_staff/staffManage', to: 'school_staff#staff_manage', as: 'school_staff_manage'
+get 'school_staff/staffInsert', to: 'school_staff#insert', as: 'school_staff_insert'
 
 delete "school_staff/checklogout", to: "school_staff#checklogout", as: 'school_staff_checklogout'
 post 'school_staff/checklogin', to: 'school_staff#checklogin', as: 'school_staff_checklogin'

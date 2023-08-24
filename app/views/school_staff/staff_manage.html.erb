@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "staff_manage.css" %>
+    <%= javascript_include_tag('staff.js') %>
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar">
+        <label class="writ">
+          name
+        </label>
+        <div class="profile">
+          Profile
+        </div>
+      </nav>
+    <div class="home">
+        <div class="upper-bottons">
+            <div class="up-botton" id="first-botton" onclick="show_panel('first-panel');">
+                Manage
+            </div>
+            <div class="up-botton" id="second-botton" onclick="show_panel('second-panel');">
+                Insert
+            </div>
+        </div> 
+        <div class="main-panel">
+            <div class="panel" id="first-panel" style="display:flex;">
+                <!-- barra di ricerca con bootstrap
+                <div class="input-group">
+                    <div class="form-outline">
+                      <input type="search" id="form1" class="form-control" />
+                      <label class="form-label" for="form1">Search</label>
+                    </div>
+                    <button type="button" class="btn btn-primary">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                barra di ricerca con rails (poi vediamo quale usare)
+                <%= form_with url: "/search", method: :get do |form| %>
+                    <%= form.label :query, "Search for:" %>
+                    <%= form.text_field :query %>
+                    <%= form.submit "Search" %>
+                <% end %> -->
+                <div class="upper-part">
+                    <div class="search-bar">
+                        search bar
+                    </div>
+                    <div class="select-bar">
+                        select by role
+                    </div>
+                </div>
+                <div class="list">
+                    <div class="item">
+                        <label class="field">
+                            nome utente
+                        </label>
+                        <label class="field">
+                            email
+                        </label>
+                        <div class="modify">
+                            <label class="edit">
+                                edit
+                            </label>
+                            <label class="delete">
+                                delete
+                            </label>
+                        </div>
+                        
+                    </div>
+                    <div class="item">
+                        <label class="field">
+                            bambino
+                        </label>
+                        <label class="field">
+                            @@
+                        </label>
+                        <div class="modify">
+                            <label class="edit">
+                                edit
+                            </label>
+                            <label class="delete">
+                                delete
+                            </label>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="panel" id="second-panel" style="display:none;" >
+                <div class="form-container">
+                    form insert roles
+                <%= form_tag school_staff_insert_path, class: 'form-subject', method: :get do %>
+                <%= select_tag :type, options_for_select(["Teacher","Student", "Family"]), class: "form-field", onchange: "this.form.submit()" %>
+                <%= select_tag :class, options_for_select(@classes),  class: "form-field", onchange: "this.form.submit()" %>
+                <%= hidden_field_tag :CF, @staff.CF %>
+            <% end %>
+
+                       
+                </div>
+                        
+                 
+                    
+            
+                
+            </div>
+
+        </div>
+    </div> 
+
+    
+</body>
+</html>

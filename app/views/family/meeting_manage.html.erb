@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= javascript_include_tag('family.js') %>
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar">
+        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+            <div class="profile">
+                home
+            </div>
+        <% end %>
+
+        <div class="profile">
+          Profile
+        </div>
+
+        <%= form_tag family_checklogout_path, method: :delete do %>
+            <%= submit_tag 'Logout', class: 'profile' %>
+        <% end %>
+    </nav>
+
+    <div class= "container">
+        <p> Book a meeting </p>
+        <div id = "bookingPanel">
+            <table>
+            <thead>
+                <tr>
+                <th>Giorno</th>
+                <th>Mese</th>
+                <th> Ora  </th>
+                <th> Select  </th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <% @free_slots.each do |free| %>
+                    <tr>
+                        <td>
+                        <% @date = Date.parse(free)%>
+                        <%= @date.day%>
+                        <br>
+                        </td> 
+                        
+                        <td>
+                        <%= @date.month%>
+                        <br>
+                        </td> 
+
+                        <% @time = Time.parse(free)%>
+                        <td>
+                        <%= @time.strftime('%H:%M')%>
+                        <br>
+                        </td> 
+
+                        <td>
+                        <%= form_with model: @family, url: add_family_meeting_url, class: 'form-book', method: :post do |form| %>
+                            <%= hidden_field_tag :time, @time.hour %>
+                            <%= hidden_field_tag :month, @date.month %>
+                            <%= hidden_field_tag :day, @date.day %>
+                            <%= hidden_field_tag :CF, params[:CF] %>
+                            <%= hidden_field_tag :free, free %>
+                            <%= hidden_field_tag :CFprof, params[:CFprof] %>
+                            <%= hidden_field_tag :link, false %>
+                            <%= hidden_field_tag :CFstudent, params[:CFstudent] %>
+
+                            <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
+                            <%= form.submit "Book", class: "button-submit" %>
+                        <% end %>
+                        <br>
+                        </td>  
+
+                    </tr>
+                    
+                    
+                <% end %> 
+            </tbody>
+        </table>
+        </div>
+    
+
+    <div class = "bookedPanel">
+        <p> Booked meeting </p>
+         <table>
+            <thead>
+                <tr>
+                <th>Giorno</th>
+                <th>Mese</th>
+                <th> Ora  </th>
+                <th> Go to link  </th>
+                <th> Delete meeting  </th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <% @iso_meeting.each do |meeting| %>
+                    <tr>
+                        <td>
+                        <% @date = Date.parse(meeting)%>
+                        <%= @date.day%>
+                        <br>
+                        </td> 
+                        
+                        <td>
+                        <%= @date.month%>
+                        <br>
+                        </td> 
+
+                        <% @time = Time.parse(meeting)%>
+                        <td>
+                        <%= @time.strftime('%H:%M')%>
+                        <br>
+                        </td> 
+
+                        <td>
+                        <%= form_with model: @family, url: family_home_url, class: 'form-booked', method: :get do |form| %>
+                            <%= hidden_field_tag :CF, params[:CF] %>
+                            <%= hidden_field_tag :CFprof, params[:CFprof] %>
+                            <%= hidden_field_tag :CFstudent, params[:CFstudent] %>
+
+                            <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
+                            <%= form.submit "Go", class: "button-submit" %>
+                        <% end %>
+                        <br>
+                        </td>  
+
+                        <td>
+                        <%= form_with model: @family, url: delete_family_meeting_url, class: 'form-booked', method: :delete do |form| %>
+                            <%= hidden_field_tag :CF, params[:CF] %>
+                            <%= hidden_field_tag :CFprof, params[:CFprof] %>
+                            <%= hidden_field_tag :CFstudent, params[:CFstudent] %>
+                            <%= hidden_field_tag :meeting, meeting %>
+
+                            <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
+                            <%= form.submit "Delete", class: "button-submit" %>
+                        <% end %>
+                        <br>
+                        </td>  
+
+                    </tr>
+                <% end %> 
+            </tbody>
+        </table>
+    </div>    
+    
+    
+</body>
+</html>

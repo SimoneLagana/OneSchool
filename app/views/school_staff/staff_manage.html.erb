@@ -27,6 +27,8 @@
         </div> 
         <div class="main-panel">
             <div class="panel" id="first-panel" style="display:flex;">
+      <div id="popupContainer"></div>
+
                 <!-- barra di ricerca con bootstrap
                 <div class="input-group">
                     <div class="form-outline">
@@ -44,58 +46,90 @@
                     <%= form.submit "Search" %>
                 <% end %> -->
                 <div class="upper-part">
+
                     <div class="search-bar">
-                        search bar
+                        Select Role
                     </div>
                     <div class="select-bar">
-                        select by role
-                    </div>
+<form action="/school_staff/staffFilter" method="post">            
+    <select name="account" required onchange="this.form.submit()">
+        <option value="" selected="true"></option>
+        <option value="Teacher">Teacher</option>
+        <option value="Student">Student</option>
+        <option value="Family">Family</option>
+    </select>
+</form>
+
+
+            </div>
                 </div>
                 <div class="list">
-                    <div class="item">
-                        <label class="field">
-                            nome utente
-                        </label>
-                        <label class="field">
-                            email
-                        </label>
-                        <div class="modify">
-                            <label class="edit">
-                                edit
-                            </label>
-                            <label class="delete">
-                                delete
-                            </label>
-                        </div>
-                        
-                    </div>
-                    <div class="item">
-                        <label class="field">
-                            bambino
-                        </label>
-                        <label class="field">
-                            @@
-                        </label>
-                        <div class="modify">
-                            <label class="edit">
-                                edit
-                            </label>
-                            <label class="delete">
-                                delete
-                            </label>
-                        </div>
-                        
-                    </div>
+                <table>
+                <thead>
+      <tr>
+      <th>Name</th>
+      <th>Surname</th>
+      <th>Email</th>
+      <th colspan="3"></th>
+    </tr>
+    <tbody>
+    <% if @type == "Student"%>
+    <% @students.each do |student|%>
+<tr>
+        <td><%= student.name %></td>
+        <td><%= student.surname %></td>
+        <td><%= student.mail %></td>
+        <% 
+            classes = ClassRoom.where(school_code: student.school_code).pluck(:class_code).uniq
+        %>
+        <td><button onclick="editStudentForm(<%= json_string= student.to_json %>, <%= json_string= classes.to_json%>);">Edit</button></td>           
+        <td> <%= form_tag school_staff_delete_path, method: :delete do %>
+            <%= hidden_field_tag :type, "Student" %>
+            <%= hidden_field_tag :CF, student.CF %>
+<%= submit_tag 'Delete', class: 'deleteButton' %>
+            <% end %>
+        </td>
+    <% end %>
+        <% elsif @type == "Teacher"%>
+    <% @teachers.each do |teacher|%>
+<tr>
+        <td><%= teacher.name %></td>
+        <td><%= teacher.surname %></td>
+        <td><%= teacher.mail %></td>
+        <td><button onclick="editUserForm(<%= json_string= teacher.to_json %>);">Edit</button></td>           
+        <td> <%= form_tag school_staff_delete_path, method: :delete do %>
+            <%= hidden_field_tag :type, "Teacher" %>
+            <%= hidden_field_tag :CF, teacher.CF %>
+            <%= submit_tag 'Delete', class: 'deleteButton' %>
+            <% end %>
+        </td>
+        <% end %>
+    <% elsif @type == "Family" %>
+    <% @families.each do |family|%>
+<tr>
+        <td><%= family.name %></td>
+        <td><%= family.surname %></td>
+        <td><%= family.mail %></td>
+        <td><button onclick="editUserForm(<%= json_string= family.to_json %>);">Edit</button></td>           
+        <td> <%= form_tag school_staff_delete_path, method: :delete do %>
+            <%= hidden_field_tag :type, "Family" %>
+            <%= hidden_field_tag :CF, family.CF %>
+            <%= submit_tag 'Delete', class: 'deleteButton' %>
+            <% end %>
+        </td>
+        <% end %>
+<%# <%= link_to 'Delete', admin_deleteSchool_path(code: "school.code"), method: :delete,
+  form: {data: {turbo_confirm: 'Are you sure?'}} %>
+     <%end%>
+    </tbody>
+                </thead>
+                </table>
                 </div>
             </div>
             <div class="panel" id="second-panel" style="display:none;" >
                 <div class="form-container">
                     form insert roles
-                <%= form_tag school_staff_insert_path, class: 'form-subject', method: :get do %>
-                <%= select_tag :type, options_for_select(["Teacher","Student", "Family"]), class: "form-field", onchange: "this.form.submit()" %>
-                <%= select_tag :class, options_for_select(@classes),  class: "form-field", onchange: "this.form.submit()" %>
-                <%= hidden_field_tag :CF, @staff.CF %>
-            <% end %>
+
 
                        
                 </div>

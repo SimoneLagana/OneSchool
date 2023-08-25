@@ -21,4 +21,29 @@ class SchoolStaffController < ApplicationController
     cookies.delete(:school_staff_info)
     redirect_to root_path
   end
+
+  def staff_manage
+    @types= []
+    @schools=[]
+    @classes = []
+
+    @staff = SchoolStaff.find_by(CF: "55")
+  end
+  def insert
+
+    @staff = SchoolStaff.find_by(CF: params[:CF])
+    
+ 
+    @classes =[]
+
+    if(params[:type].present?)
+            #rendi definitico type   
+      @types = params[:type]
+      render 'staff_manage'
+      @classes = [["ClassRoom",nil]]+ClassRoom.where(school_code: @staff.school_code).pluck(:class_code).uniq
+      if (params[:class].present?)
+        @classes = ClassRoom.where(school_code: params[:school], class_code: params[:class]).pluck(:class_code).uniq
+      end
+    end
+  end  
 end

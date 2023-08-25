@@ -21,7 +21,7 @@
     <div class="home">
         <div class="whole-panel">
             <div class="right-panel">
-                <%= link_to "/teacher/calendar", class: "calendar" do %>
+                <%= link_to teacher_commitment_url(CF: params[:CF]), class: "calendar" do %>
                     <div class="calendar">
                         Agenda personale
                     </div>
@@ -39,7 +39,7 @@
                     <%= form.select :classroom, options_for_select(@classrooms), {},  class: "select-class"%>
                     <%= form.hidden_field :CF, value: @teacher.CF %>
                     <%= form.submit "vai alla classe", class: "submit-button" %>
-                    <% end %>
+                <% end %>
 
                 
             </div>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <%= stylesheet_link_tag "teacher_absence.css" %>
+   
+    <title>Commitment</title>
+</head>
+<body> 
+    <nav class="navbar">
+        <%= link_to teacher_home_url(CF: params[:CF]) do %>
+            <label class="writ">
+                home
+            </label>
+        <% end %>
+        <%= link_to teacher_profile_url(CF: params[:CF]) do %>
+            <div class="profile">
+                Profile
+            </div>
+        <% end %>
+      </nav>
+    <div class="home">
+      <div class="insert-commitment">
+        <%= form_with url: teacher_managecommitment_url, class: 'form-subject', method: :post do |form| %>
+            <%= hidden_field_tag :CFprof, @teacher.CF %>
+            <%= hidden_field_tag :school_code, @teacher.school_code %>
+            <%= form.text_field :title, class: 'form-field' %>
+            <%= datetime_field_tag :date, "#{Date.today}T#{Time.now.hour}:00", {
+            step: 3600,  # Imposta lo step a 3600 secondi (un'ora)
+        }  %>
+            
+            <label class="label-form">inserisci il numero di ore</label>
+            <%= form.number_field :hour, class: 'form-field' %>
+            <%= form.submit "Insert", class: "button-submit" %>
+        <% end %>
+      </div>
+      
+      
+    </div>
+    
+</body>
+</html>

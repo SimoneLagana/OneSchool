@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "teacher_absence.css" %>
+    <%= javascript_include_tag('teacher.js') %>
+
+    <title>communications</title>
+</head>
+<body>
+    <nav class="navbar">
+        <%= link_to teacher_classroom_url(CF: params[:CF], classroom: @classname) do %>
+            <label class="writ">
+            <%= @classname %>
+            </label>
+        <% end %>
+        <%= link_to teacher_profile_url(CF: params[:CF]) do %>
+            <div class="profile">
+                <%= @teacher.name %>
+            </div>
+        <% end %>     
+    </nav>
+    <div class="home">
+        <label class="title"> communications </label>
+        
+         <% @communications.each do |communication| %>
+            <tr class="table">
+                <td> <%= communication.title %></td>
+                <td> <%= communication.date %></td>
+                <td> <%= communication.text %></td>
+                <br>
+            </tr>
+        <% end %> 
+    </div>
+</body>
+</html>

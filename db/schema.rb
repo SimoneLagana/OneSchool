@@ -148,7 +148,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["school_code", "class_code", "weekday", "time"], name: "chiave_primaria_subjects", unique: true
+    t.index ["school_code", "class_code", "name", "weekday", "time"], name: "chiave_primaria_subjects", unique: true
     t.index ["school_code", "class_code", "weekday", "time"], name: "index2", unique: true
   end
 

@@ -9,37 +9,44 @@
 </head>
 <body>
     <nav class="navbar">
-        <label class="writ">
-          name
-        </label>
-        <div class="profile">
-          Profile
-        </div>
+        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+            <div class="profile">
+                home
+            </div>
+        <% end %>
+
+        <%= link_to family_choose_url(CF: params[:CF]) do %>
+            <div class="profile">
+                Change student
+            </div>
+        <% end %>
 
         <%= form_tag family_checklogout_path, method: :delete do %>
             <%= submit_tag 'Logout', class: 'profile' %>
         <% end %>
-      </nav>
+    </nav>
+
+
     <div class="home">
         <div class="panel-container">
 
-            <%= link_to "/login_schoolstaff" do %>
-            <div class="panel">
-                grades
-            </div>
-             <% end %>
+            <%= link_to family_grades_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+                <div class="panel">
+                    Grades
+                </div>
+            <% end %>
 
-            <%= link_to "/login_schoolstaff" do %>
+            <%= link_to family_absences_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
             <div class="panel">
                 absences
             </div>
              <% end %>
             
-            <%= link_to "/login_schoolstaff" do %>
+            <%= link_to family_meeting_choice_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
                 <div class="panel">
-                    meeting
+                    Meeting
                 </div>
-             <% end %>
+            <% end %>
 
             <%= link_to "/login_schoolstaff" do %>
             <div class="panel">
@@ -53,7 +60,7 @@
             </div>
              <% end %>
 
-            <%= link_to "/login_schoolstaff" do %>
+            <%= link_to family_news_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
             <div class="panel">
                 news
             </div>

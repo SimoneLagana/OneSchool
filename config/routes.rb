@@ -44,7 +44,10 @@ Rails.application.routes.draw do
   get 'family/meeting_manage', to: 'family#meeting_manage', as: 'family_meeting_manage'
   post 'family/add_family_meeting', to: 'family#add_family_meeting', as: 'add_family_meeting'
   get 'family/absences', to: 'family#absences', as: 'family_absences'
+  get 'family/news', to: 'family#news', as: 'family_news'
+  delete "family/delete_meeting", to: "family#delete_meeting", as: 'delete_family_meeting'
 
+  
 
 #school_staff
 get 'school_staff/login', to: 'school_staff#login', as: 'school_staff_login'

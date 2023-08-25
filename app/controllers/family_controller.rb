@@ -105,6 +105,14 @@ class FamilyController < ApplicationController
         end
     end
 
+
+    def delete_meeting
+      @meeting = Meeting.find_by(CFprof: params[:CFprof], CFfamily: params[:CF], date: params[:meeting])
+      @meeting.destroy
+      redirect_to family_meeting_manage_url(CF: params[:CF], CFstudent: params[:CFstudent], CFprof: params[:CFprof])
+    end
+
+
   def check_cookies_login
     unless cookies[:family_info].present?
         redirect_to family_login_url, alert: "Effettua l'accesso per continuare."
@@ -124,6 +132,12 @@ class FamilyController < ApplicationController
     @absences=Absence.where(CFstudent: @student.CF)
     puts "grades"
     puts @family.CF
+  end
+
+  def news
+    @family=Family.find_by(CF: params[:CF])
+    @student=Student.find_by(CF: params[:CFstudent])
+    @news=Communication.all
   end
 
 end

@@ -91,7 +91,8 @@
                 <th>Giorno</th>
                 <th>Mese</th>
                 <th> Ora  </th>
-                <th> Select  </th>
+                <th> Go to link  </th>
+                <th> Delete meeting  </th>
                 </tr>
             </thead>
 
@@ -123,7 +124,20 @@
                             <%= hidden_field_tag :CFstudent, params[:CFstudent] %>
 
                             <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
-                            <%= form.submit "Go to link", class: "button-submit" %>
+                            <%= form.submit "Go", class: "button-submit" %>
+                        <% end %>
+                        <br>
+                        </td>  
+
+                        <td>
+                        <%= form_with model: @family, url: delete_family_meeting_url, class: 'form-booked', method: :delete do |form| %>
+                            <%= hidden_field_tag :CF, params[:CF] %>
+                            <%= hidden_field_tag :CFprof, params[:CFprof] %>
+                            <%= hidden_field_tag :CFstudent, params[:CFstudent] %>
+                            <%= hidden_field_tag :meeting, meeting %>
+
+                            <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
+                            <%= form.submit "Delete", class: "button-submit" %>
                         <% end %>
                         <br>
                         </td>  

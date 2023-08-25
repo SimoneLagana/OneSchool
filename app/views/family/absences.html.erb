@@ -56,15 +56,18 @@
                         <br>
                         </td>
 
+                        <% @justif = absence.justified %>
                         <td>
-                        <%= form_with model: @family, url: family_home_url, class: 'form-booked', method: :get do |form| %>
-                            <%= hidden_field_tag :CF, params[:CF] %>
-                            <%= hidden_field_tag :CFprof, params[:CFprof] %>
-                            <%= hidden_field_tag :CFstudent, params[:CFstudent] %>
+                        <% if !@justif %>
+                            <%= form_with model: @family, url: family_home_url, class: 'form-booked', method: :get do |form| %>
+                                <%= hidden_field_tag :CF, params[:CF] %>
+                                <%= hidden_field_tag :CFprof, params[:CFprof] %>
+                                <%= hidden_field_tag :CFstudent, params[:CFstudent] %>
 
-                            <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
-                            <%= form.submit "Justify", class: "button-submit" %>
-                        <% end %>
+                                <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
+                                <%= form.submit "Justify", class: "button-submit" %>
+                            <% end %>
+                        <%end%>
                         <br>
                         </td>
                   

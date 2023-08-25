@@ -1,7 +1,7 @@
 class SchoolStaffController < ApplicationController
   def login
     if cookies[:school_staff_info].present? && JSON.parse(cookies[:school_staff_info])["islogged"] == true
-      @staff=@staff=SchoolStaff.find_by(mail: mail)
+      @staff=SchoolStaff.find_by(mail: mail)
       redirect_to staff_home_url(CF: @staff.CF)
       redirect_to school_staff_home_url
     end

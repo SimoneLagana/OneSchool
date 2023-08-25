@@ -31,7 +31,7 @@ class SchoolStaffController < ApplicationController
     # @option="index"
     # @type=""
     # @staff = SchoolStaff.find_by(CF: "55")
-    @staff = SchoolStaff.find_by(CF: "55")
+    @staff = SchoolStaff.find_by(CF: params[:CF])
     # togliere SchoolStaff
     @tipi = User.pluck(:type).uniq
     @classi = []

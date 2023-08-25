@@ -129,10 +129,12 @@
             <div class="panel" id="second-panel" style="display:none;" >
                 <div class="form-container">
                     form insert roles
-
-
-                       
-                </div>
+                
+                <%= form_tag school_staff_manage_path, class: 'form-subject', method: :get do %>
+                <%= select_tag :type, options_for_select(@tipi), class: "form-field", onchange: "this.form.submit()" %>
+                <%= select_tag :class, options_for_select(@classi), class: "form-field", onchange: "this.form.submit()" %>
+                <%= hidden_field_tag :CF, @staff.CF %>
+            <% end %>
                         
                  
                     

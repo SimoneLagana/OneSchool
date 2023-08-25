@@ -12,7 +12,7 @@ class SchoolStaffController < ApplicationController
     if school_staff && school_staff.password == params[:password]
       school_staff_info = { mail: school_staff.mail, islogged: true }
       cookies[:school_staff_info] = { value: school_staff_info.to_json, expires: 30.day.from_now }
-      redirect_to school_staff_home_url
+      redirect_to school_staff_home_url(CF: school_staff.CF)
     else
       flash[:alert] = 'Credenziali non valide.'
       redirect_to school_staff_login_url
@@ -25,29 +25,44 @@ class SchoolStaffController < ApplicationController
   end
 
   def staff_manage
-    @types= ["Teacher","Student","Family"]
-    @schools=[]
-    @classes = []
-    @option="index"
-    @type=""
+    # @types= ["Teacher","Student","Family"]
+    # @schools=[]
+    # @classes = []
+    # @option="index"
+    # @type=""
+    # @staff = SchoolStaff.find_by(CF: "55")
     @staff = SchoolStaff.find_by(CF: "55")
-  end
-  def insert
-    @option="Insert"
-    @staff = SchoolStaff.find_by(CF: params[:CF])
-    
- 
-    @classes =[]
-
+    # togliere SchoolStaff
+    @tipi = User.pluck(:type).uniq
+    @classi = []
     if(params[:type].present?)
-            #rendi definitico type   
-      @types = params[:type]
-      render 'staff_manage'
-      @classes = [["ClassRoom",nil]]+ClassRoom.where(school_code: @staff.school_code).pluck(:class_code).uniq
-      if (params[:class].present?)
-        @classes = ClassRoom.where(school_code: params[:school], class_code: params[:class]).pluck(:class_code).uniq
+      @tipi = User.where(type: params[:type]).pluck(:type).uniq
+      if(params[:type] == "Student")
+        @classi = [["ClassRoom",nil]]+ClassRoom.where(school_code: @staff.school_code).pluck(:class_code).uniq
+    
+        if (params[:class].present?)
+          @classi = ClassRoom.where(school_code: @staff.school_code, class_code: params[:class]).pluck(:class_code).uniq
+          puts @classi.inspect + "ciao"
+        end
       end
     end
+  end
+  def insert
+    # @option="Insert"
+    # @staff = SchoolStaff.find_by(CF: params[:CF])
+    
+ 
+    # @classes =[]
+
+    # if(params[:type].present?)
+    #         #rendi definitico type   
+    #   @types = params[:type]
+    #   render 'staff_manage'
+    #   @classes = [["ClassRoom",nil]]+ClassRoom.where(school_code: @staff.school_code).pluck(:class_code).uniq
+    #   if (params[:class].present?)
+    #     @classes = ClassRoom.where(school_code: params[:school], class_code: params[:class]).pluck(:class_code).uniq
+    #   end
+    # end
   end
   def filter
     @type = params[:account]

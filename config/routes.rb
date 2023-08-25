@@ -56,7 +56,11 @@ delete "school_staff/deleteStaff", to: "school_staff#delete", as: "school_staff_
 post "school_staff/update", to: "school_staff#update", as: "school_staffupdate"
 delete "school_staff/checklogout", to: "school_staff#checklogout", as: 'school_staff_checklogout'
 post 'school_staff/checklogin', to: 'school_staff#checklogin', as: 'school_staff_checklogin'
-
+get 'school_staff/staffManageSchool', to: 'school_staff#class_manage', as: 'school_staff_class_manage'
+get "school_staff/searchClass", to: "school_staff#search_class", as: "staff_searchclass"
+delete "school_staff/deleteClass", to: "school_staff#delete_class", as: "school_staff_deleteclass"
+post "school_staff/addClass", to: "school_staff#add_class", as: "school_staff_addclass"
+post "school_staff/editClass", to: "school_staff#edit_class", as: "school_staff_editclass"
   
 
   get "/oneschool", to: "oneschool#index"

@@ -2,8 +2,7 @@ class SchoolStaffController < ApplicationController
   def login
     if cookies[:school_staff_info].present? && JSON.parse(cookies[:school_staff_info])["islogged"] == true
       @staff=SchoolStaff.find_by(mail: mail)
-      redirect_to staff_home_url(CF: @staff.CF)
-      redirect_to school_staff_home_url
+      redirect_to school_staff_home_url(CF: @staff.CF)
     end
   end
 
@@ -134,4 +133,52 @@ class SchoolStaffController < ApplicationController
     end
   end
 
+
+
+  def class_manage
+    @classes = ClassRoom.where(school_code: params["CF"])
+    @school = User.where(CF: params[:CF]).pluck(:school_code)
+  end
+
+  def search_class
+    @ret_class = ClassRoom.where('lower(class_code) = ? AND school_code = ?', params[:search].downcase, params[:school])
+
+    if @ret_class.exists?
+      render "class_manage"
+    else
+      @ret_class = "NOT_FOUND"
+      render "class_manage"
+    end
+  end
+  def delete_class
+    @old_class = params[:code]
+    @school = User.where(CF: params[:CF]).pluck(:school_code)
+    @homework = Homework.where(class_code: @old_class, school_code: @school)
+    @homework.delete_all
+    @grade = Grade.where(class_code: @old_class, school_code: @school)
+    @grade.delete_all
+    @absence = Absence.where(class_code: @old_class, school_code: @school)
+    @absence.delete_all
+    @subject = Subject.where(class_code: @old_class, school_code: @school)
+    @subject.delete_all
+    @all_stud = Student.where(student_class_code: @old_class, school_code: @school)
+    if @all_stud.exists?
+      @all_stud.each do |stud|          
+        @note = Note.where(CFstudent: stud.CF)
+        @note.delete_all
+        @fmst = FamilyStudent.where(CFstudent: stud.CF)
+        @fmst.delete_all
+        stud.destroy
+      end
+    end
+    @class_room = ClassRoom.where(class_code: @old_class, school_code: @school)
+    @class_room.delete_all
+    redirect_to "school_staff/staffManageSchool",allow_other_host: true
+  end
+  def add_class
+    
+  end
+  def edit_class
+    
+  end
 end

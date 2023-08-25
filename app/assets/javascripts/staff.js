@@ -1,15 +1,11 @@
-var panel = "manage"
 function show_panel(id){
     if(id=="first-panel"){
         document.getElementById(id).style.display="flex";
         document.getElementById("second-panel").style.display="none";
-        panel = "manage"
     }
     else{
         document.getElementById(id).style.display="flex";
         document.getElementById("first-panel").style.display="none";
-        panel="insert"
-
     }
 }
 function editUserForm(user) {

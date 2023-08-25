@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "staff_class_manage.css" %>
+    <%= javascript_include_tag('staff.js') %>
+
+    <title>Document</title>
+</head>
+<body>
+<div id="popupContainer"></div>
+<nav class="navbar">
+        <label class="writ">
+          name
+        </label>
+        <div class="profile">
+          Profile
+        </div>
+      </nav>
+    <div class="inner-home">
+        <div class="upper-bottons">
+            <div class="up-botton" id="first-botton" onclick="show_panel('first-panel');">
+                school
+            </div>
+            <div class="up-botton" id="second-botton" onclick="show_panel('second-panel');">
+                staff
+            </div>
+        </div> 
+<div class="main-panel">
+    <div class="panel" id="first-panel" style="display:flex;">
+    <%= form_with url: staff_searchclass_path, method: :get do |form| %>
+    <%= form.label :search, "Search for Code:" %>
+    <%= form.text_field :search %>
+    <%= form.submit "Search" %>
+    <%= hidden_field_tag :school, User.where(CF: params[:CF]).pluck(:school_code) %>
+    <%= hidden_field_tag :CF, params[:CF] %>
+    <% end %> 
+    <button id="addSchoolButton" onclick="openSchoolForm();"> Add a New School</button>
+    <div id="manageAdminTableDiv">
+    <table>
+  <thead>
+    <tr>
+      <th>ClassCode</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+    <tbody>
+
+    <% if @ret_class == "NOT_FOUND"%>
+    <% params[:search] =""%>
+    <%=link_to "reset", school_staff_class_manage_path(CF: params[:CF])%>
+
+    <% else  %>
+    <% if @ret_class.present? %>
+        <% @classes = @ret_class %>
+        <% params[:search] =""%>
+        <%=link_to "reset", school_staff_class_manage_path(CF: params[:CF])%>
+    <% else %>
+        <% @classes = ClassRoom.all %>
+    <%end%>
+    <% @classes.each do |cls| %>
+    <tr>
+        <td><%= cls.class_code%></td>
+<td> <%= form_tag school_staff_deleteclass_path, method: :delete do %>
+            <%= hidden_field_tag :code, cls.class_code %>
+            <%= hidden_field_tag :school, cls.school_code %>
+            <%= hidden_field_tag :CF, params[:CF] %>
+            <%= submit_tag 'Delete', class: 'deleteButton' %>   </td> 
+    <% end %>
+    <% end %>
+    <%end%>
+</tbody>
+    </table>
+    </div>
+    </div>
+
+
+
+</div>
+</body>
+</html>

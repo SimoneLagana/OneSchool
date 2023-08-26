@@ -1,6 +1,7 @@
 class SchoolStaffController < ApplicationController
   def login
     if cookies[:school_staff_info].present? && JSON.parse(cookies[:school_staff_info])["islogged"] == true
+      mail=JSON.parse(cookies[:school_staff_info])["mail"]
       @staff=SchoolStaff.find_by(mail: mail)
       redirect_to school_staff_home_url(CF: @staff.CF)
     end
@@ -56,7 +57,7 @@ class SchoolStaffController < ApplicationController
     if(params[:type].present?)
       #@tipi = User.where(type: params[:type]).pluck(:type).uniq
       if(params[:type] == "Student")
-        @classi = [["ClassRoom",nil]]+ClassRoom.where(school_code: @staff.school_code).pluck(:class_code).uniq
+        @classi = [["Select a class",nil]]+ClassRoom.where(school_code: @staff.school_code).pluck(:class_code).uniq
     
         if (params[:class].present?)
           @classi = ClassRoom.where(school_code: @staff.school_code, class_code: params[:class]).pluck(:class_code).uniq
@@ -200,10 +201,13 @@ class SchoolStaffController < ApplicationController
         @all_stud.each do |stud|          
           @note = Note.where(CFstudent: stud.CF)
           @note.delete_all
-          @fmst = FamilyStudent.where(CFstudent: stud.CF)
-          @fmst.delete_all
-          stud.destroy
+          stud.update_attribute(:student_class_code, @new_class)
         end
       end
-  end
+      @classroom = ClassRoom.where(class_code: @old_class, school_code: @new_class)
+      if @classroom.update_attribute(:class_code, @new_class)
+        redirect_to "school_staff/staffManage", allow_other_host: true
+      end
+    end
+  end  
 end

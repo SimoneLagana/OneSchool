@@ -34,8 +34,9 @@
         <table>
             <thead>
                 <tr>
-                <th> Titolo </th>
+                <th> Code </th>
                 <th> Teacher</th>
+                <th> Description</th>
                 </tr>
             </thead>
 
@@ -43,16 +44,17 @@
                 <div id="popup" class="popup">
         
                 </div>      
-                <% @news.each do |news| %>
+                <% @notes.each do |note| %>
                     <tr>
-                        
+                        <td><%= note.id %></td>
+                        <% @teach = Teacher.find_by(CF: note.CFprof)%>
+                        <td><%= @teach.name %><%= @teach.surname %></td>
+
+                        <td><%= note.date %></td>
 
                         <td>
-                        <button class="profile-button" onclick="popup('<%= news.text %>')"> <%= news.title %></button>
-                        
+                        <button class="profile-button" onclick="popup('<%= note.description %>')"> details </button>
                         </td>
-                        <td><%= news.date %></td>
-                  
                     </tr>
                 <% end %>
             </tbody>

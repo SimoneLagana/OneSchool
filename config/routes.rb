@@ -36,6 +36,9 @@ Rails.application.routes.draw do
   delete "student/checklogout", to: "student#checklogout", as: 'student_checklogout'
   post 'student/checklogin', to: 'student#checklogin', as: 'student_checklogin'
   get 'student/grades', to: 'student#grades', as: 'student_grades'
+  get 'student/news', to: 'student#news', as: 'student_news'
+  get 'student/notes', to: 'student#notes', as: 'student_notes'
+
 
 
 
@@ -54,20 +57,28 @@ Rails.application.routes.draw do
   get 'family/absences', to: 'family#absences', as: 'family_absences'
   get 'family/news', to: 'family#news', as: 'family_news'
   delete "family/delete_meeting", to: "family#delete_meeting", as: 'delete_family_meeting'
+  post 'family/justify', to: 'family#justify', as: 'family_justify'
+  get 'family/popup', to: 'family#popup', as: 'family_popup'
+  get 'family/notes', to: 'family#notes', as: 'family_notes'
 
   
-
 
 #school_staff
 get 'school_staff/login', to: 'school_staff#login', as: 'school_staff_login'
 get 'school_staff/home', to: 'school_staff#home', as: 'school_staff_home'
 get 'school_staff/staffManage', to: 'school_staff#staff_manage', as: 'school_staff_manage'
 get 'school_staff/staffInsert', to: 'school_staff#insert', as: 'school_staff_insert'
-
-
-  delete "school_staff/checklogout", to: "school_staff#checklogout", as: 'school_staff_checklogout'
-  post 'school_staff/checklogin', to: 'school_staff#checklogin', as: 'school_staff_checklogin'
-
+post 'school_staff/staffEdit', to: 'school_staff#edit', as: 'school_staff_edit'
+post 'school_staff/staffFilter', to: 'school_staff#filter', as: 'school_staff_filter'
+delete "school_staff/deleteStaff", to: "school_staff#delete", as: "school_staff_delete"
+post "school_staff/update", to: "school_staff#update", as: "school_staffupdate"
+delete "school_staff/checklogout", to: "school_staff#checklogout", as: 'school_staff_checklogout'
+post 'school_staff/checklogin', to: 'school_staff#checklogin', as: 'school_staff_checklogin'
+get 'school_staff/staffManageSchool', to: 'school_staff#class_manage', as: 'school_staff_class_manage'
+get "school_staff/searchClass", to: "school_staff#search_class", as: "staff_searchclass"
+delete "school_staff/deleteClass", to: "school_staff#delete_class", as: "school_staff_deleteclass"
+post "school_staff/addClass", to: "school_staff#add_class", as: "school_staff_addclass"
+post "school_staff/editClass", to: "school_staff#edit_class", as: "school_staff_editclass"
   
 
   get "/oneschool", to: "oneschool#index"

@@ -137,3 +137,39 @@ body{
     width: 80px;
     text-align: center;
 }
+.popupMenu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    border-radius: 10px; 
+    padding: 20px;
+    background-color: #fefbfb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 0px 15px 0px rgba(82, 80, 80, 0.712);
+  }
+
+  #closePopup {
+    position: fixed;
+    top: 5%;
+    left: 97%;
+    /* transform: translate(-50%, -50%); */
+    cursor: pointer;
+    font-size: 24px;
+    border-radius: 50%;
+  }
+ 
+   .submitBtn{
+    font-size: 15px;
+    border:none;
+    border-radius: 10px;
+    padding: 2%;
+    cursor: pointer;
+    background-color: #04AA6D;
+    color: #f7f1eb;
+    margin-bottom: 4px;
+    width: 70%;
+  }

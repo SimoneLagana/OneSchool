@@ -179,6 +179,27 @@ class SchoolStaffController < ApplicationController
     
   end
   def edit_class
-    
+    @school = User.where(CF: params[:key]).pluck(:school_code).uniq
+    @old_class = params[:old_class]
+    @new_class = params[:new_class]
+    if(@new_class!=@old_class)
+      @homework = Homework.where(class_code: @old_class, school_code: @school)
+      @homework.delete_all
+      @grade = Grade.where(class_code: @old_class, school_code: @school)
+      @grade.delete_all
+      @absence = Absence.where(class_code: @old_class, school_code: @school)
+      @absence.delete_all
+      @subject = Subject.where(class_code: @old_class, school_code: @school)
+      @subject.delete_all
+      @all_stud = Student.where(student_class_code: @old_class, school_code: @school)
+      if @all_stud.exists?
+        @all_stud.each do |stud|          
+          @note = Note.where(CFstudent: stud.CF)
+          @note.delete_all
+          @fmst = FamilyStudent.where(CFstudent: stud.CF)
+          @fmst.delete_all
+          stud.destroy
+        end
+      end
   end
 end

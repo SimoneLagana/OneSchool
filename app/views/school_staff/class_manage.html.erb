@@ -21,10 +21,10 @@
     <div class="inner-home">
         <div class="upper-bottons">
             <div class="up-botton" id="first-botton" onclick="show_panel('first-panel');">
-                school
+                Class
             </div>
             <div class="up-botton" id="second-botton" onclick="show_panel('second-panel');">
-                staff
+                Subject
             </div>
         </div> 
 <div class="main-panel">
@@ -62,6 +62,7 @@
     <% @classes.each do |cls| %>
     <tr>
         <td><%= cls.class_code%></td>
+<td><button onclick="editClassForm(<%= cls.to_json %>,<%= params[:CF].to_json %>);">Edit</button></td>
 <td> <%= form_tag school_staff_deleteclass_path, method: :delete do %>
             <%= hidden_field_tag :code, cls.class_code %>
             <%= hidden_field_tag :school, cls.school_code %>

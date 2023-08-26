@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'teacher/home', to: 'teacher#home', as: 'teacher_home'
   get 'teacher/meeting', to: 'teacher#meeting', as: 'teacher_meeting'
   get 'teacher/commitment', to: 'teacher#commitment', as: 'teacher_commitment'
+  post 'teacher/managecommitment', to: 'teacher#managecommitment', as: 'teacher_managecommitment'
   get 'teacher/grade', to: 'teacher#grade', as: 'teacher_grade'
   post 'teacher/insertgrade', to: 'teacher#insertgrade', as: 'teacher_insertgrade'
   get 'teacher/profile', to: 'teacher#profile', as: 'teacher_profile'
@@ -25,9 +26,9 @@ Rails.application.routes.draw do
   post 'teacher/insertnote', to: 'teacher#insertnote', as: 'teacher_insertnote'
   get 'teacher/homework', to: 'teacher#homework', as: 'teacher_homework'
   post 'teacher/managehomework', to: 'teacher#managehomework', as: 'teacher_managehomework'
-
- 
-
+  get 'teacher/requestmeeting', to: 'teacher#requestmeeting', as: 'teacher_requestmeeting'
+  post 'teacher/insertmeeting', to: 'teacher#insertmeeting', as: 'teacher_insertmeeting'
+  get 'teacher/communication', to: 'teacher#communication', as: 'teacher_communication'
   #student
   get 'student/login', to: 'student#login', as: 'student_login'
   get 'student/home', to: 'student#home', as: 'student_home'

@@ -61,13 +61,12 @@
                         <%= form_with model: @family, url: add_family_meeting_url, class: 'form-book', method: :post do |form| %>
                             <%= hidden_field_tag :time, @time.hour %>
                             <%= hidden_field_tag :month, @date.month %>
-                            <%= hidden_field_tag :day, @date.day %>
+                            <%= hidden_field_tag :day, @date.day %> 
                             <%= hidden_field_tag :CF, params[:CF] %>
                             <%= hidden_field_tag :free, free %>
                             <%= hidden_field_tag :CFprof, params[:CFprof] %>
-                            <%= hidden_field_tag :link, false %>
                             <%= hidden_field_tag :CFstudent, params[:CFstudent] %>
-
+            
                             <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
                             <%= form.submit "Book", class: "button-submit" %>
                         <% end %>

@@ -20,13 +20,6 @@
         <% end %>
       </nav>
     <div class="home">
-        <div class="upper-section">
-            <%= form_with url: teacher_classroom_url, class: 'form-subject', method: :get do |form| %>
-                <label class="label-subject"> Seleziona una materia per la tua classe </label>
-                <%= form.select :subject, options_for_select(@subjects), {},  class: "select-subject"%>
-                <%= form.submit "vai alla materia", class: "submit-button" %>
-            <% end %>
-        </div>
         <div class="panel-container">
             <%= link_to teacher_grade_url(CF: @teacher.CF, classroom: @classname) do %>
             <div class="panel">
@@ -53,7 +46,7 @@
                 agenda
             </div>
              <% end %>
-            <%= link_to "/login_schoolstaff" do %>
+            <%= link_to teacher_communication_url(CF: @teacher.CF, classroom: @classname) do %>
             <div class="panel">
                 news
             </div>
@@ -61,6 +54,11 @@
             <%= link_to teacher_note_url(CF: @teacher.CF, classroom: @classname) do %>
             <div class="panel">
                 personal notes
+            </div>
+             <% end %>
+             <%= link_to teacher_requestmeeting_url(CF: @teacher.CF, classroom: @classname) do %>
+            <div class="panel">
+                request meeting
             </div>
              <% end %>
         </div>

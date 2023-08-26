@@ -45,8 +45,6 @@ class FamilyController < ApplicationController
     puts params[:CFstudent]
   end
 
-
-
   def meeting_manage
     @family=Family.find_by(CF: params[:CF])
     @student=Student.find_by(CF: params[:CFstudent])
@@ -85,7 +83,12 @@ class FamilyController < ApplicationController
     end
   end
 
+ def create_link(teacher)
+    random_link = SecureRandom.hex(4) #creo una stringa random di 8 caratteri
+    link="https://localhost:8000/#{random_link}?teacher=#{teacher.surname}"
+  end
 
+ 
 
   def add_family_meeting
     # @day = params[:day]
@@ -96,8 +99,10 @@ class FamilyController < ApplicationController
     @free = params[:free]
     @date = DateTime.parse(@free)
     @school_code = Teacher.find_by(CF: params[:CFprof]).school_code
-    puts @nameSurname
-    @meeting_par = {CFfamily: params[:CF], date: @date, CFprof: params[:CFprof], title: @title, link: "meeting.com"}
+    #genera link casuale
+    meeting_link=create_link(@teacher)
+
+    @meeting_par = {CFfamily: params[:CF], date: @date, CFprof: params[:CFprof], title: @title, link: meeting_link}
 
     @meeting = Meeting.new(@meeting_par)
     if @meeting.save

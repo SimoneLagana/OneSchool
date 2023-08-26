@@ -5,25 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
     <%= stylesheet_link_tag "teacher_meeting.css" %>
-   <script src="https://'meet.jit.si'/external_api.js"></script>
-   <script>
-    const domain = 'meet.jit.si';
-      const options = {
-        roomName: 'JitsiMeetAPIExample',
-        width: 700,
-        height: 700,
-        configOverwrite: { language: 'en' }
-      };
-      APImeeting = new JitsiMeetExternalAPI(domain, options);
-      APImeeting.setParentNode(document.getElementById('contenitor'));
-   </script>
+   
     <title>Meeting</title>
 </head>
 <body> 
     <nav class="navbar">
-        <label class="writ">
-          name
-        </label>
+        <%= link_to teacher_home_url(CF: params[:CF]) do %>
+            <label class="writ">
+                home
+            </label>
+        <% end %>
         <%= link_to teacher_profile_url(CF: params[:CF]) do %>
             <div class="profile">
                 Profile
@@ -32,8 +23,20 @@
       </nav>
     <div class="home">
       <div class="meeting-screen" id="contenitor">
+        <%= link_to @link_teacher do %>
+            Link meeting
+        <% end %>
       </div>
-      
+      <% @meetings.each do |meeting| %>
+            <tr class="table">
+            <td> <%= meeting.title %></td>
+            <td> <%= meeting.date %></td>
+            <td> <%= Family.where(CF: meeting.CFfamily).pluck(:name).uniq.join %></td>
+            <td> <%= Family.where(CF: meeting.CFfamily).pluck(:surname).uniq.join %></td>
+             <td> <%= meeting.link %></td>
+            <br>  
+            </tr>
+        <% end %> 
       
     </div>
     

@@ -59,10 +59,12 @@
                         <% @justif = absence.justified %>
                         <td>
                         <% if !@justif %>
-                            <%= form_with model: @family, url: family_home_url, class: 'form-booked', method: :get do |form| %>
+                            <%= form_with model: @family, url: family_justify_url, class: 'form-booked', method: :post do |form| %>
                                 <%= hidden_field_tag :CF, params[:CF] %>
                                 <%= hidden_field_tag :CFprof, params[:CFprof] %>
                                 <%= hidden_field_tag :CFstudent, params[:CFstudent] %>
+                                <%= hidden_field_tag :ab, absence %>
+                                <%= hidden_field_tag :teach, absence.CFprof %>
 
                                 <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
                                 <%= form.submit "Justify", class: "button-submit" %>

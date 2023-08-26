@@ -10,19 +10,14 @@
 </head>
 <body>
     <nav class="navbar">
-        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+        <%= link_to student_home_url(CF: params[:CF]) do %>
             <div class="profile">
                 home
             </div>
         <% end %>
 
-        <%= link_to family_choose_url(CF: params[:CF]) do %>
-            <div class="profile">
-                Change student
-            </div>
-        <% end %>
 
-        <%= form_tag family_checklogout_path, method: :delete do %>
+        <%= form_tag student_checklogout_path, method: :delete do %>
             <%= submit_tag 'Logout', class: 'profile' %>
         <% end %>
     </nav>

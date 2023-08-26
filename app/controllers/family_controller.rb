@@ -82,7 +82,7 @@ class FamilyController < ApplicationController
       @my_iso = toiso.strftime("%Y-%m-%d %H:%M:%S %z")
       puts @my_iso
       @iso_meeting << @my_iso
-  end
+    end
   end
 
 
@@ -99,11 +99,11 @@ class FamilyController < ApplicationController
     puts @nameSurname
     @meeting_par = {CFfamily: params[:CF], date: @date, CFprof: params[:CFprof], title: @title, link: "meeting.com"}
 
-        @meeting = Meeting.new(@meeting_par)
-        if @meeting.save
-            redirect_to family_meeting_manage_url(CF: params[:CF], CFstudent: params[:CFstudent], CFprof: params[:CFprof])
-        end
+    @meeting = Meeting.new(@meeting_par)
+    if @meeting.save
+        redirect_to family_meeting_manage_url(CF: params[:CF], CFstudent: params[:CFstudent], CFprof: params[:CFprof])
     end
+  end
 
 
     def delete_meeting
@@ -138,6 +138,25 @@ class FamilyController < ApplicationController
     @family=Family.find_by(CF: params[:CF])
     @student=Student.find_by(CF: params[:CFstudent])
     @news=Communication.all
+  end
+
+  def justify
+    @family=Family.find_by(CF: params[:CF])
+    @student=Student.find_by(CF: params[:CFstudent])
+    @absence=
+    @ab = Absence.find_by(CFstudent: params[:CFstudent], date: params[:date], CFprof: params[:teach])
+    @ab.update(justified: true)
+    puts "Aggiornamento riuscito"
+    
+    puts "Aggiornamento non riuscito"
+    puts @ab.errors.full_messages # Stampa eventuali messaggi di errore
+    end
+        
+  end
+
+  def notes
+    @student=Student.find_by(CF: params[:CFstudent])
+    @notes = Note.where(CFstudent: params[:CFstudent])
   end
 
 end

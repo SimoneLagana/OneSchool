@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag "teacher_home.css" %>
+    <%= stylesheet_link_tag "family_choose.css" %>
     <%# <%= javascript_include_tag('teacher.js') %> 
     <title>Home</title>
 </head>
@@ -48,11 +48,6 @@
                 </div>
             <% end %>
 
-            <%= link_to "/login_schoolstaff" do %>
-            <div class="panel">
-                assignments
-            </div>
-             <% end %>
 
             <%= link_to "/login_schoolstaff" do %>
             <div class="panel">
@@ -66,7 +61,7 @@
             </div>
              <% end %>
 
-            <%= link_to "/login_schoolstaff" do %>
+            <%= link_to family_notes_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
             <div class="panel">
                 personal notes
             </div>

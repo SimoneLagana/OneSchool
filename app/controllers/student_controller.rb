@@ -7,6 +7,7 @@ class StudentController < ApplicationController
       @student=Student.find_by(mail: mail)
       redirect_to student_home_url(CF: @student.CF)
     end
+    
   end
 
   def checklogin
@@ -31,6 +32,11 @@ class StudentController < ApplicationController
     @student=Student.find_by(CF: params[:CF])
   end
 
+  def news
+    @student=Student.find_by(CF: params[:CF])
+    @news=Communication.all
+  end
+
   def check_cookies_login
     unless cookies[:student_info].present?
         redirect_to student_login_url, alert: "Effettua l'accesso per continuare."
@@ -40,6 +46,10 @@ class StudentController < ApplicationController
 
   def grades
     @student=Student.find_by(CF: params[:CFstudent])
+  end
+
+  def notes
+    @notes = Note.where(CFstudent: params[:CFstudent])
   end
 
 end

@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= javascript_include_tag('family.js') %>
+    <%= stylesheet_link_tag "family_choose.css" %>
+
     <title>Document</title>
 </head>
 <body>
@@ -28,7 +30,7 @@
     <% @family_students = FamilyStudent.select(:CFstudent, :CFfamily).where(CFfamily: @family.CF).distinct %>
     
     
-
+        
     
         
         <% @family_students.each do |family_student| %>

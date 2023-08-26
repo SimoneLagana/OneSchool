@@ -31,38 +31,42 @@ class SchoolStaffController < ApplicationController
     # @option="index"
     # @type=""
     # @staff = SchoolStaff.find_by(CF: "55")
+    @teachers = []
+    @students = []
+    @families = []
+    
     @staff = SchoolStaff.find_by(CF: params[:CF])
+    @type = User.pluck(:type).uniq
+    @typeName = "Teacher"
+    if(params[:account].present?)
+      @typeName = params[:account]
+      if @typeName == "Teacher"
+        @teachers = Teacher.where(school_code: @staff.school_code).uniq
+
+      elsif @typeName == "Student"
+        @students = Student.where(school_code:@staff.school_code).uniq
+
+      else
+        @families = Family.where(school_code: @staff.school_code).uniq
+
+      end 
+    end 
     # togliere SchoolStaff
     @tipi = User.pluck(:type).uniq
     @classi = []
     if(params[:type].present?)
-      @tipi = User.where(type: params[:type]).pluck(:type).uniq
+      #@tipi = User.where(type: params[:type]).pluck(:type).uniq
       if(params[:type] == "Student")
         @classi = [["ClassRoom",nil]]+ClassRoom.where(school_code: @staff.school_code).pluck(:class_code).uniq
     
         if (params[:class].present?)
           @classi = ClassRoom.where(school_code: @staff.school_code, class_code: params[:class]).pluck(:class_code).uniq
-          puts @classi.inspect + "ciao"
+          
         end
       end
     end
   end
   def insert
-    # @option="Insert"
-    # @staff = SchoolStaff.find_by(CF: params[:CF])
-    
- 
-    # @classes =[]
-
-    # if(params[:type].present?)
-    #         #rendi definitico type   
-    #   @types = params[:type]
-    #   render 'staff_manage'
-    #   @classes = [["ClassRoom",nil]]+ClassRoom.where(school_code: @staff.school_code).pluck(:class_code).uniq
-    #   if (params[:class].present?)
-    #     @classes = ClassRoom.where(school_code: params[:school], class_code: params[:class]).pluck(:class_code).uniq
-    #   end
-    # end
   end
   def filter
     @type = params[:account]
@@ -100,9 +104,9 @@ class SchoolStaffController < ApplicationController
     @communication.delete_all
     @familystudent = FamilyStudent.where(school_code: @school_code)
     @familystudent.delete_all
-    @user = User.find_by(type: params[:type], CF: params[:CF])
+    @user = User.find_by(type: params[:type1], CF: params[:CF1])
     if @user.destroy
-      redirect_to "school_staff/staffManage", allow_other_host: true
+      redirect_to school_staff_manage_path(CF: params[:CF]), allow_other_host: true
     else
       render 'delete'
     end

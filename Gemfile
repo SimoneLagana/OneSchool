@@ -20,6 +20,8 @@ gem "importmap-rails"
 
 gem 'hotwire-rails'
 
+gem 'jwt'
+
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
 
@@ -31,6 +33,7 @@ gem "jbuilder"
 
 gem 'bcrypt', '~> 3.1.7'
 gem 'actionmailer', '~> 7.0.6'
+gem 'mailcatcher'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

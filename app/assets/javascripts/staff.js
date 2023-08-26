@@ -10,7 +10,6 @@ function show_panel(id){
 }
 function editUserForm(user) {
     popupContainer = document.getElementById("popupContainer");
-  
     popupContainer.innerHTML = `
       <div class="popupMenu">
 
@@ -20,7 +19,7 @@ function editUserForm(user) {
           <input type="hidden" name="type" value="not_student"}>
 	      <input type="text" name="name" disabled placeholder="Name" value=${JSON.stringify(user['name'])}>
           <input type="text" name="surname" disabled placeholder="Surname" value=${JSON.stringify(user['surname'])}>
-          <input type="text" name="CF" disabled placeholder="CF" value=${JSON.stringify(user['CF'])}>
+          <input type="text" name="CF1" disabled placeholder="CF1" value=${JSON.stringify(user['CF1'])}>
           <input type="email" name="mail" placeholder="Mail" value=${JSON.stringify(user['mail'])}>
           <br>
           <input class="submitBtn" type="submit" value="submit">
@@ -45,7 +44,7 @@ function editStudentForm(student,classes) {
           <input type="hidden" name="old_class" value=${student['student_class_code']}>
 	      <input type="text" name="name" disabled placeholder="Name" value=${JSON.stringify(student['name'])}>
           <input type="text" name="surname" disabled placeholder="Surname" value=${JSON.stringify(student['surname'])}>
-          <input type="text" name="CF" disabled placeholder="CF" value=${JSON.stringify(student['CF'])}>
+          <input type="text" name="CF1" disabled placeholder="CF1" value=${JSON.stringify(student['CF1'])}>
           <input type="text" name="birthdate" disabled placeholder="birthdate" value=${JSON.stringify(student['birthdate'])}>
           <input type="email" name="mail" placeholder="Mail" value=${JSON.stringify(student['mail'])}>
           <select name="class">

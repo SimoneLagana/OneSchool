@@ -7,19 +7,14 @@
 </head>
 <body>
     <nav class="navbar">
-        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+        <%= link_to student_home_url(CF: params[:CF]) do %>
             <div class="profile">
                 home
             </div>
         <% end %>
 
-        <%= link_to family_choose_url(CF: params[:CF]) do %>
-            <div class="profile">
-                Change student
-            </div>
-        <% end %>
 
-        <%= form_tag family_checklogout_path, method: :delete do %>
+        <%= form_tag student_checklogout_path, method: :delete do %>
             <%= submit_tag 'Logout', class: 'profile' %>
         <% end %>
     </nav>
@@ -32,7 +27,7 @@
                 <th> Date</th>
                 <th> Subject</th>
                 <th> Teacher</th>
-                <th> Justify</th>
+                <th> Justified</th>
                 </tr>
             </thead>
 
@@ -51,15 +46,19 @@
                         <br>
                         </td>
 
+                         <td>
+                        <%= absence.justified %>
+                        <br>
+                        </td>
                         
 
                         <% @justif = absence.justified %>
                         <td>
-                        <% if !@justif %>
-                            <%= form_with model: @family, url: family_justify_url, class: 'form-booked', method: :post do |form| %>
+                        <% if !@justif && $ofAge %>
+                            <%= form_with model: @student, url: student_justify_url, class: 'form-booked', method: :post do |form| %>
                                 <%= hidden_field_tag :CF, params[:CF] %>
                                 <%= hidden_field_tag :CFprof, params[:CFprof] %>
-                                <%= hidden_field_tag :CFstudent, params[:CF] %>
+                                <%= hidden_field_tag :CFstudent, params[:CFstudent] %>
                                 <%= hidden_field_tag :abteach, absence.CFprof %>
                                 <%= hidden_field_tag :school_code, absence.school_code %>
                                 <%= hidden_field_tag :class_code, absence.class_code %>
@@ -80,6 +79,8 @@
                     </tr>
 
                 <% end %>
+
+                
 
             </tbody>
         </table>

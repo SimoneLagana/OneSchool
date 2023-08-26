@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
-  create_table "absences", id: false, force: :cascade do |t|
+  create_table "absences", force: :cascade do |t|
     t.string "CFprof"
     t.string "CFstudent"
     t.datetime "date"
@@ -42,7 +42,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "commitments", id: false, force: :cascade do |t|
+  create_table "commitments", force: :cascade do |t|
     t.string "title"
     t.datetime "date"
     t.string "type", null: false
@@ -106,7 +106,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.index ["date", "school_code", "class_code", "weekday", "time", "subject_name"], name: "chiave_primaria_homeworks", unique: true
   end
 
-  create_table "meetings", id: false, force: :cascade do |t|
+  create_table "meetings", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -22,4 +22,7 @@ class Student < User
             errors.add(:school_code, 'is not a valid school code for the given class')
         end
       end
+
+      
+
 end

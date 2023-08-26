@@ -11,9 +11,12 @@
 </head>
 <body>
     <nav class="navbar">
-        <label class="writ">
-          name
-        </label>
+        <%= link_to student_home_url(CF: params[:CF]) do %>
+            <div class="profile">
+                home
+            </div>
+        <% end %>
+
         <div class="profile">
           Profile
         </div>
@@ -32,7 +35,7 @@
             </div>
              <% end %>
 
-            <%= link_to "/login_schoolstaff" do %>
+            <%= link_to student_absence_url(CF: params[:CF]) do %>
             <div class="panel">
                 absences
             </div>

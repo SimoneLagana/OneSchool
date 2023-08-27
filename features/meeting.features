@@ -1,0 +1,10 @@
+Feature: Managing Meetings in Family Dashboard
+
+  Scenario: Booking a Meeting
+    Given you are on the family home page
+    When you click on the "Meeting" panel
+    Then you are on the meeting choice page
+    When you click on a meeting link
+    Then you are on the meeting manage page
+    When you click the "book" button
+    

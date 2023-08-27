@@ -35,7 +35,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'actionmailer', '~> 7.0.6'
 
 
-gem 'eventmachine', '~> 1.2', require: false
+
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -78,8 +78,13 @@ end
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
+  gem 'capybara-screenshot', '~> 1.0', '>= 1.0.13'
   gem "selenium-webdriver"
   gem "webdrivers"
   gem "cucumber-rails", require: false
   gem "database_cleaner"
+   gem 'guard-compat'
+  gem 'guard-cucumber'
+  gem 'rspec-rails'
+
 end

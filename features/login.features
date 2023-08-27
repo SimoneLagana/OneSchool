@@ -1,0 +1,11 @@
+Feature: Login
+    Scenario: Student successfully logs in
+        Given the user is on the login page  
+        When the user fills in "babba@bianchi" in the mail field
+        And fills in "lucapas" in the password field
+        And clicks the "login" button
+       
+        Then the user is directed to the "/student/home" page
+        
+        
+    

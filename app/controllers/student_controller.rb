@@ -1,6 +1,6 @@
 class StudentController < ApplicationController
-  before_action :check_cookies_login, except: [:login, :checklogin]
-  before_action :ofAge, except: [:login, :checklogin, :logout, :checklogout]
+  before_action :check_cookies_login, except: [:login, :checklogin, :prova]
+  before_action :ofAge, except: [:login, :checklogin, :logout, :checklogout, :prova]
   $ofAge = false
 
   def login
@@ -165,6 +165,10 @@ class StudentController < ApplicationController
     else
       redirect_to student_homework_url(CF: @student.CF)
     end
+  end
+
+  def prova
+    
   end
 
 end

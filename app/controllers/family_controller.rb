@@ -165,6 +165,18 @@ class FamilyController < ApplicationController
     @notes = Note.where(CFstudent: params[:CFstudent])
   end
 
+
+  def justify_note
+    @family=Family.find_by(CF: params[:CF])
+    @student=Student.find_by(CF: params[:CFstudent])
+
+    @note= Note.find_by(id: params[:id])
+
+    @note.update(justified: true)
+    redirect_to family_notes_url(CF: params[:CF], CFstudent: params[:CFstudent])
+    
+  end
+
   def profile
     @student=Student.find_by(CF: params[:CFstudent])
     @family=Family.find_by(CF: params[:CF])

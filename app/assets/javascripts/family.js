@@ -1,6 +1,7 @@
 
 function popup(news) {
     popupcontainer = document.getElementById("popup");
+    console.log(news);
     popupcontainer.innerHTML = `
     <div class="popupMenu">
     <div id="closePopup">&times;</div>

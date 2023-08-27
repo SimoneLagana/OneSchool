@@ -117,6 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.datetime "date"
     t.text "description"
     t.string "school_code"
+    t.boolean "justified", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

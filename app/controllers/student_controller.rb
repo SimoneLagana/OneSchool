@@ -51,8 +51,19 @@ class StudentController < ApplicationController
   end
 
   def notes
-    @notes = Note.where(CFstudent: params[:CF])
     @student=Student.find_by(CF: params[:CF])
+    @notes = Note.where(CFstudent: params[:CF])
+  end
+
+
+  def justify_note
+    @student=Student.find_by(CF: params[:CF])
+
+    @note= Note.find_by(id: params[:id])
+
+    @note.update(justified: true)
+    redirect_to student_notes_url(CF: params[:CF])
+    
   end
 
   def absence

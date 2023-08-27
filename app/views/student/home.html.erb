@@ -11,17 +11,16 @@
 </head>
 <body>
     <nav class="navbar">
-        <label class="writ">
-          name
-        </label>
-        <div class="profile">
-          Profile
-        </div>
-
-        <%= form_tag student_checklogout_path, method: :delete do %>
-            <%= submit_tag 'Logout', class: 'profile' %>
+        <%= link_to student_home_url(CF: params[:CF]) do %>
+            <label class="writ">
+                <%= @student.name %>
+            </label>
         <% end %>
-        
+        <%= link_to student_profile_url(CF: params[:CF]) do %>
+            <div class="profile">
+                Profile
+            </div>
+        <% end %>
       </nav>
     <div class="home">
         <div class="panel-container">
@@ -38,7 +37,7 @@
             </div>
              <% end %>
             
-            <%= link_to "/login_schoolstaff" do %>
+            <%= link_to student_homework_url(CF: params[:CF]) do %>
             <div class="panel">
                 assignments
             </div>

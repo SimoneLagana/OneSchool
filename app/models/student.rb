@@ -1,3 +1,6 @@
+require 'date'
+require 'date_diff'
+
 class Student < User
   #has_many :family_student, foreign_key: 'CFstudent', primary_key: 'CF'
 
@@ -22,4 +25,11 @@ class Student < User
             errors.add(:school_code, 'is not a valid school code for the given class')
         end
       end
+
+
+      def ofAge
+        return true
+        return false
+      end
+    
 end

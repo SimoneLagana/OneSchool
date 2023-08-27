@@ -1,6 +1,6 @@
 class CreateGrades < ActiveRecord::Migration[7.0]
   def change
-    create_table :grades, id: false, primary_key: [:school_code, :CFstudent, :class_code, :subject_name, :date] do |t|
+    create_table :grades do |t|
       t.float :value
       t.string :CFprof
       t.string :school_code

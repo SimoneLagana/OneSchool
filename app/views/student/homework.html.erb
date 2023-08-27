@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "student_homework.css" %>
+    <%= javascript_include_tag('family.js') %>
+
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar">
+        <%= link_to student_home_url(CF: params[:CF]) do %>
+            <label class="writ">
+                <%= @student.name %>
+            </label>
+        <% end %>
+        <%= link_to student_profile_url(CF: params[:CF]) do %>
+            <div class="profile">
+                Profile
+            </div>
+        <% end %>
+      </nav>
+    <div class="home">
+
+        <div class="select">
+            <%= form_tag student_homework_url, class: 'form-subject', method: :get do %>
+                <%= select_tag :subject, options_for_select(@subjects, @subject), class: "form-field", onchange: "this.form.submit()" %>
+                <%= hidden_field_tag :CF, @student.CF %>
+            <% end %>
+        </div>        
+        <div class ="homework-panel">
+            <div class= "list-homework-panel">
+                <% @homeworks.each do |homework| %>
+                <div class="show-homework">
+                    <label class="name"><%=homework.name%></label>
+                    <label class="text"><%=homework.text%></label>
+                    <label class="date">Consegnare entro: <%=homework.date%></label>
+                    <label class="name"><%=homework.subject_name%></label>
+
+                    <%= form_with url: student_submit_url, class: 'form-login', method: :post do |form| %>
+                        <label class="label-field"> Consegna</label>
+                        <label class="label-field"> Inserisci i nomi di altri componenti (opzionale) </label>
+                        <%= form.text_field :other, class: 'text-field' %>
+                        <%= form.text_field :mail_text, class: 'text-field' %>
+                        <%= form.file_field :file, class: 'text-field'%> 
+                        <%= form.submit "Consegna", class: 'button-field' %>
+                        <%= hidden_field_tag :CF, @student.CF %>
+                        <%= hidden_field_tag :CFprof, homework.CFprof %>
+                        <%= hidden_field_tag :date, homework.date %>
+                        <%= hidden_field_tag :weekday, homework.weekday %>
+                        <%= hidden_field_tag :time, homework.time %>
+                        <%= hidden_field_tag :subject_name, homework.subject_name %>
+                    <% end %>
+                </div>
+                <% end %>
+        </div>
+            <div class="list-homework-panel">
+                <% @submitted_homeworks.each do |submitted_homework| %>
+                <div class="show-homework">
+                    <label class="name"><%=submitted_homework.name%></label>
+                    <label class="text"><%=submitted_homework.text%></label>
+                    <label class="date">Consegnato <%=submitted_homework.date%></label>
+                    <label class="name"><%=submitted_homework.subject_name%></label>
+                </div>
+                <% end %>
+            </div>
+        
+
+    </div>
+
+</body>
+</html>

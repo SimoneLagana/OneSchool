@@ -29,15 +29,23 @@ Rails.application.routes.draw do
   get 'teacher/requestmeeting', to: 'teacher#requestmeeting', as: 'teacher_requestmeeting'
   post 'teacher/insertmeeting', to: 'teacher#insertmeeting', as: 'teacher_insertmeeting'
   get 'teacher/communication', to: 'teacher#communication', as: 'teacher_communication'
+
+
   #student
   get 'student/login', to: 'student#login', as: 'student_login'
   get 'student/home', to: 'student#home', as: 'student_home'
+
+  post 'student/changepassword', to: 'student#changepassword', as: 'student_changepassword'
+  get 'student/upgradepassword', to: 'student#upgradepassword', as: 'student_upgradepassword'
+  get 'student/profile', to: 'student#profile', as: 'student_profile'
 
   delete "student/checklogout", to: "student#checklogout", as: 'student_checklogout'
   post 'student/checklogin', to: 'student#checklogin', as: 'student_checklogin'
   get 'student/grades', to: 'student#grades', as: 'student_grades'
   get 'student/news', to: 'student#news', as: 'student_news'
   get 'student/notes', to: 'student#notes', as: 'student_notes'
+  get 'student/homework', to: 'student#homework', as: 'student_homework'
+  post 'student/submit', to: 'student#submit', as: 'student_submit'
 
 
 

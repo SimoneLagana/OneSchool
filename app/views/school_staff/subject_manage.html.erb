@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "staff_subject_manage.css" %>
+    <%= javascript_include_tag('staff.js') %>
+
+    <title>Document</title>
+</head>
+<body>
+<div id="popupContainer"></div>
+<nav class="navbar">
+        <label class="writ">
+          name
+        </label>
+        <div class="profile">
+          Profile
+        </div>
+      </nav>
+    <div class="inner-home">
+        <div class="upper-bottons">
+        <%= link_to school_staff_class_manage_path(CF: params[:CF]) do %>
+            <div class="up-botton" id="first-botton" onclick="show_panel('first-panel');">
+              Class Manage
+            </div><%end%>
+            <%= link_to school_staff_subject_manage_path(CF: params[:CF]) do%>
+            <div class="up-botton" id="second-botton" onclick="show_panel('second-panel');">
+                Subject Manage
+            </div><%end%>
+        </div> 
+<div class="main-panel">
+<button id="addSubjectButton" onclick="openAddSubjectForm(<%= params[:CF].to_json %>);"> Add a New Subject</button>
+
+<div class="panel" id="first-panel" style="display:flex;">
+
+    <div id="manageAdminTableDiv">
+    <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Class</th>
+      <th>Teacher</th>
+
+      <th colspan="4"></th>
+    </tr>
+  </thead>
+    <tbody>
+
+    <% if @ret_sub == "NOT_FOUND"%>
+    <% params[:search] =""%>
+    <%=link_to "reset", school_staff_suject_manage_path(CF: params[:CF])%>
+
+    <% else  %>
+    <% if @ret_sub.present? %>
+        <% @subjects = @ret_sub %>
+        <% params[:search] =""%>
+    <%=link_to "reset", school_staff_suject_manage_path(CF: params[:CF])%>
+    <% else %>
+        <% @subjects = Subject.where(school_code: User.where(CF: params[:CF]).pluck(:school_code).uniq.first).order(:class_code).pluck(:name, :class_code, :CFprof).uniq
+%>
+    <%end%>
+    <% @subjects.each do |subj| %>
+    <tr>
+        <td><%= subj[0]%></td>
+        <td><%= subj[1] %></td>
+        <td><%= subj[2] %></td>
+<td><button onclick="editSubjectForm(<%= subj.to_json %>,<%= params[:CF].to_json %>);">Edit</button></td>
+    <%end%>
+    <%end%>
+        <% flash.each do |key, message| %>
+            <div class="flash <%= key %>">
+                <%= message %>
+            </div>
+        <% end %>
+</tbody>
+    </table>
+    </div>
+    </div>
+
+
+
+</div>
+</body>
+</html>

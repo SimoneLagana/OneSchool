@@ -79,7 +79,9 @@ get "school_staff/searchClass", to: "school_staff#search_class", as: "staff_sear
 delete "school_staff/deleteClass", to: "school_staff#delete_class", as: "school_staff_deleteclass"
 post "school_staff/addClass", to: "school_staff#add_class", as: "school_staff_addclass"
 post "school_staff/editClass", to: "school_staff#edit_class", as: "school_staff_editclass"
-  
+post "school_staff/removeStudent", to: "school_staff#remove_student", as: "school_staff_removestudent"
+get 'school_staff/staffManageSubject', to: 'school_staff#subject_manage', as: 'school_staff_subject_manage'
+post "school_staff/addSubject" ,to: 'school_staff#subject_add', as: 'school_staff_subject_add' 
 
   get "/oneschool", to: "oneschool#index"
 

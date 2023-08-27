@@ -59,24 +59,145 @@ function editStudentForm(student,classes) {
     popupContainer.innerHTML = "";
     });
 }
-function editClassForm(cls,CF) {
+function editClassForm(cls,CF,stud,classes) {
     popupContainer = document.getElementById("popupContainer");
-  console.log(CF);
-  console.log(cls);
     popupContainer.innerHTML = `
       <div class="popupMenu">
 
           <div id="closePopup">&times;</div>      
           <form action="/school_staff/editClass" method="post">
           <input type="hidden" name="key" value=${CF}>
-          <input type="hidden" name="old_class" value=${cls}>
+          <input type="hidden" name="old_class" value=${JSON.stringify(cls['class_code'])}>
 	      <input type="text" name="new_class" placeholder="Class" value=${JSON.stringify(cls['class_code'])}>
-          <br>
-          <input class="submitBtn" type="submit" value="submit">
+
+
+        <table>
+        <tr>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>CF</th>
+        </tr>
+        ${stud.map(s => `
+          <tr>
+            <td>${s.name}</td>
+            <td>${s.surname}</td>
+            <td>${s.CF}</td>
+            <td>
+              <form action="/school_staff/removeStudent" method="post">
+                <input type="hidden" name="CF" value=${CF}>
+                <input type="hidden" name="stud" value=${s.CF}>
+                <input type="submit" value="Delete student">
+              </form>
+            </td>
+          </tr>
+        `).join('')}
+      </table>
+      
+<br>
+          <input class="submitBtn" type="submit" value="Update Class Name">        
         </form>
     </div>
     `;  
     document.querySelector("#closePopup").addEventListener("click", function() {
     popupContainer.innerHTML = "";
     });
+}
+function openAddClassForm(CF) {
+    popupContainer = document.getElementById("popupContainer");
+  
+    popupContainer.innerHTML = `
+      <div class="popupMenu">
+        <div id="closePopup">×</div>      
+        <form id="addClassForm" action="/school_staff/addClass" method="post">
+          <input type="hidden" name="CF" value=${CF}>
+          <input type="text" id="classCodeInput" name="class_code" placeholder="Class Code">
+          <br>
+          <input class="submitBtn" type="submit" value="submit">
+        </form>
+      </div>
+    `;
+     document.querySelector("#closePopup").addEventListener("click", function() {
+      popupContainer.innerHTML = "";
+    }); 
+  }
+
+function openAddSubjectForm(CF) {
+    popupContainer = document.getElementById("popupContainer");
+  
+    popupContainer.innerHTML = `
+      <div class="popupMenu">
+        <div id="closePopup">×</div>      
+        <form id="addClassForm" action="/school_staff/addSubject" method="post">
+          <input type="hidden" name="CF" value=${CF}>
+          <input type="text"  name="subject_name" placeholder="Name">
+          <input type="text"  name="subject_class" placeholder="Class">
+          <input type="text"  name="subject_teacher" placeholder="Teacher CF">
+          <select name="subject_day">
+            <option selected> Monday </option>
+            <option> Tuesday </option>
+            <option> Wednesday </option>
+            <option>Thursday </option>
+            <option> Friday </option>
+            <option> Saturday </option>
+          </select>
+          <select name="subject_hour">
+          <option selected> 1 </option>
+          <option> 2 </option>
+          <option> 3 </option>
+          <option>4 </option>
+          <option> 5 </option>
+          <option> 6 </option>
+        </select>
+
+          <br>
+          <input class="submitBtn" type="submit" value="submit">
+        </form>
+      </div>
+    `;
+     document.querySelector("#closePopup").addEventListener("click", function() {
+      popupContainer.innerHTML = "";
+    }); 
+}
+function editSubjectForm(subj, CF) {
+  popupContainer = document.getElementById("popupContainer");
+  popupContainer.innerHTML = `
+    <div class="popupMenu">
+
+        <div id="closePopup">&times;</div>      
+        <form action="/school_staff/editClass" method="post">
+        <input type="hidden" name="CF" value=${CF}>
+        <input type="hidden" name="old_class" value=${JSON.stringify(cls['class_code'])}>
+      <input type="text" name="new_class" placeholder="Class" value=${JSON.stringify(cls['class_code'])}>
+
+
+      <table>
+      <tr>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>CF</th>
+      </tr>
+      ${stud.map(s => `
+        <tr>
+          <td>${s.name}</td>
+          <td>${s.surname}</td>
+          <td>${s.CF}</td>
+          <td>
+            <form action="/school_staff/removeStudent" method="post">
+              <input type="hidden" name="CF" value=${CF}>
+              <input type="hidden" name="stud" value=${s.CF}>
+              <input type="submit" value="Delete student">
+            </form>
+          </td>
+        </tr>
+      `).join('')}
+    </table>
+    
+<br>
+        <input class="submitBtn" type="submit" value="Update Class Name">        
+      </form>
+  </div>
+  `;  
+  document.querySelector("#closePopup").addEventListener("click", function() {
+  popupContainer.innerHTML = "";
+  });
 }

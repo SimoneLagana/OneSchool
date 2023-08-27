@@ -20,12 +20,14 @@
       </nav>
     <div class="inner-home">
         <div class="upper-bottons">
+        <%= link_to school_staff_class_manage_path(CF: params[:CF]) do %>
             <div class="up-botton" id="first-botton" onclick="show_panel('first-panel');">
-                Class
-            </div>
+              Class Manage
+            </div><%end%>
+            <%= link_to school_staff_subject_manage_path(CF: params[:CF]) do%>
             <div class="up-botton" id="second-botton" onclick="show_panel('second-panel');">
-                Subject
-            </div>
+                Subject Manage
+            </div><%end%>
         </div> 
 <div class="main-panel">
     <div class="panel" id="first-panel" style="display:flex;">
@@ -36,7 +38,8 @@
     <%= hidden_field_tag :school, User.where(CF: params[:CF]).pluck(:school_code) %>
     <%= hidden_field_tag :CF, params[:CF] %>
     <% end %> 
-    <button id="addSchoolButton" onclick="openSchoolForm();"> Add a New School</button>
+<button id="addSchoolButton" onclick="openAddClassForm(<%= params[:CF].to_json %>);"> Add a New Class</button>
+
     <div id="manageAdminTableDiv">
     <table>
   <thead>
@@ -57,12 +60,15 @@
         <% params[:search] =""%>
         <%=link_to "reset", school_staff_class_manage_path(CF: params[:CF])%>
     <% else %>
-        <% @classes = ClassRoom.all %>
+        <% @classes = ClassRoom.where(school_code:  User.where(CF: params[:CF]).pluck(:school_code).uniq.first).order(:class_code) %>
     <%end%>
     <% @classes.each do |cls| %>
     <tr>
         <td><%= cls.class_code%></td>
-<td><button onclick="editClassForm(<%= cls.to_json %>,<%= params[:CF].to_json %>);">Edit</button></td>
+<td><button onclick="editClassForm(<%= cls.to_json %>,<%= params[:CF].to_json %>,
+    <%= Student.where(student_class_code: cls.class_code).to_json%>,
+<%= ClassRoom.where(school_code: User.where(CF: params[:CF]).pluck(:school_code).uniq.first).where.not(class_code:"STUDENTS_WITHOUT_CLASS").to_json %>
+);">Edit</button></td>
 <td> <%= form_tag school_staff_deleteclass_path, method: :delete do %>
             <%= hidden_field_tag :code, cls.class_code %>
             <%= hidden_field_tag :school, cls.school_code %>
@@ -71,6 +77,12 @@
     <% end %>
     <% end %>
     <%end%>
+    
+        <% flash.each do |key, message| %>
+            <div class="flash <%= key %>">
+                <%= message %>
+            </div>
+        <% end %>
 </tbody>
     </table>
     </div>

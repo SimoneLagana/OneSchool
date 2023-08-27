@@ -1,6 +1,7 @@
 class SchoolStaffController < ApplicationController
   def login
     if cookies[:school_staff_info].present? && JSON.parse(cookies[:school_staff_info])["islogged"] == true
+      mail=JSON.parse(cookies[:school_staff_info])["mail"]
       @staff=SchoolStaff.find_by(mail: mail)
       redirect_to school_staff_home_url(CF: @staff.CF)
     end
@@ -156,7 +157,7 @@ class SchoolStaffController < ApplicationController
   end
   def delete_class
     @old_class = params[:code]
-    @school = User.where(CF: params[:CF]).pluck(:school_code)
+    @school = User.where(CF: params[:CF]).pluck(:school_code).first
     @homework = Homework.where(class_code: @old_class, school_code: @school)
     @homework.delete_all
     @grade = Grade.where(class_code: @old_class, school_code: @school)
@@ -177,35 +178,96 @@ class SchoolStaffController < ApplicationController
     end
     @class_room = ClassRoom.where(class_code: @old_class, school_code: @school)
     @class_room.delete_all
-    redirect_to "school_staff/staffManageSchool",allow_other_host: true
+    redirect_to school_staff_class_manage_path(CF: params[:CF])
   end
   def add_class
-    
+    @school = User.where(CF: params[:CF]).pluck(:school_code).uniq.first
+    @new_class = params[:class_code].upcase
+    if ClassRoom.where(school_code: @school, class_code: @new_class).exists?
+      redirect_to school_staff_class_manage_path(CF: params[:CF])
+      flash[:alert]= "Classe già presente nel sistema"
+    else
+      if ClassRoom.create(school_code: @school, class_code: @new_class)
+        redirect_to school_staff_class_manage_path(CF: params[:CF])
+      else
+        redirect_to school_staff_class_manage_path(CF: params[:CF])
+        flash[:alert]= "Errore creazione classe"
+      end
+    end
   end
   def edit_class
-    @school = User.where(CF: params[:key]).pluck(:school_code).uniq
+    @school = User.where(CF: params[:key]).pluck(:school_code).uniq.first
     @old_class = params[:old_class]
-    @new_class = params[:new_class]
-    if(@new_class!=@old_class)
-      @homework = Homework.where(class_code: @old_class, school_code: @school)
-      @homework.delete_all
-      @grade = Grade.where(class_code: @old_class, school_code: @school)
-      @grade.delete_all
-      @absence = Absence.where(class_code: @old_class, school_code: @school)
-      @absence.delete_all
-      @subject = Subject.where(class_code: @old_class, school_code: @school)
-      @subject.delete_all
-      @all_stud = Student.where(student_class_code: @old_class, school_code: @school)
-      if @all_stud.exists?
-        @all_stud.each do |stud|          
-          @note = Note.where(CFstudent: stud.CF)
-          @note.delete_all
-          stud.update_attribute(:student_class_code, @new_class)
+    @new_class = params[:new_class].upcase
+    if @new_class!=@old_class
+      if !ClassRoom.where(school_code: @school, class_code: @new_class).exists?
+        @homework = Homework.where(class_code: @old_class, school_code: @school)
+        @homework.delete_all
+        @grade = Grade.where(class_code: @old_class, school_code: @school)
+        @grade.delete_all
+        @absence = Absence.where(class_code: @old_class, school_code: @school)
+        @absence.delete_all
+        @subject = Subject.where(class_code: @old_class, school_code: @school)
+        @subject.delete_all
+        @all_stud = Student.where(student_class_code: @old_class, school_code: @school)
+        if @all_stud.exists?
+          @all_stud.each do |stud|          
+            @note = Note.where(CFstudent: stud.CF)
+            @note.delete_all
+            stud.update_attribute(:student_class_code, @new_class)
+          end
         end
+        @classroom = ClassRoom.find_by(class_code: @old_class, school_code: @school)
+        if @classroom.update(class_code: @new_class)
+          redirect_to school_staff_class_manage_path(CF: params[:key])
+        end
+      else
+        redirect_to school_staff_class_manage_path(CF: params[:key])
+        flash[:alert]= "Classe già presente nel sistema"
       end
-      @classroom = ClassRoom.where(class_code: @old_class, school_code: @new_class)
-      if @classroom.update_attribute(:class_code, @new_class)
-        redirect_to "school_staff/staffManage", allow_other_host: true
-      end
+    end
+  end
+
+  def remove_student
+    @school = User.where(CF: params[:CF]).pluck(:school_code).uniq.first
+    @grade = Grade.where(CFstudent: params[:stud], school_code: @school)
+    @grade.delete_all
+    @absence = Absence.where(CFstudent: params[:stud], school_code: @school)
+    @absence.delete_all
+
+    @student = Student.find_by(CF: params[:stud])
+    if @student.update(student_class_code: "STUDENTS_WITHOUT_CLASS")
+      redirect_to school_staff_class_manage_path(CF: params[:CF])
+    end
+  end
+  def subject_manage
+    
+  end
+  def subject_add
+    @school = User.where(CF: params[:CF]).pluck(:school_code).uniq.first
+    @cls = params[:subject_class].upcase
+    if !ClassRoom.find_by(school_code: @school, class_code: @cls)
+      redirect_to school_staff_subject_manage_path(CF: params[:CF])
+      flash[:alert]= "Class not found"
+      return
+    end
+    @teacher = params[:subject_teacher]
+    if !Teacher.where(CF: @teacher).exists?
+      redirect_to school_staff_subject_manage_path(CF: params[:CF])
+      flash[:alert]= "Teacher not found"
+      return
+    end  
+    @day = params[:subject_day]
+    @hour = params[:subject_hour]
+    @name=params[:subject_name].downcase
+    if Subject.where(school_code: @school, class_code: @cls, CFprof: @teacher, weekday: @day,time:@hour,name:@name).exists?
+      redirect_to school_staff_subject_manage_path(CF: params[:CF])
+      flash[:alert]= "Subject already added"
+      return
+    end
+    @subj = Subject.new(school_code: @school, class_code: @cls, CFprof: @teacher, weekday: @day,time:@hour,name:@name)
+    if @subj.save
+      redirect_to school_staff_subject_manage_path(CF: params[:CF])
+    end
   end
 end

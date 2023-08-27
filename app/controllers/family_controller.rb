@@ -84,8 +84,8 @@ class FamilyController < ApplicationController
   end
 
  def create_link(teacher)
-    random_link = SecureRandom.hex(4) #creo una stringa random di 8 caratteri
-    link="https://localhost:8000/#{random_link}?teacher=#{teacher.surname}"
+    random_link = SecureRandom.hex(10) #creo una stringa random di 8 caratteri
+    link="https://localhost:8000/#{random_link}"
   end
 
  
@@ -101,6 +101,7 @@ class FamilyController < ApplicationController
     @school_code = Teacher.find_by(CF: params[:CFprof]).school_code
     #genera link casuale
     meeting_link=create_link(@teacher)
+
 
     @meeting_par = {CFfamily: params[:CF], date: @date, CFprof: params[:CFprof], title: @title, link: meeting_link}
 
@@ -135,8 +136,7 @@ class FamilyController < ApplicationController
     @family=Family.find_by(CF: params[:CF])
     @student=Student.find_by(CF: params[:CFstudent])
     @absences=Absence.where(CFstudent: @student.CF)
-    puts "grades"
-    puts @family.CF
+
   end
 
   def news
@@ -148,15 +148,16 @@ class FamilyController < ApplicationController
   def justify
     @family=Family.find_by(CF: params[:CF])
     @student=Student.find_by(CF: params[:CFstudent])
-    @absence=
-    @ab = Absence.find_by(CFstudent: params[:CFstudent], date: params[:date], CFprof: params[:teach])
-    @ab.update(justified: true)
-    puts "Aggiornamento riuscito"
+    @date = params[:date]
+    @d = DateTime.parse(@date).utc
+
+     @absence= Absence.find_by(CFstudent: params[:CFstudent], school_code: params[:school_code], 
+            class_code: params[:class_code], weekday: params[:weekday], time: params[:time], date: @date
+            )
     
-    puts "Aggiornamento non riuscito"
-    puts @ab.errors.full_messages # Stampa eventuali messaggi di errore
-    end
-        
+    @absence.update(justified: true)
+    redirect_to family_absences_url(CF: params[:CF], CFstudent: params[:CFstudent])
+    
   end
 
   def notes
@@ -164,4 +165,42 @@ class FamilyController < ApplicationController
     @notes = Note.where(CFstudent: params[:CFstudent])
   end
 
+
+  def justify_note
+    @family=Family.find_by(CF: params[:CF])
+    @student=Student.find_by(CF: params[:CFstudent])
+
+    @note= Note.find_by(id: params[:id])
+
+    @note.update(justified: true)
+    redirect_to family_notes_url(CF: params[:CF], CFstudent: params[:CFstudent])
+    
+  end
+
+  def profile
+    @student=Student.find_by(CF: params[:CFstudent])
+    @family=Family.find_by(CF: params[:CF])
+  end
+
+
+  def upgradepassword
+    @family=Family.find_by(CF: params[:CF])
+    @family.update(password: $passk)
+    redirect_to family_home_url(CF: @family.CF)
+  end
+
+  def changepassword
+    @family=Family.find_by(CF: params[:CF])
+    pass=params[:old_password]
+    $passk=params[:password]
+    if(@family) && @family.password == pass
+      PasswordMailer.email_confirm(@family).deliver_now
+    else
+      redirect_to family_login_url
+      flash[:alert]= "password inserita errata"
+    end
+    pass=""
+  end
+
+  
 end

@@ -1,26 +1,10 @@
-
-function popup(news) {
-    popupcontainer = document.getElementById("popup");
-    console.log(news);
-    popupcontainer.innerHTML = `
-    <div class="popupMenu">
-    <div id="closePopup">&times;</div>
-        ${news}
-    </div>
-    `;  
-    document.querySelector("#closePopup").addEventListener("click", function() {
-    popupcontainer.innerHTML = "";
-    });
-}
-
-
 function editpassword(CF, email) {
     popupcontainer = document.getElementById("popupcontainer");
   
     popupcontainer.innerHTML = `
       <div class="popupMenu">
         <div id="closePopup">&times;</div>
-          <form action="/family/changepassword" method="post">
+          <form action="/student/changepassword" method="post">
             <input type="text" id="CF" name="CF" value=${CF}>
             <label for="email">Email</label>
             <input type="email" id="email" name="email" value=${email}>

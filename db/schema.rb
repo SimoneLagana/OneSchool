@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
-  create_table "absences", id: false, force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 2023_08_26_135240) do
+  create_table "absences", force: :cascade do |t|
     t.string "CFprof"
     t.string "CFstudent"
     t.datetime "date"
@@ -24,6 +24,34 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["school_code", "CFstudent", "date", "class_code", "weekday", "time"], name: "chiave_primaria_absences", unique: true
+  end
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "admins", primary_key: "CF", id: :string, force: :cascade do |t|
@@ -42,7 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "commitments", id: false, force: :cascade do |t|
+  create_table "commitments", primary_key: ["date", "CFprof"], force: :cascade do |t|
     t.string "title"
     t.datetime "date"
     t.string "type", null: false
@@ -148,7 +176,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["school_code", "class_code", "name", "weekday", "time"], name: "chiave_primaria_subjects", unique: true
+    t.index ["school_code", "class_code", "weekday", "time"], name: "chiave_primaria_subjects", unique: true
     t.index ["school_code", "class_code", "weekday", "time"], name: "index2", unique: true
   end
 
@@ -173,6 +201,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
 
   add_foreign_key "absences", "users", column: "CFprof", primary_key: "CF"
   add_foreign_key "absences", "users", column: "CFstudent", primary_key: "CF"
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "class_rooms", "schools", column: "school_code", primary_key: "code"
   add_foreign_key "commitments", "users", column: "CFfamily", primary_key: "CF"
   add_foreign_key "commitments", "users", column: "CFprof", primary_key: "CF"

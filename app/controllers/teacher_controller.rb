@@ -131,12 +131,14 @@ class TeacherController < ApplicationController
     @confirm=""
     if(params[:confirm].present?)
       @confirm="email inviata al genitore!"
-      @confirm=""
+      
     end
     @students= Student.where(student_class_code: @classname)
+    
   end
 
   def insertmeeting
+    @confirm=""  
     cfstudent=params[:CFstudent]
     student=Student.find_by(CF: cfstudent)
     teacher=Teacher.find_by(CF: params[:CFprof])

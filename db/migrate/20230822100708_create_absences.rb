@@ -1,6 +1,6 @@
 class CreateAbsences < ActiveRecord::Migration[7.0]
   def change
-    create_table :absences, id: false, primary_key: [:school_code, :CFstudent, :date, :class_code, :name, :weekday, :time ] do |t|
+    create_table :absences do |t|
       t.string :CFprof
       t.string :CFstudent
       t.datetime :date

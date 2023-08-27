@@ -201,3 +201,23 @@ function editSubjectForm(subj, CF) {
   popupContainer.innerHTML = "";
   });
 }
+function openCommunicationForm(CF) {
+  popupContainer = document.getElementById("popupContainer");
+
+  popupContainer.innerHTML = `
+    <div class="popupMenu">
+      <div id="closePopup">×</div>
+      <form action="/school_staff/addCommunication" method="post">
+        <input type="hidden" name="CF" value=${CF}>
+        <input type="text" name="title" placeholder="Insert title"><br><br>
+        <input type="date" name="date"><br><br>
+        <textarea name="text" placeholder="Insert text for new communication" rows="10" cols="50"></textarea>
+        <br><br>
+        <input class="submitBtn" type="submit" value="Submit communication">
+      </form>
+    </div>
+  `;
+  document.querySelector("#closePopup").addEventListener("click", function() {
+    popupContainer.innerHTML = "";
+  });
+}

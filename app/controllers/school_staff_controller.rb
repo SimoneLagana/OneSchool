@@ -34,6 +34,12 @@ class SchoolStaffController < ApplicationController
     @teachers = []
     @students = []
     @families = []
+
+    $typo = params[:type]
+    puts $typo
+
+    $classroom = params[:classroom]
+    puts $classroom
     
     @staff = SchoolStaff.find_by(CF: params[:CF])
     @type = User.pluck(:type).uniq
@@ -54,11 +60,11 @@ class SchoolStaffController < ApplicationController
     # togliere SchoolStaff
     @tipi = User.pluck(:type).uniq
     @classi = []
+    
     if(params[:type].present?)
       #@tipi = User.where(type: params[:type]).pluck(:type).uniq
       if(params[:type] == "Student")
-        @classi = [["ClassRoom",nil]]+ClassRoom.where(school_code: @staff.school_code).pluck(:class_code).uniq
-    
+        @classi = [["Select a class",nil]]+ClassRoom.where(school_code: @staff.school_code).pluck(:class_code).uniq
         if (params[:class].present?)
           @classi = ClassRoom.where(school_code: @staff.school_code, class_code: params[:class]).pluck(:class_code).uniq
           
@@ -67,6 +73,25 @@ class SchoolStaffController < ApplicationController
     end
   end
   def insert
+    puts $typo
+    puts $classroom
+    @staffs = SchoolStaff.find_by(CF: params[:CF])
+    @name = params[:name]
+    @surname = params[:surname]
+    @CFis = params[:CFis]
+    @mail = params[:mail]
+    @password = params[:password]
+    @birthdate = params[:birthdate]
+    @family_CF = params[:family_CF]
+
+    if($typo=="Teacher")
+      Teacher.create(name: @name, surname: @surname, CF: @CFis, mail: @mail, password: @password, school_code:  @staffs.school_code)
+    elsif($typo=="Family")
+      Family.create(name: @name, surname: @surname, CF: @CFis, school_code: @staffs.school_code, mail: @mail, password: @password)
+    elsif($typo == "Student")
+      puts "ciao!"
+      Student.create(name: @name, surname: @surname, CF: @CFis, mail: @mail, password: @password, school_code: @staffs.school_code, birthdate: @birthdate, student_class_code: $classroom, student_school_code: @staffs.school_code)
+    end
   end
   def filter
     @type = params[:account]
@@ -195,6 +220,47 @@ class SchoolStaffController < ApplicationController
       end
     end
   end
+
+  def communications
+    
+  end
+  def search_communication
+    @ret_comm = Communication.where('lower(title) = ? AND school_code = ?', params[:search].downcase, params[:school])
+    puts @ret_comm.inspect
+    if @ret_comm.exists?
+      render "communications"
+    else
+      @ret_comm = "NOT_FOUND"
+      
+      redirect_to school_staff_communications_path(CF: params[:CF])
+      flash[:alert]= "Communication not found"
+      return
+    end
+  end
+  
+
+  def delete_communication
+    @cm = Communication.find_by(title: params[:title], school_code: params[:school])
+    if @cm.destroy
+      redirect_to school_staff_communications_path(CF: params[:CF]), allow_other_host: true
+    else
+      render 'delete'
+    end
+  end
+
+  def add_communication
+    @cd = User.where(CF: params[:CF]).pluck(:school_code).uniq.first
+    @title = params[:title]
+    @date = params[:date]
+    @text = params[:text]
+  
+    @com = Communication.create(title: @title, text: @text, date: @date, school_code: @cd)
+    if @com.save
+      redirect_to school_staff_communications_path(CF: params[:CF])
+    end
+  end
+  
+
   def edit_class
     @school = User.where(CF: params[:key]).pluck(:school_code).uniq.first
     @old_class = params[:old_class]

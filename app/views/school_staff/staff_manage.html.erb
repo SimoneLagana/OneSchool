@@ -137,15 +137,157 @@
             </div>
             <div class="panel" id="second-panel" style="display:none;" >
                 <div class="form-container">
-                    form insert roles
+                    Insert type of user
                 
-                <%= form_tag school_staff_manage_path, class: 'form-subject', method: :get do %>
-                <%= select_tag :type, options_for_select(@tipi), class: "form-field", onchange: "this.form.submit()" %>
-                <%= select_tag :class, options_for_select(@classi), class: "form-field", onchange: "this.form.submit()" %>
-                <%= hidden_field_tag :CF, @staff.CF %>
-                <%= hidden_field_tag :account, @typeName %>
-                <%= hidden_field_tag :token, "insert" %>
-            <% end %>
+<%= form_tag school_staff_manage_path, class: 'form-subject', method: :get do %>
+  <%= label_tag :type, "Type" %><br>
+  <%= select_tag :type, options_for_select([["Select type", nil]] + @tipi.reject { |t| t == "SchoolStaff" }), class: "form-field" %><br>
+  <div id="class-field" style="display:none;">
+    <%= label_tag :class, "Class" %><br>
+    <%= select_tag :class, options_for_select(@classi), class: "form-field" %><br>
+  </div>
+  <%= hidden_field_tag :CF, @staff.CF %>
+  <%= hidden_field_tag :token, "insert" %>
+<% end %>
+<% puts @typo%>
+<%= form_tag school_staff_insert_path(CF: params[:CF]), method: :post, id: "insert-form" do %>
+  <div id="common-fields" style="display:none;">
+    <%= label_tag :name, "Name" %><br>
+    <%= text_field_tag :name, nil, placeholder: "Enter name" %><br>
+
+    <%= label_tag :surname, "Surname" %><br>
+    <%= text_field_tag :surname, nil, placeholder: "Enter surname" %><br>
+
+    <%= label_tag :CFis, "CF" %><br>
+    <%= text_field_tag :CFis, nil, placeholder: "Enter CF" %><br>
+
+    <%= label_tag :mail, "Mail" %><br>
+    <%= email_field_tag :mail, nil, placeholder: "Enter mail" %><br>
+
+    <%= label_tag :password, "Password" %><br>
+    <%= password_field_tag :password, nil, placeholder: "Enter password" %><br>
+  </div>
+
+  <div id="student-fields" style="display:none;">
+    <%= label_tag :birthdate, "Birthdate" %><br>
+    <%= date_field_tag :birthdate %><br>
+  </div>
+
+  <div id="family-fields" style="display:none;">
+    <%= label_tag :family_CF, "Family CF" %><br>
+    <%= text_field_tag :family_CF, nil, placeholder: "Enter family CF" %><br>
+  </div>
+
+ <!--, onclick: "document.getElementById('insert-form').reset();" -->
+  <%= submit_tag "Submit", id: "submit-button", style: "display:none;"%>
+
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+  const typeSelect = document.querySelector("select[name='type']");
+  const classSelect = document.querySelector("select[name='class']");
+  const classField = document.querySelector("#class-field");
+  const commonFields = document.querySelector("#common-fields");
+  const studentFields = document.querySelector("#student-fields");
+  const familyFields = document.querySelector("#family-fields");
+  const submitButton = document.querySelector("#submit-button");
+
+  typeSelect.addEventListener("change", function() {
+    commonFields.style.display = "block";
+    submitButton.style.display = "block";
+
+    checkValue = 0
+
+    if (this.value === "Student") {
+      checkValue = 1
+      classField.style.display = "block";
+      studentFields.style.display = "block";
+      familyFields.style.display = "none";
+
+      fetch("<%= school_staff_manage_path %>?" + new URLSearchParams({
+        type: this.value,
+        CF: "<%= @staff.CF %>",
+        account: "<%= @typeName %> ",
+        token: "insert"
+      }), {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      }).then(function(response) {
+        return response.text();
+      }).then(function(html) {
+
+        const newClassSelect = new DOMParser().parseFromString(html, 'text/html').querySelector("select[name='class']");
+        classSelect.innerHTML = newClassSelect.innerHTML;
+      });
+    } else if (this.value === "Family") {
+      checkValue = 1
+      classField.style.display = "none";
+      studentFields.style.display = "none";
+      familyFields.style.display = "block";
+
+      
+      fetch("<%= school_staff_manage_path %>?" + new URLSearchParams({
+        type: this.value,
+        CF: "<%= @staff.CF %>",
+        account: "<%= @typeName %> ",
+        token: "insert"
+      }), {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      });
+    } else if (this.value === "Teacher") {
+      checkValue = 1
+      classField.style.display = "none";
+      studentFields.style.display = "none";
+      familyFields.style.display = "none";
+
+      
+      fetch("<%= school_staff_manage_path %>?" + new URLSearchParams({
+        type: this.value,
+        CF: "<%= @staff.CF %>",
+        account: "<%= @typeName %> ",
+        token: "insert"
+      }), {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      });
+    } else {
+      checkValue = 1
+      classField.style.display = "none";
+      studentFields.style.display = "none";
+      familyFields.style.display = "none";
+    }
+    if (checkValue == 1) {
+      this.querySelector("option[value='']").remove();
+    }
+  });
+
+  
+  classSelect.addEventListener("change", function() {
+    if (typeSelect.value === "Student") {
+      fetch("<%= school_staff_manage_path %>?" + new URLSearchParams({
+        type: typeSelect.value,
+        classroom: this.value,
+        CF: "<%= @staff.CF %>",
+        account: "<%= @typeName %> ",
+        token: "insert"
+      }), {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      });
+    }
+  });
+});
+
+  </script>
+<% end %>
+
+
                         
                  
                     

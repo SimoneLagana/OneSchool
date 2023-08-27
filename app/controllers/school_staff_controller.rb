@@ -323,7 +323,7 @@ class SchoolStaffController < ApplicationController
       flash[:alert]= "Teacher not found"
       return
     end  
-    @day = params[:subject_day]
+    @day = params[:subject_day].upcase
     @hour = params[:subject_hour]
     @name=params[:subject_name].downcase
     if Subject.where(school_code: @school, class_code: @cls, CFprof: @teacher, weekday: @day,time:@hour,name:@name).exists?
@@ -336,4 +336,115 @@ class SchoolStaffController < ApplicationController
       redirect_to school_staff_subject_manage_path(CF: params[:CF])
     end
   end
+  def subject_delete
+    @school = User.where(CF: params[:CF]).pluck(:school_code).uniq.first
+    @time = params[:subj_time]
+    @day = params[:subj_day]
+    @subj_name = params[:subj_name]
+# se lo apro dal popup gli mando anche giorno e ora, se non è l'unica entry allora la elimino
+    if @time.present? && @day.present?
+      @cls = params[:subj_class]
+      @prof = params[:subj_teacher]
+      @subj = Subject.where(school_code:@school, class_code: @cls, CFprof: @prof, name: @subj_name)
+      if @subj.count>1
+        @subj = Subject.where(school_code:@school, class_code: @cls, time: @time, weekday: @day, CFprof: @prof,name: @subj_name)
+        @subj.delete_all
+        redirect_to school_staff_subject_manage_path(CF: params[:CF])
+        return
+      else
+        @cls = params[:subj_class]
+        @prof = params[:subj_teacher]
+        
+        @homework = Homework.where(class_code: @cls, school_code: @school, CFprof: @prof, subject_name: @subj_name )
+        @homework.delete_all
+        @grade = Grade.where(class_code: @cls, school_code: @school, CFprof: @prof, subject_name: @subj_name )
+        @grade.delete_all
+        @absence = Absence.where(class_code: @cls, school_code: @school, CFprof: @prof, subject_name: @subj_name )
+        @absence.delete_all
+        @subj = Subject.where(school_code:@school, class_code: @cls,CFprof: @prof,name: @subj_name)
+        @subj.delete_all
+        redirect_to school_staff_subject_manage_path(CF: params[:CF])
+        return
+      end
+    # se invece lo apro dal menu principale oppure se è l'unica, debbo eliminare tutti i record associati
+    else
+      @cls = params[:subj_class]
+      @prof = params[:subj_teacher]
+      
+      @homework = Homework.where(class_code: @cls, school_code: @school, CFprof: @prof, subject_name: @subj_name )
+      @homework.delete_all
+      @grade = Grade.where(class_code: @cls, school_code: @school, CFprof: @prof, subject_name: @subj_name )
+      @grade.delete_all
+      @absence = Absence.where(class_code: @cls, school_code: @school, CFprof: @prof, subject_name: @subj_name )
+      @absence.delete_all
+      @subj = Subject.where(school_code:@school, class_code: @cls,CFprof: @prof,name: @subj_name)
+      @subj.delete_all
+      redirect_to school_staff_subject_manage_path(CF: params[:CF])
+      return
+    end
+  end
+  def subject_edit
+    @school = User.where(CF: params[:CF]).pluck(:school_code).uniq.first
+    @subj_name = params[:subj_name]
+    @cls = params[:subj_class]
+    @old_prof = params[:subj_old_teacher]
+    @new_prof = params[:subj_new_teacher]
+    if @old_prof!= @new_prof
+      @subj = Subject.where(school_code:@school, class_code: @cls,CFprof: @old_prof,name: @subj_name)
+      if !Teacher.find_by(CF: @new_prof).exists?
+        redirect_to school_staff_subject_manage_path(CF: params[:CF])
+        flash[:alert]= "Error: Teacher not found"
+        return
+      end
+      if @subj.update_all(CFprof: @new_prof)
+        redirect_to school_staff_subject_manage_path(CF: params[:CF])
+      else
+        redirect_to school_staff_subject_manage_path(CF: params[:CF])
+        flash[:alert]= "Error on change"
+        return
+      end
+    end
+  end
+  def subject_search
+    @ret_sub = Subject.where('lower(name) = ? AND school_code = ?', params[:search].downcase, params[:school]).order(:class_code).pluck(:name, :class_code, :CFprof).uniq
+    if @ret_sub!=[]
+      
+      render "subject_manage"
+    else
+      @ret_sub = "NOT_FOUND"
+      render "subject_manage"
+    end
+  end
+  def timetable
+  end
+  def search_time
+    days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY']
+    hours = (1..6).to_a
+    subjects = Subject.where('upper(class_code) = ? AND school_code = ?', params[:search].upcase, params[:school]).order(Arel.sql("CASE weekday
+      WHEN 'MONDAY' THEN 1
+      WHEN 'TUESDAY' THEN 2
+      WHEN 'WEDNESDAY' THEN 3
+      WHEN 'THURSDAY' THEN 4
+      WHEN 'FRIDAY' THEN 5
+      WHEN 'SATURDAY' THEN 6
+    END")).pluck(:name, :weekday, :time)
+    
+    result = hours.map do |hour|
+      days.map do |day|
+        subject = subjects.find { |s| s[1] == day && s[2].to_i == hour }
+        subject ? subject[0] : '-'
+      end
+    end
+    
+    @ret = result
+    
+    
+    
+    if @ret!=[]
+      render "timetable"
+    else
+      @ret = "NOT_FOUND"
+      render "timetable"
+    end
+  end  
 end

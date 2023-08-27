@@ -38,7 +38,6 @@
   <thead>
     <tr>
       <th>Title</th>
-      <th>Delete</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -58,6 +57,7 @@
     <% @communications.each do |comm| %>
       <tr>
         <td><%= comm.title %></td>
+<td><button onclick="viewComunication(<%= comm.title.to_json%>,<%= comm.text.to_json %>,<%=  comm.date.to_json %>)">View</td>
         <td>
           <%= form_tag school_staff_delete_communication_path, method: :delete do %>
             <%= hidden_field_tag :CF, params[:CF] %>

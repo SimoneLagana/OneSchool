@@ -28,11 +28,23 @@
             <div class="up-botton" id="second-botton" onclick="show_panel('second-panel');">
                 Subject Manage
             </div><%end%>
-        </div> 
+            <%= link_to school_staff_timetable_path(CF: params[:CF]) do%>
+            <div class="up-botton" id="second-botton" onclick="show_panel('second-panel');">
+                Timetables
+            </div><%end%>
+            </div> 
 <div class="main-panel">
+
 <button id="addSubjectButton" onclick="openAddSubjectForm(<%= params[:CF].to_json %>);"> Add a New Subject</button>
 
-<div class="panel" id="first-panel" style="display:flex;">
+    <%= form_with url: staff_searchsubject_path, method: :get do |form| %>
+    <%= form.label :search, "Search for Name:" %>
+    <%= form.text_field :search %>
+    <%= form.submit "Search" %>
+    <%= hidden_field_tag :school, User.where(CF: params[:CF]).pluck(:school_code) %>
+    <%= hidden_field_tag :CF, params[:CF] %>
+    <% end %> 
+    <div class="panel" id="first-panel" style="display:flex;">
 
     <div id="manageAdminTableDiv">
     <table>
@@ -49,13 +61,13 @@
 
     <% if @ret_sub == "NOT_FOUND"%>
     <% params[:search] =""%>
-    <%=link_to "reset", school_staff_suject_manage_path(CF: params[:CF])%>
+    <%=link_to "reset", school_staff_subject_manage_path(CF: params[:CF])%>
 
     <% else  %>
     <% if @ret_sub.present? %>
         <% @subjects = @ret_sub %>
         <% params[:search] =""%>
-    <%=link_to "reset", school_staff_suject_manage_path(CF: params[:CF])%>
+    <%=link_to "reset", school_staff_subject_manage_path(CF: params[:CF])%>
     <% else %>
         <% @subjects = Subject.where(school_code: User.where(CF: params[:CF]).pluck(:school_code).uniq.first).order(:class_code).pluck(:name, :class_code, :CFprof).uniq
 %>
@@ -65,7 +77,22 @@
         <td><%= subj[0]%></td>
         <td><%= subj[1] %></td>
         <td><%= subj[2] %></td>
-<td><button onclick="editSubjectForm(<%= subj.to_json %>,<%= params[:CF].to_json %>);">Edit</button></td>
+<td><button onclick="editSubjectForm(<%= 
+  Subject.where(school_code: User.where(CF: params[:CF]).pluck(:school_code).uniq.first, class_code: subj[1], name: subj[0], CFprof: subj[2]).order(Arel.sql("CASE weekday
+  WHEN 'MONDAY' THEN 1
+  WHEN 'TUESDAY' THEN 2
+  WHEN 'WEDNESDAY' THEN 3
+  WHEN 'THURSDAY' THEN 4
+  WHEN 'FRIDAY' THEN 5
+  WHEN 'SATURDAY' THEN 6
+END")).pluck(:name, :class_code, :CFprof, :weekday,:time).uniq.to_json %>,<%= params[:CF].to_json %>);">Edit</button></td>
+<td> <%= form_tag school_staff_subject_deletee_path, method: :delete do %>
+            <%= hidden_field_tag :subj_name, subj[0] %>
+            <%= hidden_field_tag :subj_class, subj[1] %>
+            <%= hidden_field_tag :subj_teacher, subj[2] %>
+            <%= hidden_field_tag :CF, params[:CF] %>
+            <%= submit_tag 'Delete', class: 'deleteButton' %>   </td> 
+    <% end %>   
     <%end%>
     <%end%>
         <% flash.each do |key, message| %>
@@ -77,8 +104,6 @@
     </table>
     </div>
     </div>
-
-
 
 </div>
 </body>

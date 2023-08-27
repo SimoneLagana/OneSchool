@@ -70,7 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_135240) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "commitments", primary_key: ["date", "CFprof"], force: :cascade do |t|
+  create_table "commitments", force: :cascade do |t|
     t.string "title"
     t.datetime "date"
     t.string "type", null: false
@@ -103,7 +103,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_135240) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "grades", id: false, force: :cascade do |t|
+  create_table "grades", force: :cascade do |t|
     t.float "value"
     t.string "CFprof"
     t.string "school_code"
@@ -118,7 +118,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_135240) do
     t.index ["school_code", "CFstudent", "class_code", "subject_name", "date"], name: "chiave_primaria_grades", unique: true
   end
 
-  create_table "homeworks", id: false, force: :cascade do |t|
+  create_table "homeworks", force: :cascade do |t|
     t.boolean "delivered", default: false
     t.text "text"
     t.datetime "date"
@@ -134,7 +134,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_135240) do
     t.index ["date", "school_code", "class_code", "weekday", "time", "subject_name"], name: "chiave_primaria_homeworks", unique: true
   end
 
-  create_table "meetings", id: false, force: :cascade do |t|
+  create_table "meetings", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -145,6 +145,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_135240) do
     t.datetime "date"
     t.text "description"
     t.string "school_code"
+    t.boolean "justified", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -176,7 +177,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_135240) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["school_code", "class_code", "weekday", "time"], name: "chiave_primaria_subjects", unique: true
+    t.index ["school_code", "class_code", "name", "weekday", "time"], name: "chiave_primaria_subjects", unique: true
     t.index ["school_code", "class_code", "weekday", "time"], name: "index2", unique: true
   end
 

@@ -69,7 +69,8 @@ function editClassForm(cls,CF,stud,classes) {
           <input type="hidden" name="key" value=${CF}>
           <input type="hidden" name="old_class" value=${JSON.stringify(cls['class_code'])}>
 	      <input type="text" name="new_class" placeholder="Class" value=${JSON.stringify(cls['class_code'])}>
-
+          <input class="submitBtn" type="submit" value="Update Class Name">        
+        </form>
 
         <table>
         <tr>
@@ -78,24 +79,23 @@ function editClassForm(cls,CF,stud,classes) {
           <th>CF</th>
         </tr>
         ${stud.map(s => `
-          <tr>
-            <td>${s.name}</td>
-            <td>${s.surname}</td>
-            <td>${s.CF}</td>
-            <td>
-              <form action="/school_staff/removeStudent" method="post">
-                <input type="hidden" name="CF" value=${CF}>
-                <input type="hidden" name="stud" value=${s.CF}>
-                <input type="submit" value="Delete student">
-              </form>
-            </td>
-          </tr>
-        `).join('')}
+        <tr>
+          <td>${s.name}</td>
+          <td>${s.surname}</td>
+          <td>${s.CF}</td>
+          <td>
+            <form action="/school_staff/removeStudent" method="post">
+              <input type="hidden" name="CF" value=${CF}>
+              <input type="hidden" name="stud" value=${s.CF}>
+              <input type="submit" value="Delete student">
+            </form>
+          </td>
+        </tr>
+      `).join('')}
       </table>
       
 <br>
-          <input class="submitBtn" type="submit" value="Update Class Name">        
-        </form>
+
     </div>
     `;  
     document.querySelector("#closePopup").addEventListener("click", function() {
@@ -159,42 +159,57 @@ function openAddSubjectForm(CF) {
     }); 
 }
 function editSubjectForm(subj, CF) {
+  console.log(subj);
+  console.log(CF);
   popupContainer = document.getElementById("popupContainer");
   popupContainer.innerHTML = `
     <div class="popupMenu">
 
         <div id="closePopup">&times;</div>      
-        <form action="/school_staff/editClass" method="post">
+        <form action="/school_staff/editSubject" method="post">
         <input type="hidden" name="CF" value=${CF}>
-        <input type="hidden" name="old_class" value=${JSON.stringify(cls['class_code'])}>
-      <input type="text" name="new_class" placeholder="Class" value=${JSON.stringify(cls['class_code'])}>
+        <input type="hidden" name="subj_name" value=${subj[0][0]}>
+        <input type="hidden" name="subj_old_teacher" value=${subj[0][2]}>
+        <input type="hidden" name="subj_class"   value=${JSON.stringify(subj[0][1])}>
+        <input type="text" disabled name="subj_name" value=${subj[0][0]}>
 
-
-      <table>
-      <tr>
-        <th>Name</th>
-        <th>Surname</th>
-        <th>CF</th>
-      </tr>
-      ${stud.map(s => `
+        <input type="text" name="subj_classsss"  disabled value=${JSON.stringify(subj[0][1])}>
+        <input type="text" name="subj_new_teacher"  value=${JSON.stringify(subj[0][2])}>
+        <input class="submitBtn" type="submit" value="Update Teacher">        
+      </form>
+      <div id="manageAdminTableDiv">
+        <table>
+      <thead>
         <tr>
-          <td>${s.name}</td>
-          <td>${s.surname}</td>
-          <td>${s.CF}</td>
+          <th>Weekday</th>
+          <th>Hour</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+     <tbody>
+      ${subj.map(s => `
+        <tr>
+          <td>${s[3]}</td>
+          <td>${s[4]}</td>
           <td>
-            <form action="/school_staff/removeStudent" method="post">
-              <input type="hidden" name="CF" value=${CF}>
-              <input type="hidden" name="stud" value=${s.CF}>
-              <input type="submit" value="Delete student">
-            </form>
+          <form action="/school_staff/subjectDelete" method="post">
+          <input type="hidden" name="CF" value=${CF}>
+          <input type="hidden" name="subj_name" value=${s[0]}>
+          <input type="hidden" name="subj_class" value=${s[1]}>
+          <input type="hidden" name="subj_teacher" value=${s[2]}>
+          <input type="hidden" name="subj_day" value=${s[3]}>
+          <input type="hidden" name="subj_time" value=${s[4]}>
+          <input type="submit" value="Delete Hour">
+        </form>
           </td>
         </tr>
       `).join('')}
+      </tbody>
     </table>
     
 <br>
-        <input class="submitBtn" type="submit" value="Update Class Name">        
-      </form>
+
   </div>
   `;  
   document.querySelector("#closePopup").addEventListener("click", function() {
@@ -215,6 +230,25 @@ function openCommunicationForm(CF) {
         <br><br>
         <input class="submitBtn" type="submit" value="Submit communication">
       </form>
+    </div>
+  `;
+  document.querySelector("#closePopup").addEventListener("click", function() {
+    popupContainer.innerHTML = "";
+  });
+}
+function viewComunication(title,msg, date) {
+  popupContainer = document.getElementById("popupContainer");
+
+  popupContainer.innerHTML = `
+    <div class="popupMenu">
+      <div id="closePopup">×</div>
+      <h>${title}</h>
+      <br>       
+      created at: ${date}
+        <br>
+      ${msg}
+        <br>
+
     </div>
   `;
   document.querySelector("#closePopup").addEventListener("click", function() {

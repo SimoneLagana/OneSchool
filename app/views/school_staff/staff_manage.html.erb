@@ -147,18 +147,19 @@
     <%= select_tag :class, options_for_select(@classi), class: "form-field" %><br>
   </div>
   <%= hidden_field_tag :CF, @staff.CF %>
-  <%= hidden_field_tag :account, @typeName %>
   <%= hidden_field_tag :token, "insert" %>
-
+<% end %>
+<% puts @typo%>
+<%= form_tag school_staff_insert_path(CF: params[:CF]), method: :post, id: "insert-form" do %>
   <div id="common-fields" style="display:none;">
     <%= label_tag :name, "Name" %><br>
-    <%= text_field_tag :name, nil, placeholder: "Enter name" %><br>
+    <%= text_field_tag :name, nil, placeholder: @typo %><br>
 
     <%= label_tag :surname, "Surname" %><br>
     <%= text_field_tag :surname, nil, placeholder: "Enter surname" %><br>
 
-    <%= label_tag :CF, "CF" %><br>
-    <%= text_field_tag :CF, nil, placeholder: "Enter CF" %><br>
+    <%= label_tag :CFis, "CF" %><br>
+    <%= text_field_tag :CFis, nil, placeholder: "Enter CF" %><br>
 
     <%= label_tag :mail, "Mail" %><br>
     <%= email_field_tag :mail, nil, placeholder: "Enter mail" %><br>
@@ -177,65 +178,115 @@
     <%= text_field_tag :family_CF, nil, placeholder: "Enter family CF" %><br>
   </div>
 
-  <input id="submit-button" type="submit" value="Submit" style="display:none;">
+ <!--, onclick: "document.getElementById('insert-form').reset();" -->
+  <%= submit_tag "Submit", id: "submit-button", style: "display:none;"%>
+
+
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      const typeSelect = document.querySelector("select[name='type']");
-      const classSelect = document.querySelector("select[name='class']");
-      const classField = document.querySelector("#class-field");
-      const commonFields = document.querySelector("#common-fields");
-      const studentFields = document.querySelector("#student-fields");
-      const familyFields = document.querySelector("#family-fields");
-      const submitButton = document.querySelector("#submit-button");
+  const typeSelect = document.querySelector("select[name='type']");
+  const classSelect = document.querySelector("select[name='class']");
+  const classField = document.querySelector("#class-field");
+  const commonFields = document.querySelector("#common-fields");
+  const studentFields = document.querySelector("#student-fields");
+  const familyFields = document.querySelector("#family-fields");
+  const submitButton = document.querySelector("#submit-button");
 
-      typeSelect.addEventListener("change", function() {
-        commonFields.style.display = "block";
-        submitButton.style.display = "block";
+  typeSelect.addEventListener("change", function() {
+    commonFields.style.display = "block";
+    submitButton.style.display = "block";
 
-        checkValue = 0
-        
-        if (this.value === "Student") {
-          checkValue = 1
-          classField.style.display = "block";
-          studentFields.style.display = "block";
-          familyFields.style.display = "none";
+    checkValue = 0
 
-          // Fetch classes from server using AJAX
-          fetch("<%= school_staff_manage_path %>?" + new URLSearchParams({
-            type: this.value,
-            CF: "<%= @staff.CF %>",
-            account: "<%= @typeName %> ",
-            token: "insert"
-          }), {
-            headers: {
-              'X-Requested-With': 'XMLHttpRequest'
-            }
-          }).then(function(response) {
-            return response.text();
-          }).then(function(html) {
-            // Update class select with new options
-            const newClassSelect = new DOMParser().parseFromString(html, 'text/html').querySelector("select[name='class']");
-            classSelect.innerHTML = newClassSelect.innerHTML;
-          });
-        } else if (this.value === "Family") {
-          checkValue = 1
-          classField.style.display = "none";
-          studentFields.style.display = "none";
-          familyFields.style.display = "block";
-        } else {
-          checkValue = 1
-          classField.style.display = "none";
-          studentFields.style.display = "none";
-          familyFields.style.display = "none";
+    if (this.value === "Student") {
+      checkValue = 1
+      classField.style.display = "block";
+      studentFields.style.display = "block";
+      familyFields.style.display = "none";
+
+      fetch("<%= school_staff_manage_path %>?" + new URLSearchParams({
+        type: this.value,
+        CF: "<%= @staff.CF %>",
+        account: "<%= @typeName %> ",
+        token: "insert"
+      }), {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
         }
-          if (checkValue == 1) {
-          this.querySelector("option[value='']").remove();
+      }).then(function(response) {
+        return response.text();
+      }).then(function(html) {
+
+        const newClassSelect = new DOMParser().parseFromString(html, 'text/html').querySelector("select[name='class']");
+        classSelect.innerHTML = newClassSelect.innerHTML;
+      });
+    } else if (this.value === "Family") {
+      checkValue = 1
+      classField.style.display = "none";
+      studentFields.style.display = "none";
+      familyFields.style.display = "block";
+
+      // Aggiungi questa richiesta fetch per il valore "Family"
+      fetch("<%= school_staff_manage_path %>?" + new URLSearchParams({
+        type: this.value,
+        CF: "<%= @staff.CF %>",
+        account: "<%= @typeName %> ",
+        token: "insert"
+      }), {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
         }
       });
-    });
+    } else if (this.value === "Teacher") {
+      checkValue = 1
+      classField.style.display = "none";
+      studentFields.style.display = "none";
+      familyFields.style.display = "none";
+
+      // Aggiungi questa richiesta fetch per il valore "Teacher"
+      fetch("<%= school_staff_manage_path %>?" + new URLSearchParams({
+        type: this.value,
+        CF: "<%= @staff.CF %>",
+        account: "<%= @typeName %> ",
+        token: "insert"
+      }), {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      });
+    } else {
+      checkValue = 1
+      classField.style.display = "none";
+      studentFields.style.display = "none";
+      familyFields.style.display = "none";
+    }
+    if (checkValue == 1) {
+      this.querySelector("option[value='']").remove();
+    }
+  });
+
+  // Aggiungi questo event listener per la select class
+  classSelect.addEventListener("change", function() {
+    if (typeSelect.value === "Student") {
+      fetch("<%= school_staff_manage_path %>?" + new URLSearchParams({
+        type: typeSelect.value,
+        classroom: this.value,
+        CF: "<%= @staff.CF %>",
+        account: "<%= @typeName %> ",
+        token: "insert"
+      }), {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      });
+    }
+  });
+});
+
   </script>
 <% end %>
+
 
                         
                  

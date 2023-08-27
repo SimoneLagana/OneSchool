@@ -34,6 +34,12 @@ class SchoolStaffController < ApplicationController
     @teachers = []
     @students = []
     @families = []
+
+    $typo = params[:type]
+    puts $typo
+
+    $classroom = params[:classroom]
+    puts $classroom
     
     @staff = SchoolStaff.find_by(CF: params[:CF])
     @type = User.pluck(:type).uniq
@@ -54,11 +60,11 @@ class SchoolStaffController < ApplicationController
     # togliere SchoolStaff
     @tipi = User.pluck(:type).uniq
     @classi = []
+    
     if(params[:type].present?)
       #@tipi = User.where(type: params[:type]).pluck(:type).uniq
       if(params[:type] == "Student")
         @classi = [["Select a class",nil]]+ClassRoom.where(school_code: @staff.school_code).pluck(:class_code).uniq
-    
         if (params[:class].present?)
           @classi = ClassRoom.where(school_code: @staff.school_code, class_code: params[:class]).pluck(:class_code).uniq
           
@@ -67,6 +73,25 @@ class SchoolStaffController < ApplicationController
     end
   end
   def insert
+    puts $typo
+    puts $classroom
+    @staffs = SchoolStaff.find_by(CF: params[:CF])
+    @name = params[:name]
+    @surname = params[:surname]
+    @CFis = params[:CFis]
+    @mail = params[:mail]
+    @password = params[:password]
+    @birthdate = params[:birthdate]
+    @family_CF = params[:family_CF]
+
+    if($typo=="Teacher")
+      Teacher.create(name: @name, surname: @surname, CF: @CFis, mail: @mail, password: @password, school_code:  @staffs.school_code)
+    elsif($typo=="Family")
+      Family.create(name: @name, surname: @surname, CF: @CFis, school_code: @staffs.school_code, mail: @mail, password: @password)
+    elsif($typo == "Student")
+      puts "ciao!"
+      Student.create(name: @name, surname: @surname, CF: @CFis, mail: @mail, password: @password, school_code: @staffs.school_code, birthdate: @birthdate, student_class_code: $classroom, student_school_code: @staffs.school_code)
+    end
   end
   def filter
     @type = params[:account]

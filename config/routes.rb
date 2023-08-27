@@ -99,6 +99,10 @@ get "school_staff/searchClass", to: "school_staff#search_class", as: "staff_sear
 delete "school_staff/deleteClass", to: "school_staff#delete_class", as: "school_staff_deleteclass"
 post "school_staff/addClass", to: "school_staff#add_class", as: "school_staff_addclass"
 post "school_staff/editClass", to: "school_staff#edit_class", as: "school_staff_editclass"
+get "school_staff/communications", to: "school_staff#communications", as: "school_staff_communications"
+get "school_staff/searchCommunication", to: "school_staff#search_communication", as: "school_staff_search_communication"
+delete "school_staff/deleteCommunication", to: "school_staff#delete_communication", as: "school_staff_delete_communication"
+post "school_staff/addCommunication", to: "school_staff#add_communication", as: "school_staff_add_communication"
   
 
   get "/oneschool", to: "oneschool#index"

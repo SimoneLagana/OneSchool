@@ -208,6 +208,48 @@ class SchoolStaffController < ApplicationController
   def add_class
     
   end
+
+  def communications
+    
+  end
+
+  def search_communication
+    @ret_comm = Communication.where('lower(title) = ? AND school_code = ?', params[:search].downcase, params[:school])
+    puts @ret_comm.inspect
+    if @ret_comm.exists?
+      render "communications"
+    else
+      @ret_comm = "NOT_FOUND"
+      
+      redirect_to school_staff_communications_path(CF: params[:CF])
+      flash[:alert]= "Communication not found"
+      return
+    end
+  end
+  
+
+  def delete_communication
+    @cm = Communication.find_by(title: params[:title], school_code: params[:school])
+    if @cm.destroy
+      redirect_to school_staff_communications_path(CF: params[:CF]), allow_other_host: true
+    else
+      render 'delete'
+    end
+  end
+
+  def add_communication
+    @cd = User.where(CF: params[:CF]).pluck(:school_code).uniq.first
+    @title = params[:title]
+    @date = params[:date]
+    @text = params[:text]
+  
+    @com = Communication.create(title: @title, text: @text, date: @date, school_code: @cd)
+    if @com.save
+      redirect_to school_staff_communications_path(CF: params[:CF])
+    end
+  end
+  
+
   def edit_class
     @school = User.where(CF: params[:key]).pluck(:school_code).uniq
     @old_class = params[:old_class]

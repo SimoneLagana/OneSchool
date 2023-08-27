@@ -21,8 +21,12 @@
             </div>
         <% end %>
 
-        <%= form_tag family_checklogout_path, method: :delete do %>
-            <%= submit_tag 'Logout', class: 'profile' %>
+       
+
+        <%= link_to family_profile_url(CF: params[:CF]) do %>
+            <div class="profile">
+                Profile
+            </div>
         <% end %>
     </nav>
 

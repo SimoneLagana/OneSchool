@@ -27,9 +27,7 @@ class Student < User
       end
 
 
-      def ofAge
-        return true
-        return false
-      end
+
     
+
 end

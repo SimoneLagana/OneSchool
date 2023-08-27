@@ -1,5 +1,7 @@
 class StudentController < ApplicationController
   before_action :check_cookies_login, except: [:login, :checklogin]
+  before_action :ofAge, except: [:login, :checklogin, :logout, :checklogout]
+  $ofAge = false
 
   def login
     if cookies[:student_info].present? && JSON.parse(cookies[:student_info])["islogged"] == true
@@ -73,7 +75,59 @@ class StudentController < ApplicationController
   end
 
   def notes
-    @notes = Note.where(CFstudent: params[:CFstudent])
+    @student=Student.find_by(CF: params[:CF])
+    @notes = Note.where(CFstudent: params[:CF])
+  end
+
+
+  def justify_note
+    @student=Student.find_by(CF: params[:CF])
+
+    @note= Note.find_by(id: params[:id])
+
+    @note.update(justified: true)
+    redirect_to student_notes_url(CF: params[:CF])
+    
+  end
+
+  def absence
+    @student=Student.find_by(CF: params[:CF])
+    @absences=Absence.where(CFstudent: @student.CF)
+    puts $ofAge
+  end
+
+  def ofAge
+    @student = Student.find_by(CF: params[:CF])
+    @birth = @student.birthdate
+    puts @birth
+    @today = DateTime.now.in_time_zone("UTC")
+    puts @today
+
+    @diff_sec = @today - @birth
+    puts @diff_sec
+
+    @diff_days = @diff_sec / 86400
+    @diff_years = @diff_days / 365.25
+
+    if @diff_years > 18
+      $ofAge = true
+    else
+      $ofAge = false
+    end 
+  end
+
+  
+  def justify
+    @student=Student.find_by(CF: params[:CF])
+    @date = params[:date]
+    @d = DateTime.parse(@date).utc
+
+     @absence= Absence.find_by(CFstudent: params[:CF], school_code: params[:school_code], 
+            class_code: params[:class_code], weekday: params[:weekday], time: params[:time], date: @date)
+    
+    @absence.update(justified: true)
+    redirect_to student_absence_url(CF: params[:CF])
+    
   end
 
   def homework

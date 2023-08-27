@@ -10,7 +10,9 @@
   <% elsif @user.type=='SchoolStaff' %>
   <%= link_to 'Conferma cambio password', { controller: 'family', action: 'upgradepassword', CF: @user.CF, success: 'success'}, method: :get %>
   <% elsif @user.type=='Family' %>
-  <%= link_to 'Conferma cambio password', { controller: 'school_staff', action: 'upgradepassword', CF: @user.CF, success: 'success'}, method: :get %>
+
+  <%= link_to 'Conferma Cambio Password', { controller: 'family', action: 'upgradepassword', CF: @user.CF, success: 'success'}, method: :get %>
+
   <% else %>
   <% end %> 
 </body>

@@ -44,8 +44,14 @@ Rails.application.routes.draw do
   get 'student/grades', to: 'student#grades', as: 'student_grades'
   get 'student/news', to: 'student#news', as: 'student_news'
   get 'student/notes', to: 'student#notes', as: 'student_notes'
+
+  get 'student/absence', to: 'student#absence', as: 'student_absence'
+  post 'student/justify', to: 'student#justify', as: 'student_justify'
+  post 'student/justify_note', to: 'student#justify_note', as: 'student_justify_note'
+
   get 'student/homework', to: 'student#homework', as: 'student_homework'
   post 'student/submit', to: 'student#submit', as: 'student_submit'
+
 
 
 
@@ -68,8 +74,14 @@ Rails.application.routes.draw do
   post 'family/justify', to: 'family#justify', as: 'family_justify'
   get 'family/popup', to: 'family#popup', as: 'family_popup'
   get 'family/notes', to: 'family#notes', as: 'family_notes'
+  get 'family/profile', to: 'family#profile', as: 'family_profile'
+  post 'family/changepassword', to: 'family#changepassword', as: 'family_changepassword'
+  get 'family/upgradepassword', to: 'family#upgradepassword', as: 'family_upgradepassword'
+  post 'family/justify_note', to: 'family#justify_note', as: 'family_justify_note'
 
-  
+
+
+
 
 #school_staff
 get 'school_staff/login', to: 'school_staff#login', as: 'school_staff_login'

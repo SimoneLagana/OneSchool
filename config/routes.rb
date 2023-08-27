@@ -35,14 +35,23 @@ Rails.application.routes.draw do
   get 'student/login', to: 'student#login', as: 'student_login'
   get 'student/home', to: 'student#home', as: 'student_home'
 
+  post 'student/changepassword', to: 'student#changepassword', as: 'student_changepassword'
+  get 'student/upgradepassword', to: 'student#upgradepassword', as: 'student_upgradepassword'
+  get 'student/profile', to: 'student#profile', as: 'student_profile'
+
   delete "student/checklogout", to: "student#checklogout", as: 'student_checklogout'
   post 'student/checklogin', to: 'student#checklogin', as: 'student_checklogin'
   get 'student/grades', to: 'student#grades', as: 'student_grades'
   get 'student/news', to: 'student#news', as: 'student_news'
   get 'student/notes', to: 'student#notes', as: 'student_notes'
+
   get 'student/absence', to: 'student#absence', as: 'student_absence'
   post 'student/justify', to: 'student#justify', as: 'student_justify'
   post 'student/justify_note', to: 'student#justify_note', as: 'student_justify_note'
+
+  get 'student/homework', to: 'student#homework', as: 'student_homework'
+  post 'student/submit', to: 'student#submit', as: 'student_submit'
+
 
 
 
@@ -78,7 +87,7 @@ Rails.application.routes.draw do
 get 'school_staff/login', to: 'school_staff#login', as: 'school_staff_login'
 get 'school_staff/home', to: 'school_staff#home', as: 'school_staff_home'
 get 'school_staff/staffManage', to: 'school_staff#staff_manage', as: 'school_staff_manage'
-get 'school_staff/staffInsert', to: 'school_staff#insert', as: 'school_staff_insert'
+post 'school_staff/staffInsert', to: 'school_staff#insert', as: 'school_staff_insert'
 post 'school_staff/staffEdit', to: 'school_staff#edit', as: 'school_staff_edit'
 post 'school_staff/staffFilter', to: 'school_staff#filter', as: 'school_staff_filter'
 delete "school_staff/deleteStaff", to: "school_staff#delete", as: "school_staff_delete"

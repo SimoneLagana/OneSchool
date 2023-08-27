@@ -1,3 +1,6 @@
+require 'date'
+require 'date_diff'
+
 class Student < User
   #has_many :family_student, foreign_key: 'CFstudent', primary_key: 'CF'
 
@@ -23,6 +26,8 @@ class Student < User
         end
       end
 
-      
+
+
+    
 
 end

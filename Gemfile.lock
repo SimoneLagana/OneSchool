@@ -123,6 +123,7 @@ GEM
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     date (3.3.3)
+    date_diff (0.0.4)
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
@@ -147,6 +148,10 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     jwt (2.7.1)
+    launchy (2.5.2)
+      addressable (~> 2.8)
+    letter_opener (1.8.1)
+      launchy (>= 2.2, < 3)
     loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -273,11 +278,17 @@ DEPENDENCIES
   capybara
   cucumber-rails
   database_cleaner
+  date_diff
   debug
+  eventmachine (~> 1.2)
   hotwire-rails
   importmap-rails
   jbuilder
   jwt
+
+  letter_opener
+  mailcatcher
+
   puma (~> 5.0)
   rails (~> 7.0.6)
   selenium-webdriver

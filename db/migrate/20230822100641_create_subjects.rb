@@ -1,6 +1,6 @@
 class CreateSubjects < ActiveRecord::Migration[7.0]
   def change
-    create_table :subjects, id: false, primary_key: [:school_code, :class_code, :name,:weekday, :time ] do |t|
+    create_table :subjects do |t|
       t.string :weekday
       t.string :time
       t.string :school_code

@@ -280,15 +280,11 @@ DEPENDENCIES
   database_cleaner
   date_diff
   debug
-  eventmachine (~> 1.2)
   hotwire-rails
   importmap-rails
   jbuilder
   jwt
-
   letter_opener
-  mailcatcher
-
   puma (~> 5.0)
   rails (~> 7.0.6)
   selenium-webdriver

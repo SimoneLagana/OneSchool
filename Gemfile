@@ -35,7 +35,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'actionmailer', '~> 7.0.6'
 
 
-gem 'eventmachine', '~> 1.2', require: false
+
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"

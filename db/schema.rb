@@ -10,9 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_08_26_135240) do
   create_table "absences", force: :cascade do |t|
     t.string "CFprof"
     t.string "CFstudent"
@@ -170,7 +168,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_22_154550) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "subjects", id: false, force: :cascade do |t|
+  create_table "subjects", force: :cascade do |t|
     t.string "weekday"
     t.string "time"
     t.string "school_code"

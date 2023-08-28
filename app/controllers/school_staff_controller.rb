@@ -24,6 +24,30 @@ class SchoolStaffController < ApplicationController
     redirect_to root_path
   end
 
+  def upgradepassword
+    @staff=SchoolStaff.find_by(CF: params[:CF])
+    @staff.update(password: $passk)
+    redirect_to school_staff_home_url(CF: @staff.CF)
+  end
+
+  def changepassword
+    @staff=SchoolStaff.find_by(CF: params[:CF])
+    pass=params[:old_password]
+    $passk=params[:password]
+    if(@staff) && @staff.password == pass
+      PasswordMailer.email_confirm(@staff).deliver_now
+    else
+      redirect_to school_staff_login_url
+      flash[:alert]= "password inserita errata"
+    end
+    pass=""
+  end
+  
+  def profile
+    @staff = SchoolStaff.find_by(CF: params[:CF])
+  end
+
+
   def staff_manage
     # @types= ["Teacher","Student","Family"]
     # @schools=[]

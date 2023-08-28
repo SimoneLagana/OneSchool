@@ -12,11 +12,14 @@
 <div id="popupContainer"></div>
 <nav class="navbar">
         <label class="writ">
-          Name
+          name
         </label>
-        <div class="profile">
-          Profile
-        </div>
+        <%= link_to school_staff_profile_url(CF: params[:CF]) do %>
+            <div class="profile">
+                Profile
+            </div>
+        <% end %>
+
       </nav>
     <div class="inner-home">
         <div class="upper-bottons">

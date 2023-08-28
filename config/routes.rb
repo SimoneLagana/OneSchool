@@ -112,8 +112,10 @@ delete "school_staff/subjectDelete", to: "school_staff#subject_delete", as: "sch
 get "school_staff/subjectSearch",to: "school_staff#subject_search",as: "staff_searchsubject"
 get "schoolStaff/timetable",to: "school_staff#timetable",as: "school_staff_timetable"
 get "school_staff/timeTableSearch",to: "school_staff#search_time",as: "staff_searchtime"
+get 'school_staff/profile', to: 'school_staff#profile', as: 'school_staff_profile'
+post 'school_staff/changepassword', to: 'school_staff#changepassword', as: 'school_staff_changepassword'
+get 'school_staff/upgradepassword', to: 'school_staff#upgradepassword', as: 'school_staff_upgradepassword'
 
-  get "/oneschool", to: "oneschool#index"
 
   #admin
   get "/admin/signup", to: "admin#signup"

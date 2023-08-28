@@ -14,12 +14,10 @@
         <label class="writ">
           name
         </label>
-        <div class="profile">
-          Profile
-        </div>
-
-        <%= form_tag school_staff_checklogout_path, method: :delete do %>
-            <%= submit_tag 'Logout', class: 'profile' %>
+        <%= link_to school_staff_profile_url(CF: params[:CF]) do %>
+            <div class="profile">
+                Profile
+            </div>
         <% end %>
 
       </nav>

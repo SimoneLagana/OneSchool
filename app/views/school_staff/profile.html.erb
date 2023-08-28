@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "profile.css" %>
+    <%= javascript_include_tag('staff.js') %>
+    <title>Profile</title>
+</head>
+<body>
+    <div id="popupcontainer"></div>
+    <nav class="navbar">
+        <%= link_to school_staff_home_url(CF: params[:CF]) do %>
+            <label class="writ">
+                <%= @staff.name %>
+            </label>
+        <% end %>
+        <%= link_to school_staff_profile_url(CF: params[:CF]) do %>
+            <div class="profile">
+                Profile
+            </div>
+        <% end %>
+      </nav>
+    <div class="home">
+        <div class="main-panel">
+            <label class="profile-field"><%= @staff.name %> </label>
+            <label class="profile-field"><%= @staff.surname %> </label>
+            <label class="profile-field"><%= @staff.CF %> </label>
+            <label class="profile-field"><%= @staff.mail %> </label>
+            <label class="profile-field"><%= @staff.school_code %> </label>
+            <div class="button-container">
+                <button class="profile-button" onclick="editpassword('<%= @staff.CF%>', '<%= @staff.mail%>')">Modifica password</button>
+                <%= form_tag school_staff_checklogout_path, method: :delete do %>
+                    <%= submit_tag 'Logout', class: 'profile-button' %> 
+                <% end %> 
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

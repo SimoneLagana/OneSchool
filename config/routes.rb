@@ -99,7 +99,19 @@ get "school_staff/searchClass", to: "school_staff#search_class", as: "staff_sear
 delete "school_staff/deleteClass", to: "school_staff#delete_class", as: "school_staff_deleteclass"
 post "school_staff/addClass", to: "school_staff#add_class", as: "school_staff_addclass"
 post "school_staff/editClass", to: "school_staff#edit_class", as: "school_staff_editclass"
-  
+post "school_staff/removeStudent", to: "school_staff#remove_student", as: "school_staff_removestudent"
+get 'school_staff/staffManageSubject', to: 'school_staff#subject_manage', as: 'school_staff_subject_manage'
+post "school_staff/addSubject" ,to: 'school_staff#subject_add', as: 'school_staff_subject_add' 
+post "school_staff/editSubject" ,to: 'school_staff#subject_edit', as: 'school_staff_subject_edit' 
+get "school_staff/communications", to: "school_staff#communications", as: "school_staff_communications"
+get "school_staff/searchCommunication", to: "school_staff#search_communication", as: "school_staff_search_communication"
+delete "school_staff/deleteCommunication", to: "school_staff#delete_communication", as: "school_staff_delete_communication"
+post "school_staff/addCommunication", to: "school_staff#add_communication", as: "school_staff_add_communication"
+post "school_staff/subjectDelete", to: "school_staff#subject_delete", as: "school_staff_subject_delete"  
+delete "school_staff/subjectDelete", to: "school_staff#subject_delete", as: "school_staff_subject_deletee"  
+get "school_staff/subjectSearch",to: "school_staff#subject_search",as: "staff_searchsubject"
+get "schoolStaff/timetable",to: "school_staff#timetable",as: "school_staff_timetable"
+get "school_staff/timeTableSearch",to: "school_staff#search_time",as: "staff_searchtime"
 
   get "/oneschool", to: "oneschool#index"
 

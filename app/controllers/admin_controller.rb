@@ -25,6 +25,7 @@ class AdminController < ApplicationController
 
         @school = School.new(school_params)
         if @school.save
+            @classroom = ClassRoom.create(school_code: params[:code],class_code: "STUDENTS_WITHOUT_CLASS")
             redirect_to "/admin/manage"
         end
     end

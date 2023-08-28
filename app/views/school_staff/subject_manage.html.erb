@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag "staff_class_manage.css" %>
+    <%= stylesheet_link_tag "staff_subject_manage.css" %>
     <%= javascript_include_tag('staff.js') %>
 
     <title>Document</title>
@@ -34,54 +34,67 @@
             </div><%end%>
             </div> 
 <div class="main-panel">
-    <div class="panel" id="first-panel" style="display:flex;">
-    <%= form_with url: staff_searchclass_path, method: :get do |form| %>
-    <%= form.label :search, "Search for Code:" %>
+
+<button id="addSubjectButton" onclick="openAddSubjectForm(<%= params[:CF].to_json %>);"> Add a New Subject</button>
+
+    <%= form_with url: staff_searchsubject_path, method: :get do |form| %>
+    <%= form.label :search, "Search for Name:" %>
     <%= form.text_field :search %>
     <%= form.submit "Search" %>
     <%= hidden_field_tag :school, User.where(CF: params[:CF]).pluck(:school_code) %>
     <%= hidden_field_tag :CF, params[:CF] %>
     <% end %> 
-<button id="addSchoolButton" onclick="openAddClassForm(<%= params[:CF].to_json %>);"> Add a New Class</button>
+    <div class="panel" id="first-panel" style="display:flex;">
 
     <div id="manageAdminTableDiv">
     <table>
   <thead>
     <tr>
-      <th>ClassCode</th>
-      <th colspan="3"></th>
+      <th>Name</th>
+      <th>Class</th>
+      <th>Teacher</th>
+
+      <th colspan="4"></th>
     </tr>
   </thead>
     <tbody>
 
-    <% if @ret_class == "NOT_FOUND"%>
+    <% if @ret_sub == "NOT_FOUND"%>
     <% params[:search] =""%>
-    <%=link_to "reset", school_staff_class_manage_path(CF: params[:CF])%>
+    <%=link_to "reset", school_staff_subject_manage_path(CF: params[:CF])%>
 
     <% else  %>
-    <% if @ret_class.present? %>
-        <% @classes = @ret_class %>
+    <% if @ret_sub.present? %>
+        <% @subjects = @ret_sub %>
         <% params[:search] =""%>
-        <%=link_to "reset", school_staff_class_manage_path(CF: params[:CF])%>
+    <%=link_to "reset", school_staff_subject_manage_path(CF: params[:CF])%>
     <% else %>
-        <% @classes = ClassRoom.where(school_code:  User.where(CF: params[:CF]).pluck(:school_code).uniq.first).where.not(class_code: "STUDENTS_WITHOUT_CLASS").order(:class_code) %>
+        <% @subjects = Subject.where(school_code: User.where(CF: params[:CF]).pluck(:school_code).uniq.first).order(:class_code).pluck(:name, :class_code, :CFprof).uniq
+%>
     <%end%>
-    <% @classes.each do |cls| %>
+    <% @subjects.each do |subj| %>
     <tr>
-        <td><%= cls.class_code%></td>
-<td><button onclick="editClassForm(<%= cls.to_json %>,<%= params[:CF].to_json %>,
-    <%= Student.where(student_class_code: cls.class_code).to_json%>,
-<%= ClassRoom.where(school_code: User.where(CF: params[:CF]).pluck(:school_code).uniq.first).where.not(class_code:"STUDENTS_WITHOUT_CLASS").to_json %>
-);">Edit</button></td>
-<td> <%= form_tag school_staff_deleteclass_path, method: :delete do %>
-            <%= hidden_field_tag :code, cls.class_code %>
-            <%= hidden_field_tag :school, cls.school_code %>
+        <td><%= subj[0]%></td>
+        <td><%= subj[1] %></td>
+        <td><%= subj[2] %></td>
+<td><button onclick="editSubjectForm(<%= 
+  Subject.where(school_code: User.where(CF: params[:CF]).pluck(:school_code).uniq.first, class_code: subj[1], name: subj[0], CFprof: subj[2]).order(Arel.sql("CASE weekday
+  WHEN 'MONDAY' THEN 1
+  WHEN 'TUESDAY' THEN 2
+  WHEN 'WEDNESDAY' THEN 3
+  WHEN 'THURSDAY' THEN 4
+  WHEN 'FRIDAY' THEN 5
+  WHEN 'SATURDAY' THEN 6
+END")).pluck(:name, :class_code, :CFprof, :weekday,:time).uniq.to_json %>,<%= params[:CF].to_json %>);">Edit</button></td>
+<td> <%= form_tag school_staff_subject_deletee_path, method: :delete do %>
+            <%= hidden_field_tag :subj_name, subj[0] %>
+            <%= hidden_field_tag :subj_class, subj[1] %>
+            <%= hidden_field_tag :subj_teacher, subj[2] %>
             <%= hidden_field_tag :CF, params[:CF] %>
             <%= submit_tag 'Delete', class: 'deleteButton' %>   </td> 
-    <% end %>
-    <% end %>
+    <% end %>   
     <%end%>
-    
+    <%end%>
         <% flash.each do |key, message| %>
             <div class="flash <%= key %>">
                 <%= message %>
@@ -91,8 +104,6 @@
     </table>
     </div>
     </div>
-
-
 
 </div>
 </body>

@@ -1,0 +1,4 @@
+Feature: Student submit homework
+  Scenario: Student submit homework
+    Given I am logged in as a student
+    And there is an homework

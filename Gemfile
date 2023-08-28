@@ -35,7 +35,6 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'actionmailer', '~> 7.0.6'
 
 
-gem 'eventmachine', '~> 1.2', require: false
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -52,6 +51,7 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
+gem 'factory_bot_rails'
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -67,7 +67,7 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
   gem 'letter_opener'
-
+  
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 
@@ -77,9 +77,10 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
+  gem "capybara", '~> 3.39.2'
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem "rspec-rails"
   gem "cucumber-rails", require: false
   gem "database_cleaner"
 end

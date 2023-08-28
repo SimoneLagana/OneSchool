@@ -1,0 +1,10 @@
+Feature: Student Login and Logout
+
+  Scenario: Successful Student Login
+    Given there is a student with email and password
+    When I visit the student login page
+    And I fill in email with "mario@rossi"
+    And I fill in password with "passw"
+    And I click the login button
+    Then I should be on the student home page
+    And I should see "grades"

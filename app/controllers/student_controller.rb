@@ -1,7 +1,7 @@
 class StudentController < ApplicationController
-  before_action :check_cookies_login, except: [:login, :checklogin, :prova]
-  before_action :ofAge, except: [:login, :checklogin, :logout, :checklogout, :prova]
-  $ofAge = false
+  before_action :check_cookies_login, except: [:login, :checklogin]
+  #before_action :ofAge, except: [:login, :checklogin, :logout, :checklogout]
+  #$ofAge = false
 
   def login
     if cookies[:student_info].present? && JSON.parse(cookies[:student_info])["islogged"] == true

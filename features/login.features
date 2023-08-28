@@ -1,11 +1,15 @@
-Feature: Login
-    Scenario: Student successfully logs in
-        Given the user is on the login page  
-        When the user fills in "babba@bianchi" in the mail field
-        And fills in "lucapas" in the password field
-        And clicks the "login" button
-       
-        Then the user is directed to the "/student/home" page
-        
-        
-    
+Feature: Autenticazione studente
+
+  Scenario: Accesso studente login 
+    Given I am on the mail page
+    When I click on the panel "Student"
+    Then I go to the "/student/login" page
+    When I check if the cookie not exists
+    Then I should be on the "/student/login" page
+    When I put "mario@rossi" in the field mail
+    And I put "passw" in the field password
+    And Click on pulsante login
+    And I check if the login is successfull
+    Then I check if cookie using email "mario@rossi" is created 
+    Then Vengo reindirizzato alla pagina "/student/login"
+

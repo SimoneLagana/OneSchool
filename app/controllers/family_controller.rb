@@ -45,6 +45,10 @@ class FamilyController < ApplicationController
     puts params[:CFstudent]
   end
 
+
+
+
+
   def meeting_manage
     @family=Family.find_by(CF: params[:CF])
     @student=Student.find_by(CF: params[:CFstudent])
@@ -64,6 +68,7 @@ class FamilyController < ApplicationController
       end
     end
 
+    
     @commit_datetime = Commitment.where(CFprof: params[:CFprof]).pluck(:date)
     @iso_commit = []
 
@@ -82,6 +87,11 @@ class FamilyController < ApplicationController
       @iso_meeting << @my_iso
     end
   end
+
+
+
+
+
 
  def create_link(teacher)
     random_link = SecureRandom.hex(10) #creo una stringa random di 8 caratteri

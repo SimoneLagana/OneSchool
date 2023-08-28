@@ -36,6 +36,7 @@ gem 'actionmailer', '~> 7.0.6'
 
 
 
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 gem 'date_diff'
@@ -83,4 +84,8 @@ group :test do
   gem "rspec-rails"
   gem "cucumber-rails", require: false
   gem "database_cleaner"
+   gem 'guard-compat'
+  gem 'guard-cucumber'
+  gem 'rspec-rails'
+
 end

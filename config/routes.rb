@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'school/home'
   get 'school/login'
-
+  
 
   get 'oneschool/index'
   root "oneschool#index"
@@ -52,7 +52,8 @@ Rails.application.routes.draw do
   get 'student/homework', to: 'student#homework', as: 'student_homework'
   post 'student/submit', to: 'student#submit', as: 'student_submit'
 
-
+  get 'student/prova', to: 'student#prova', as: 'student_prova'
+  
 
 
 

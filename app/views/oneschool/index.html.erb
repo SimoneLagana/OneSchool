@@ -4,49 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OneSchool</title>
+    <%= stylesheet_link_tag "home.css" %>
 </head>
 <body>
     <nav class="navbar">
       <label class="writ">
-        sas
+        OneSchool
       </label>
-    
-    <%= link_to "/admin/signup" do %>
-
+      <%= link_to admin_login_url, class: 'link-profile no-underline'  do %>
       <div class="profile">
-        Profile
+        Admin signup
       </div>
       <% end %>
     </nav>
    
-    
     <div class="home">
-        <label class="title">OneSchool</label>
+        <label class="title">Welcome to Oneschool! please select your role</label>
         <div class="panel-container">
-
-            <%= link_to school_staff_login_url do %>
+            <%= link_to school_staff_login_url, class: 'no-underline'  do %>
               <div class="panel">
                   Schoolstaff
               </div>
             <% end %>  
 
-            <%= link_to family_login_url do %>
+            <%= link_to family_login_url, class: 'no-underline'  do %>
             <div class="panel">
                 Family
             </div>
             <% end %>
 
-            <%= link_to teacher_login_url do %>
-            <div class="panel ">
+            <%= link_to teacher_login_url, class: 'no-underline'  do %>
+            <div class="panel">
                 Teacher
             </div>
              <% end %> 
 
-            <%= link_to student_login_url do %>
+            <%= link_to student_login_url, class: 'no-underline' do %>
             <div class="panel" id="panel-student">
-                Student
+              Student
             </div>
-            <% end %> 
+            <% end %>
+
 
         </div>
     </div>

@@ -182,7 +182,7 @@ class TeacherController < ApplicationController
   end
 
   def absence
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
     @classname=params[:classroom]
     @subjects=[["Subject", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom]).pluck(:name).uniq
     @students=Student.where(student_class_code: params[:classroom])
@@ -213,7 +213,7 @@ class TeacherController < ApplicationController
   end
 
   def note
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
     @students=Student.where(student_class_code: params[:classroom])
     @classname=params[:classroom]
     @notes=Note.where(CFprof: params[:CF])
@@ -228,7 +228,7 @@ class TeacherController < ApplicationController
   end
 
   def homework
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
     @classname=params[:classroom]
     @subjects=[["Subject", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom]).pluck(:name).uniq
     @homeworks= Homework.where(CFprof: params[:CF], class_code: params[:classroom])

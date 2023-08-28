@@ -11,7 +11,7 @@
         <label class="writ">
           <%= @teacher.name %>
         </label>
-        <%= link_to teacher_profile_url(CF: params[:CF]) do %>
+        <%= link_to teacher_profile_url do %>
             <div class="profile">
                 Profile
             </div>
@@ -21,7 +21,7 @@
     <div class="home">
         <div class="whole-panel">
             <div class="right-panel">
-                <%= link_to teacher_commitment_url(CF: params[:CF]), class: "calendar" do %>
+                <%= link_to teacher_commitment_url, class: "calendar" do %>
                     <div class="calendar">
                         Agenda personale
                     </div>

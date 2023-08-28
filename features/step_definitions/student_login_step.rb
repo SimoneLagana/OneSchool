@@ -2,7 +2,7 @@ Given("there is a student with email and password") do
     # Crea uno studente di prova con le credenziali specificate
     FactoryBot.create(:school)
     FactoryBot.create(:class_room)
-    FactoryBot.create(:user, name: "Mario", surname: "Rossi", CF: "60", mail: "mario@rossi", password: "passw", school_code: "1", birthdate: DateTime.new(2001,2,3), student_class_code: "1A", student_school_code: "1")
+    FactoryBot.create(:student, name: "Mario", surname: "Rossi", CF: "60", mail: "mario@rossi", password: "passw", school_code: "1", birthdate: DateTime.new(2001,2,3), student_class_code: "1A", student_school_code: "1")
   end
   
   When("I visit the student login page") do

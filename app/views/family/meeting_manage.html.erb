@@ -70,7 +70,7 @@
                             <%= hidden_field_tag :CFstudent, params[:CFstudent] %>
             
                             <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
-                            <%= form.submit "Book", class: "button-submit" %>
+                            <%= form.submit "Book", class: "button-submit", id: @date.strftime('%d%m') + "_" + @time.strftime('%H')%>
                         <% end %>
                         <br>
                         </td>  
@@ -119,13 +119,10 @@
                         </td> 
 
                         <td>
-                        <%= form_with model: @family, url: family_home_url, class: 'form-booked', method: :get do |form| %>
-                            <%= hidden_field_tag :CF, params[:CF] %>
-                            <%= hidden_field_tag :CFprof, params[:CFprof] %>
-                            <%= hidden_field_tag :CFstudent, params[:CFstudent] %>
-
-                            <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
-                            <%= form.submit "Go", class: "button-submit" %>
+                        <% @comm = Commitment.find_by(CFprof: params[:CFprof], CFfamily: params[:CF], date: DateTime.strptime(meeting, "%Y-%m-%d %H:%M:%S %z")) %>
+                    
+                        <%= link_to @comm.link, id: @date.strftime('%d%m') + "_" + @time.strftime('%H') + "Go" do %>
+                            Go 
                         <% end %>
                         <br>
                         </td>  

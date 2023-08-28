@@ -32,12 +32,13 @@
         
     
         
-        <% @family_students.each do |family_student| %>
+        <% @family_students.each_with_index do |family_student, index| %>
             <% @student = Student.find_by(CF: family_student[:CFstudent]) %>
-            <%= link_to family_home_url(CF: params[:CF], CFstudent: @student.CF) do %>
-                <option value=<%= @student.CF %>> <%= "#{@student.name}  #{@student.surname}" %> </option>
+            <%= link_to family_home_url(CF: params[:CF], CFstudent: @student.CF), class: "student-link", id:  @student.CF,  "data-index": index do %>
+                <option value=<%= @student.CF %>> <%= "#{@student.name} #{@student.surname}" %> </option>
             <% end %>
         <% end %>
+
     
     
 

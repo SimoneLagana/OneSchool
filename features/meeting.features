@@ -1,10 +1,24 @@
 Feature: Managing Meetings in Family Dashboard
 
-  Scenario: Booking a Meeting
-    Given you are on the family home page
-    When you click on the "Meeting" panel
-    Then you are on the meeting choice page
-    When you click on a meeting link
-    Then you are on the meeting manage page
-    When you click the "book" button
+  Background: Successful Family Login
+    Given there is a family with email and password
+    When I visit the family login page
+    And I fill in email field with "maria@Rossi"
+    And I fill in password field with "samir"
+    And I click login button
+    
+    
+ 
+
+Scenario:  Successful meeting book
+    Given I am on the family page to choose a student
+    When I select the option "60"
+    Then I should be on the family home page
+    When I click on the "Meeting" panel 
+    Then I should be on the meeting choice page
+    When I select Luigi Colombo 
+    Then I should be on the meeting manage page
+    When I book a meeting on "03" "09" at "19"
+    Then I shoud have a meeting booked on "03" "09" at "19"
+	
     

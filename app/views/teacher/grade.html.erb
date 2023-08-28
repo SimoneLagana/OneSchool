@@ -25,11 +25,12 @@
         <label class="title"> Grades </label>
         <div class="insert-container">
             <%= form_tag teacher_grade_url, class: 'form-subject', method: :get do %>
-                <%= select_tag :subject, options_for_select(@subjects), class: "form-field", onchange: "this.form.submit()" %>
-                <%= select_tag :weekday, options_for_select(@weekdays),  class: "form-field", onchange: "this.form.submit()" %>
-                <%= select_tag :time, options_for_select(@times),  class: "form-field", onchange: "this.form.submit()" %>
-                <%= hidden_field_tag :classroom, @classname %>
-                <%= hidden_field_tag :CF, @teacher.CF %>
+            <%= select_tag :subject, options_for_select(@subjects), class: "form-field" %>
+            <%= select_tag :weekday, options_for_select(@weekdays),  class: "form-field" %>
+            <%= select_tag :time, options_for_select(@times),  class: "form-field" %>
+            <%= hidden_field_tag :classroom, @classname %>
+            <%= hidden_field_tag :CF, @teacher.CF %>
+            <%= submit_tag "Submit", class: "submit-button", id: "submitt" %>
             <% end %>
 
             <%= form_with model: @teacher, url: teacher_insertgrade_url, class: 'form-subject', method: :post do |form| %>
@@ -42,18 +43,22 @@
                 <%= number_field_tag :value, nil, class: "form-field", step: "0.1" %>
                 <%= date_field_tag :date, value: Date.today, class: 'form-field'%>
                 <%= select_tag :CFstudent, options_for_select(@students.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
-                <%= form.submit "Save absence", class: "button-submit" %>
+                <%= form.submit "Save grade", class: "button-submit" %>
             <% end %>
         </div>
         
          <% @grades.each do |grade| %>
             <tr class="table">
+    
+                <% name=Student.where(student_class_code: grade.class_code, CF: grade.CFstudent).pluck(:name).uniq.join %>
+                <div id="<%= grade.id %>">
                 <td> <%= grade.date %></td>
                 <td> <%= grade.value %></td>
                 <td> <%= grade.subject_name %></td>
                 <td> <%= name=Student.where(student_class_code: grade.class_code, CF: grade.CFstudent).pluck(:name).uniq.join %></td>
                 <td> <%= surname=Student.where(student_class_code: grade.class_code, CF: grade.CFstudent).pluck(:surname).uniq.join %></td>
                 <br>
+                </div>
             </tr>
         <% end %> 
     </div>

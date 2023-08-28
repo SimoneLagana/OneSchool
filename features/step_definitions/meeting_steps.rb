@@ -9,6 +9,7 @@ Given("there is a family with email and password") do
   FactoryBot.create(:family_student, id: 1, CFfamily: "7", CFstudent: "60", school_code: "1")
   FactoryBot.create(:teacher, name: "Luigi", surname: "Colombo", CF: "40", mail: "luigi@colombo", password: "pas", school_code: "1")
   FactoryBot.create(:subject, weekday: "TUESDAY", time: "3", school_code: "1", CFprof: "40", class_code: "1A", name: "storia")
+  FactoryBot.create(:meeting, id: 9, title: "Meeting con Enzo Esposito", date: DateTime.new(2023, 8, 30, 18, 0, 0), CFprof: "40", CFfamily: "7")
 
 end
 
@@ -75,5 +76,16 @@ end
 
 Then("I shoud have a meeting booked on {string} {string} at {string}") do |day, month, time|
   id = day + month + "_" + time + "Go"
+  expect(page).to have_css("##{id}")
+end
+
+When("I delete the meeting on {string} {string} at {string}") do |day, month, time|
+  puts "#" + day + month + "_" + time + "Del"
+  find("#" + day + month + "_" + time + "Del").click
+  puts page.body
+end
+
+Then("I should have the possibility to book a meeting on {string} {string} at {string}") do |day, month, time|
+  id = day + month + "_" + time 
   expect(page).to have_css("##{id}")
 end

@@ -20,5 +20,7 @@ Scenario:  Successful meeting book
     Then I should be on the meeting manage page
     When I book a meeting on "03" "09" at "19"
     Then I shoud have a meeting booked on "03" "09" at "19"
+    When I delete the meeting on "30" "08" at "18"
+    Then I should have the possibility to book a meeting on "30" "08" at "18"
 	
     

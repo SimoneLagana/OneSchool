@@ -162,8 +162,6 @@ function openAddSubjectForm(CF) {
     }); 
 }
 function editSubjectForm(subj, CF) {
-  console.log(subj);
-  console.log(CF);
   popupContainer = document.getElementById("popupContainer");
   popupContainer.innerHTML = `
     <div class="popupMenu">
@@ -193,9 +191,9 @@ function editSubjectForm(subj, CF) {
      <tbody>
       ${subj.map(s => `
         <tr>
-          <td>${s[3]}</td>
-          <td>${s[4]}</td>
-          <td>
+          <td class="center">${s[3]}</td>
+          <td class="center">${s[4]}</td>
+          <td class="center">
           <form action="/school_staff/subjectDelete" method="post">
           <input type="hidden" name="CF" value=${CF}>
           <input type="hidden" name="subj_name" value=${s[0]}>

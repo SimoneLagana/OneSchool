@@ -157,7 +157,7 @@ body{
     position: fixed;
     top: 5%;
     left: 97%;
-    /* transform: translate(-50%, -50%); */
+    transform: translate(-50%, -50%); 
     cursor: pointer;
     font-size: 24px;
     border-radius: 50%;
@@ -179,8 +179,52 @@ body{
     max-height: 500px;
     overflow-y: auto;
   }
-
+  #manageAdminTableDiv-small{
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .link-profile{
+    text-decoration: none;
+    background: none;
+}
   .inner-home{
     border-radius: 20px;
   }
-  
+  .select-add{
+    width: 650px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    background-color: rgb(172, 245, 255);
+    margin-bottom: 20px;
+}
+.form-search{
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 70%;
+    background-color: rgb(172, 245, 255);
+}
+.label-field{
+    background-color: rgb(172, 245, 255);
+}
+
+.text-field{
+    padding: 3px;
+}
+.center{
+    text-align: center;
+}
+.style-button{
+    font-size: 16px;
+    padding: 3px;
+
+}
+.style-button-small{
+    font-size: 10px;
+    padding: 3px;
+}
+.tabella{
+    border-radius: 10px;
+    width: 650px;
+}

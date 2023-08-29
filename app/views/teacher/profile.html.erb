@@ -10,12 +10,12 @@
 <body>
     <div id="popupcontainer"></div>
     <nav class="navbar">
-        <%= link_to teacher_home_url(CF: params[:CF]) do %>
+        <%= link_to teacher_home_url do %>
             <label class="writ">
                 <%= @teacher.name %>
             </label>
         <% end %>
-        <%= link_to teacher_profile_url(CF: params[:CF]) do %>
+        <%= link_to teacher_profile_url do %>
             <div class="profile">
                 Profile
             </div>
@@ -24,12 +24,17 @@
     <div class="home">
         <div class="main-panel">
             <label class="profile-field"><%= @teacher.name %> </label>
-            <label class="profile-field"><%= @teacher.surname %> </label>
-            <label class="profile-field"><%= @teacher.CF %> </label>
+            <%if !session[:teacher_code].present? %>
+                <label class="profile-field"><%= @teacher.surname %> </label>
+            <%end%>
             <label class="profile-field"><%= @teacher.mail %> </label>
             <label class="profile-field"><%= @teacher.school_code %> </label>
             <div class="button-container">
-                <button class="profile-button" onclick="editpassword('<%= @teacher.CF%>', '<%= @teacher.mail%>')">Modifica password</button>
+            <% puts (session[:teacher_code].present?)%>
+                <%if !session[:teacher_code].present? %>
+                <% puts (session[:teacher_code].present?)%>
+                    <button class="profile-button" onclick="editpassword('<%= @teacher.CF%>', '<%= @teacher.mail%>')">Modifica password</button>
+                <%end%>
                 <%= form_tag teacher_checklogout_path, method: :delete do %>
                     <%= submit_tag 'Logout', class: 'profile-button' %> 
                 <% end %> 

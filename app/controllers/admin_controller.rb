@@ -1,11 +1,67 @@
 class AdminController < ApplicationController
 
+    before_action :check_session_login, except: [:login, :checklogin, :create, :signup]
     def index
         redirect_to "/admin/manage"  
     end
-    def signup       
+    def signup
+        session[:admin_code]="google"       
     end
-    def manage        
+
+    def login
+        session[:admin_code]="google"
+    end
+
+    def checklogout
+        session.delete(:CF)
+        session.delete(:admin_code)
+        redirect_to root_path
+        
+    end
+
+    def delete_account
+        admin=Admin.find_by(CF: session[:CF])
+        session.delete(:admin_code)
+        if admin.delete
+            puts("account eliminato con successo")
+            redirect_to root_path
+        else
+            redirect_to admin_profile_url
+            flash[:alert]= "errore nell'eliminazione"
+        end
+    end
+
+    def check_session_login
+        unless session[:CF].present?
+            redirect_to admin_login_url, alert: "Effettua l'accesso per continuare."
+        end
+    end
+
+    def manage
+        
+    end
+
+    def profile
+        @admin = Admin.find_by(CF: session[:CF])
+    end
+
+    def upgradepassword
+        @admin=Admin.find_by(CF: session[:CF])
+        @admin.update(password: $passk)
+        redirect_to admin_manage_url
+    end
+    
+    def changepassword
+        @admin=Admin.find_by(CF: session[:CF])
+        pass=params[:old_password]
+        $passk=params[:password]
+        if(@admin) && @admin.password == pass
+          PasswordMailer.email_confirm(@admin).deliver_now
+        else
+          redirect_to admin_login_url
+          flash[:alert]= "password inserita errata"
+        end
+        pass=""
     end
 
     #Registra un nuovo Admin dal form.
@@ -14,7 +70,7 @@ class AdminController < ApplicationController
         
         @admin = Admin.new(admin_params)
         if @admin.save
-            redirect_to "/admin/manage"
+            redirect_to admin_manage_url
         else
             flash[:alert] = "Si è verificato un errore durante la creazione del post."
         end
@@ -39,9 +95,11 @@ class AdminController < ApplicationController
             redirect_to "/admin/manage"
         end
     end
+
     def edit_staff
         @school_staff = SchoolStaff.find(params[:key])
     end
+
     def update_staff
         @school_staff = SchoolStaff.find(params[:key])
         staff_params = {name: params[:name], surname: params[:surname], CF: params[:CF],mail: params[:mail],
@@ -52,6 +110,7 @@ class AdminController < ApplicationController
           render 'edit'
         end
     end
+
     def delete_staff
         @school_staff = SchoolStaff.find(params[:CF])
         if @school_staff.destroy
@@ -59,10 +118,12 @@ class AdminController < ApplicationController
         else
             render 'delete'
         end
-    end      
+    end   
+
     def edit_school
         @school = School.find(params[:key])
     end
+
     def update_school
         @school = School.find(params[:key])
         @new_school = params[:code]        
@@ -73,6 +134,8 @@ class AdminController < ApplicationController
           render 'edit'
         end
     end
+
+
     def delete_school
         @school = School.find(params[:code])
         @commitment = Commitment.where(school_code: @school.code)

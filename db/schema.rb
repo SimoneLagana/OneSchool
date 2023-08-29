@@ -59,6 +59,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_135240) do
     t.string "surname"
     t.string "mail"
     t.string "password"
+    t.string "uid"
+    t.string "provider"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -193,6 +195,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_26_135240) do
     t.string "password"
     t.string "school_code"
     t.string "type", null: false
+    t.string "uid"
+    t.string "provider"
     t.datetime "birthdate"
     t.string "student_class_code"
     t.string "student_school_code"

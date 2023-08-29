@@ -27,8 +27,12 @@
             <%= form.password_field :password, class: 'form-field' %>
             <%= form.submit "signup", class: 'button-field'%>
             <% end %> 
+
+            <%= button_to  'Signup with Google', user_google_oauth2_omniauth_authorize_path, method: :post, :data => {turbo: "false"} %>
         
-            <%= link_to "login", "/login" %>
+            <%= link_to admin_login_url do %>
+              do you already have a profile? login
+            <% end %>
         </form>
       <% if flash[:alert] %>
         <div class="flash notice">

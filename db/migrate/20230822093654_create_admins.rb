@@ -6,6 +6,10 @@ class CreateAdmins < ActiveRecord::Migration[7.0]
       t.string :CF, primary_key: true
       t.string :mail
       t.string :password
+
+      t.string :uid
+      t.string :provider
+      
       t.timestamps
     end
   end

@@ -1,7 +1,9 @@
 class TeacherController < ApplicationController
   before_action :check_cookies_login, except: [:login, :checklogin]
-
+  $has_logged =false
   def login
+    #cookies.delete(:teacher)
+    #session.delete(:CF)
     if session[:CF].present?
       @teacher=Teacher.find_by(CF: session[:CF])
       redirect_to teacher_home_url
@@ -39,6 +41,10 @@ class TeacherController < ApplicationController
     @teacher = Teacher.find_by(mail: params[:mail])
     if @teacher && @teacher.password == params[:password]
       session[:CF]= @teacher.CF
+      if @teacher.first_login == true
+        @teacher.update(first_login: false)
+        cookies[:teacher]=@teacher.CF
+      end
       redirect_to teacher_home_url
       
     else
@@ -49,6 +55,7 @@ class TeacherController < ApplicationController
 
   def checklogout
     session.delete(:CF)
+    session.delete(:teacher_code)
     redirect_to root_path
   end
 

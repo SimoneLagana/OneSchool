@@ -1,4 +1,4 @@
-Given("there is a student with mail and password") do
+Given("there is a user with mail and password") do
     FactoryBot.create(:school)
     FactoryBot.create(:class_room, class_code: "1A", school_code: "1")
     FactoryBot.create(:student, name: "Mario", surname: "Rossi", CF: "60", mail: "mario@rossi", password: "passw", school_code: "1", birthdate: DateTime.new(2001,2,3), student_class_code: "1A", student_school_code: "1")

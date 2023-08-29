@@ -1,7 +1,7 @@
 Feature: Managing Absences
 
   Background: Successful Student Login
-    Given there is a student with mail and password
+    Given there is a user with mail and password
 
 
   Scenario:  Successful absence justification of an Adult student

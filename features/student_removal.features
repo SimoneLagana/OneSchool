@@ -1,0 +1,32 @@
+Feature: Managing ClassRoom
+
+  Background: Successful School Staff Login
+    Given there is a school staff user with mail and password
+
+
+  Scenario:  Successful removal of a class
+    Given I login as a school staff user
+    Then I should be on the school staff home page
+    When I select "Class schedule"
+    Then I should be on the page to manage ClassRooms
+    When I search for a class 
+    And I press "Delete" for the same class in the list 
+    Then I should not have that class anymore
+
+  Scenario:  Successful adding of a class
+    Given I login as a school staff user
+    Then I should be on the school staff home page
+    When I select "Class schedule"
+    Then I should be on the page to manage ClassRooms
+    When I search for a class 
+    And I press "addSchoolButton"
+    Then I should have a popup open
+
+  Scenario:  Successful removal of a subject
+    Given I login as a school staff user
+    Then I should be on the school staff home page
+    When I select "Class schedule"
+    Then I should be on the page to manage ClassRooms
+    When I search for a class 
+    And I press "Delete" for the same class in the list 
+    Then I should not have that class anymore

@@ -1,3 +1,8 @@
+function print() {
+  console.log("bbbb")
+}
+
+
 function show_panel(id){
   if(id=="first-panel"){
       document.getElementById(id).style.display="flex";
@@ -62,6 +67,7 @@ function editStudentForm(student,classes) {
     });
 }
 function editClassForm(cls,CF,stud,classes) {
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     popupContainer = document.getElementById("popupContainer");
     popupContainer.innerHTML = `
       <div class="popupMenu">

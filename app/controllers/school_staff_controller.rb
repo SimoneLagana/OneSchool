@@ -67,26 +67,26 @@ class SchoolStaffController < ApplicationController
     
     @staff = SchoolStaff.find_by(CF: params[:CF])
     @type = User.pluck(:type).uniq
-    @typeName = "Teacher"
-    if(params[:account].present?)
-      @typeName = params[:account]
-      if @typeName == "Teacher"
-        @teachers = Teacher.where(school_code: @staff.school_code).uniq
+    
+      if(params[:account].present?)
+        @typeName = params[:account]
+        if @typeName == "Teacher"
+          @teachers = Teacher.where(school_code: @staff.school_code).uniq
 
-      elsif @typeName == "Student"
-        @students = Student.where(school_code:@staff.school_code).uniq
+        elsif @typeName == "Student"
+          @students = Student.where(school_code:@staff.school_code).uniq
 
-      else
-        @families = Family.where(school_code: @staff.school_code).uniq
+        else
+          @families = Family.where(school_code: @staff.school_code).uniq
 
+        end
       end 
-    end 
-    # togliere SchoolStaff
+     
+    
     @tipi = User.pluck(:type).uniq
     @classi = []
     
     if(params[:type].present?)
-      #@tipi = User.where(type: params[:type]).pluck(:type).uniq
       if(params[:type] == "Student")
         @classi = [["Select a class",nil]]+ClassRoom.where(school_code: @staff.school_code).pluck(:class_code).uniq
         if (params[:class].present?)

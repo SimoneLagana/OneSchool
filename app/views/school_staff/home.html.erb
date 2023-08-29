@@ -31,7 +31,7 @@
             </div>
             <% end %>
 
-            <%= link_to school_staff_manage_path(CF: params[:CF]) do %>
+            <%= link_to school_staff_manage_path(CF: params[:CF], token: params[:token]) do %>
                 <div class="panel">
                     Manage School profiles
                 </div>

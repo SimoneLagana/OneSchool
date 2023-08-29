@@ -181,6 +181,7 @@ class SchoolStaffController < ApplicationController
       end
       if @student.update_attribute(:mail, params[:mail])
         redirect_to "school_staff/staffManage", allow_other_host: true
+      
       else
         render "edit"
       end

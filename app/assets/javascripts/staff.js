@@ -221,7 +221,7 @@ function openCommunicationForm(CF) {
   popupContainer = document.getElementById("popupContainer");
 
   popupContainer.innerHTML = `
-    <div class="popupMenu">
+    <div class="popupMenu-large">
       <div id="closePopup">×</div>
       <form action="/school_staff/addCommunication" method="post">
         <input type="hidden" name="CF" value=${CF}>

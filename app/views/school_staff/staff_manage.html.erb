@@ -11,15 +11,16 @@
 <body>
 
     <nav class="navbar">
-        <label class="writ">
-          name
-        </label>
-        <%= link_to school_staff_profile_url(CF: params[:CF]) do %>
+<%= link_to school_staff_home_path(CF: params[:CF]),class: 'link-profile no-underline' do%>
+        <div class="writ">
+          OneSchool
+        </div>
+<%end%>
+        <%= link_to school_staff_profile_url(CF: params[:CF]),class: 'link-profile no-underline' do %>
             <div class="profile">
                 Profile
             </div>
         <% end %>
-
       </nav>
     <div class="home">
         <div class="upper-bottons">
@@ -53,7 +54,7 @@
                 <div class="upper-part">
 
                     <div class="search-bar">
-                        Select Role
+                        Select role
                     </div>
                     <div class="select-bar">
             <%= form_tag school_staff_manage_path, class: 'form-subject', method: :get do %>
@@ -86,8 +87,8 @@
 
             </div>
                 </div>
-                <div class="list">
-                <table>
+                <div id="manageAdminTableDiv">
+                <table class="tabella">
                 <thead>
       <tr>
       <th>Name</th>
@@ -99,9 +100,9 @@
     <% if @typeName == "Student"%>
     <% @students.each do |student|%>
 <tr>
-        <td><%= student.name %></td>
-        <td><%= student.surname %></td>
-        <td><%= student.mail %></td>
+        <td class= "center"><%= student.name %></td>
+        <td class= "center"><%= student.surname %></td>
+        <td class= "center"><%= student.mail %></td>
         <% 
             classes = ClassRoom.where(school_code: student.school_code).pluck(:class_code).uniq
         %>
@@ -118,9 +119,9 @@
         <% elsif @typeName == "Teacher"%>
     <% @teachers.each do |teacher|%>
 <tr>
-        <td><%= teacher.name %></td>
-        <td><%= teacher.surname %></td>
-        <td><%= teacher.mail %></td>
+        <td class="center"><%= teacher.name %></td>
+        <td class= "center"><%= teacher.surname %></td>
+        <td class="center"><%= teacher.mail %></td>
         <td><button onclick="editUserForm(<%= json_string= teacher.to_json %>);">Edit</button></td>           
         <td> <%= form_tag school_staff_delete_path, method: :delete do %>
             <%= hidden_field_tag :CF, @staff.CF %>
@@ -133,9 +134,9 @@
     <% elsif @typeName == "Family" %>
     <% @families.each do |family|%>
 <tr>
-        <td><%= family.name %></td>
-        <td><%= family.surname %></td>
-        <td><%= family.mail %></td>
+        <td class= "center"><%= family.name %></td>
+        <td class= "center"><%= family.surname %></td>
+        <td class= "center"><%= family.mail %></td>
         <td><button onclick="editUserForm(<%= json_string= family.to_json %>);">Edit</button></td>           
         <td> <%= form_tag school_staff_delete_path, method: :delete do %>
             <%= hidden_field_tag :type1, "Family" %>
@@ -152,11 +153,13 @@
                 </thead>
                 </table>
                 </div>
-            </div>
-            <div class="panel" id="second-panel" style="display:none;" >
+                </div>
+            
+            
+            <div class="panel" id="second-panel" style="display:none;">
                 <div class="form-container">
                     Insert type of user
-                
+             
 <%= form_tag school_staff_manage_path, class: 'form-subject', method: :get do %>
   <%= label_tag :type, "Type" %><br>
   <%= select_tag :type, options_for_select([["Select type", nil]] + @tipi.reject { |t| t == "SchoolStaff" }), class: "form-field" %><br>
@@ -308,7 +311,7 @@
                  
                     
             
-                
+                </div>
             </div>
 
         </div>

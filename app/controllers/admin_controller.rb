@@ -8,9 +8,23 @@ class AdminController < ApplicationController
         session[:admin_code]="google"       
     end
 
+
+
     def login
         session[:admin_code]="google"
     end
+
+    def checklogin
+        @admin = Admin.find_by(mail: params[:mail])
+        if @admin && @admin.password == params[:password]
+          session[:CF]= @admin.CF
+          redirect_to admin_home_url
+          
+        else
+          redirect_to admin_login_url
+          flash[:alert] = 'Credenziali non valide.'
+        end
+      end
 
     def checklogout
         session.delete(:CF)
@@ -22,6 +36,8 @@ class AdminController < ApplicationController
     def delete_account
         admin=Admin.find_by(CF: session[:CF])
         session.delete(:admin_code)
+        session.delete(:CF)
+        cookies.delete(:admin_params)
         if admin.delete
             puts("account eliminato con successo")
             redirect_to root_path
@@ -67,7 +83,8 @@ class AdminController < ApplicationController
     #Registra un nuovo Admin dal form.
     def create
         admin_params = { name: params[:name], surname: params[:surname],CF: params[:CF], mail: params[:email],password: params[:password] }
-        
+        cookies[:admin_params]={value: admin_params.to_json, expires: 30.day.from_now}
+        session[:CF]= params[:CF]
         @admin = Admin.new(admin_params)
         if @admin.save
             redirect_to admin_manage_url

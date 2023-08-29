@@ -19,6 +19,7 @@ gem "puma", "~> 5.0"
 gem "importmap-rails"
 
 gem 'hotwire-rails'
+gem 'google-api-client', require: 'google/apis/calendar_v3'
 
 gem 'jwt'
 

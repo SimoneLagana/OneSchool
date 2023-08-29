@@ -10,42 +10,67 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
     
     if session[:admin_code].present?
-      admin=Admin.find_by(mail: auth.info.email)
+        admin=Admin.find_by(mail: auth.info.email)
       if(admin)
-        session[:CF]=admin.uid
-        redirect_to=admin_manage_url
+        session[:CF]=admin.CF
+        redirect_to admin_manage_url
       else
-        admin=Admin.new(name: auth.info.name, mail: auth.info.email, surname: auth.info.last_name, CF: auth.uid, provider: auth.provider, password: Devise.friendly_token[0, 20])
-        if admin
-          admin.save
-          if admin.save
-            session[:CF]=admin.CF
-            redirect_to admin_manage_url
-          end
+        if cookies[:admin_params].present?
+          name=JSON.parse(cookies[:admin_params])["name"]
+          surname=JSON.parse(cookies[:admin_params])["surname"]
+          admin=Admin.new(name: name, mail: auth.info.email, surname: surname, CF: auth.uid, provider: auth.provider, password: Devise.friendly_token[0, 20])
         else
-          redirect_to root_path
+          admin=Admin.new(name: auth.info.name, mail: auth.info.email, surname: auth.info.name, CF: auth.uid, provider: auth.provider, password: Devise.friendly_token[0, 20])
         end
+        if admin.save
+          session[:CF]=admin.CF
+          redirect_to admin_manage_url
+          return
+        end
+        
+        redirect_to root_path
+        
       end
     else
-      teacher=Teacher.find_by(mail: auth.info.email)
-      if (teacher)
-        session[:CF]=teacher.uid
+      cf=JSON.parse(cookies[:teacher])
+      teacher=Teacher.find_by(CF: cf)
+      puts(teacher.name)
+      puts(teacher.surname)
+      puts(cf)
+      @user = Teacher.from_omniauth(request.env["omniauth.auth"],cf, teacher.name, teacher.surname)
+      puts("ciao")
+      if @user.persisted?
+        puts("ciao2")
+        session[:CF]=@user.CF
+        @user.update(first_login: false)
         session[:teacher_code]="google"
+        flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
+        sign_in @user, :event => :authentication
         redirect_to teacher_home_url
       else
-        cf=JSON.parse(cookies[:teacher])
-        school_code=Teacher.where(CF: cf).pluck(:school_code).uniq.first.to_s
-        teacher=Teacher.new(name: auth.info.name, mail: auth.info.email, surname: auth.info.last_name, CF: auth.uid, uid: auth.uid, provider: auth.provider, school_code: school_code, password: Devise.friendly_token[0, 20])
-        if teacher.save
-            session[:teacher_code]="google"
-            session.delete(:CF)
-            session[:CF]=teacher.CF
-            teacher.update(first_login: false)
-            redirect_to teacher_home_url 
-            return
-        end
-        redirect_to root_path
+        #session["devise.google_data"] = request.env["omniauth.auth"]
+        redirect_to teacher_login_url
       end
+      #teacher=Teacher.find_by(mail: auth.info.email)
+      #if (teacher)
+      #  session[:CF]=teacher.uid
+      #  session[:teacher_code]="google"
+      #  redirect_to teacher_home_url
+      #else
+      #  cf=JSON.parse(cookies[:teacher])
+      #  school_code=Teacher.where(CF: cf).pluck(:school_code).uniq.first.to_s
+      #  
+      #  teacher=Teacher.new(name: auth.info.name, mail: auth.info.email, surname: auth.info.last_name, CF: auth.uid, uid: auth.uid, provider: auth.provider, school_code: school_code, password: Devise.friendly_token[0, 20])
+      #  if teacher.save
+      #      session[:teacher_code]="google"
+      #      session.delete(:CF)
+      #      session[:CF]=teacher.CF
+      #      teacher.update(first_login: false)
+      #      redirect_to teacher_home_url 
+      #      return
+      #  end
+      #  redirect_to root_path
+      #end
 
     end
 

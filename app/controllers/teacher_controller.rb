@@ -1,9 +1,12 @@
+require "google/apis/calendar_v3"
+require "google/api_client/client_secrets.rb"
+
 class TeacherController < ApplicationController
   before_action :check_cookies_login, except: [:login, :checklogin]
   $has_logged =false
   def login
     #cookies.delete(:teacher)
-    #session.delete(:CF)
+    session.delete(:CF)
     if session[:CF].present?
       @teacher=Teacher.find_by(CF: session[:CF])
       redirect_to teacher_home_url
@@ -78,36 +81,71 @@ class TeacherController < ApplicationController
 
   def commitment
     @teacher=Teacher.find_by(CF: session[:CF])
+  
+    client= get_google_calendar_client(@teacher)
+    @calendar_list = client.list_calendar_lists
+    #@event_list =client.list_events('mettete qui il vostro calendar id per avere un elenco degli eventi')
+  end
 
+  def get_google_calendar_client(current_user)
+    client = Google::Apis::CalendarV3::CalendarService.new
+    return unless (current_user.present? && current_user.access_token.present? && current_user.refresh_token.present?)
+    secrets = Google::APIClient::ClientSecrets.new({
+      "web" => {
+        "access_token" => current_user.access_token,
+        "refresh_token" => current_user.refresh_token,
+        "client_id" => ENV["GOOGLE_OAUTH_CLIENT_KEY"],
+        "client_secret" => ENV["GOOGLE_OAUTH_CLIENT_SECRET"]
+      }
+    })
+    begin
+      client.authorization = secrets.to_authorization
+      client.authorization.grant_type = "refresh_token"
+
+      if !current_user.present?
+        client.authorization.refresh!
+        current_user.update_attributes(
+          access_token: client.authorization.access_token,
+          refresh_token: client.authorization.refresh_token,
+          expires_at: client.authorization.expires_at.to_i
+        )
+      end
+    rescue => e
+      flash[:error] = 'Your token has been expired. Please login again with google.'
+      redirect_to teacher_login_url
+    end
+    client
   end
 
   def managecommitment
-    if(!params[:hour].present?)
-      num=1
-    else
-      num = params[:hour].to_i
-      if(num<=0)
-        num=1
-      end
-    end
-       
-      # Utilizzo un oggetto DateTime per la data iniziale
-      new_date = DateTime.parse(params[:date])
-      puts new_date
-      for i in 1..num
-        @commitment = Commitment.new(
-          title: params[:title],
-          date: new_date,
-          type: 'Commitment',
-          CFprof: params[:CFprof],
-          school_code: params[:school_code]
-        )
-        if @commitment
-          @commitment.save
-          puts("sas")
-        end
-        new_date += 1.hour
-      end      
+
+
+    #if(!params[:hour].present?)
+    #  num=1
+    #else
+    #  num = params[:hour].to_i
+    #  if(num<=0)
+    #    num=1
+    #  end
+    #end
+    #   
+    #  # Utilizzo un oggetto DateTime per la data iniziale
+    #  new_date = DateTime.parse(params[:date])
+    #  puts new_date
+    #  for i in 1..num
+    #    @commitment = Commitment.new(
+    #      title: params[:title],
+    #      date: new_date,
+    #      type: 'Commitment',
+    #      CFprof: params[:CFprof],
+    #      school_code: params[:school_code]
+    #    )
+    #    if @commitment
+    #      @commitment.save
+    #      puts("sas")
+    #    end
+    #    new_date += 1.hour
+    #  end      
     redirect_to teacher_commitment_url
   end
   

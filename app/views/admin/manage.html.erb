@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +15,7 @@
       <label class="writ">
         OneSchool
       </label>
-      <%= link_to admin_profile_url, class: 'link-profile no-underline'  do %>
+      <%= link_to "", class: 'link-profile no-underline'  do %>
       <div class="profile">
         Profile
       </div>
@@ -95,7 +96,7 @@
             <div class="panel" id="second-panel" style="display:none;" >
                 <div class="select-add">
                   <%= form_with url: admin_searchstaff_path, class: 'form-search', method: :get do |form| %>
-                      <%= form.label :search, "Search for School Code:", class:'label-field' %>
+                      <%= form.label :search, "Search for School Name:", class:'label-field' %>
                       <%= form.text_field :search, class: 'text-field' %>
                       <%= form.submit "Search", class: 'style-button' %>
                   <% end %> 

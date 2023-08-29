@@ -1,25 +1,28 @@
 function show_panel(id){
-    if(id=="first-panel"){
-        document.getElementById(id).style.display="flex";
-        document.getElementById("second-panel").style.display="none";
-    }
-    else{
-        document.getElementById(id).style.display="flex";
-        document.getElementById("first-panel").style.display="none";
-    }
+  if(id=="first-panel"){
+      document.getElementById(id).style.display="flex";
+      document.getElementById("second-panel").style.display="none";
+  }
+  else{
+      document.getElementById(id).style.display="flex";
+      document.getElementById("first-panel").style.display="none";
+
+  }
 }
-function editUserForm(user) {
+
+function editUserForm(user,CF) {
+  
     popupContainer = document.getElementById("popupContainer");
     popupContainer.innerHTML = `
       <div class="popupMenu">
-
+  
           <div id="closePopup">&times;</div>      
           <form action="/school_staff/update" method="post">
           <input type="hidden" name="key" value=${JSON.stringify(user['CF'])}>
           <input type="hidden" name="type" value="not_student"}>
 	      <input type="text" name="name" disabled placeholder="Name" value=${JSON.stringify(user['name'])}>
           <input type="text" name="surname" disabled placeholder="Surname" value=${JSON.stringify(user['surname'])}>
-          <input type="text" name="CF1" disabled placeholder="CF1" value=${JSON.stringify(user['CF1'])}>
+          <input type="text" name="CF1" disabled placeholder="CF1" value=${JSON.stringify(user['CF'])}>
           <input type="email" name="mail" placeholder="Mail" value=${JSON.stringify(user['mail'])}>
           <br>
           <input class="submitBtn" type="submit" value="submit">
@@ -30,8 +33,8 @@ function editUserForm(user) {
     popupContainer.innerHTML = "";
     });
 }
-function editStudentForm(student,classes) {
-    console.log(JSON.stringify(classes));
+function editStudentForm(student,classes,CF) {
+    
     popupContainer = document.getElementById("popupContainer");
   
     popupContainer.innerHTML = `
@@ -44,7 +47,7 @@ function editStudentForm(student,classes) {
           <input type="hidden" name="old_class" value=${student['student_class_code']}>
 	      <input type="text" name="name" disabled placeholder="Name" value=${JSON.stringify(student['name'])}>
           <input type="text" name="surname" disabled placeholder="Surname" value=${JSON.stringify(student['surname'])}>
-          <input type="text" name="CF1" disabled placeholder="CF1" value=${JSON.stringify(student['CF1'])}>
+          <input type="text" name="CF1" disabled placeholder="CF1" value=${JSON.stringify(student['CF'])}>
           <input type="text" name="birthdate" disabled placeholder="birthdate" value=${JSON.stringify(student['birthdate'])}>
           <input type="email" name="mail" placeholder="Mail" value=${JSON.stringify(student['mail'])}>
           <select name="class">
@@ -71,8 +74,9 @@ function editClassForm(cls,CF,stud,classes) {
 	      <input type="text" name="new_class" placeholder="Class" value=${JSON.stringify(cls['class_code'])}>
           <input class="submitBtn" type="submit" value="Update Class Name">        
         </form>
+        <div id="manageAdminTableDiv-small">
 
-        <table>
+        <table >
         <tr>
           <th>Name</th>
           <th>Surname</th>
@@ -80,14 +84,14 @@ function editClassForm(cls,CF,stud,classes) {
         </tr>
         ${stud.map(s => `
         <tr>
-          <td>${s.name}</td>
-          <td>${s.surname}</td>
-          <td>${s.CF}</td>
+          <td class="center">${s.name}</td>
+          <td class="center">${s.surname}</td>
+          <td class= "center">${s.CF}</td>
           <td>
             <form action="/school_staff/removeStudent" method="post">
               <input type="hidden" name="CF" value=${CF}>
               <input type="hidden" name="stud" value=${s.CF}>
-              <input type="submit" value="Delete student">
+              <input type="submit" value="Remove student" class="style-button-small">
             </form>
           </td>
         </tr>
@@ -95,7 +99,7 @@ function editClassForm(cls,CF,stud,classes) {
       </table>
       
 <br>
-
+</div>
     </div>
     `;  
     document.querySelector("#closePopup").addEventListener("click", function() {
@@ -159,8 +163,6 @@ function openAddSubjectForm(CF) {
     }); 
 }
 function editSubjectForm(subj, CF) {
-  console.log(subj);
-  console.log(CF);
   popupContainer = document.getElementById("popupContainer");
   popupContainer.innerHTML = `
     <div class="popupMenu">
@@ -177,7 +179,7 @@ function editSubjectForm(subj, CF) {
         <input type="text" name="subj_new_teacher"  value=${JSON.stringify(subj[0][2])}>
         <input class="submitBtn" type="submit" value="Update Teacher">        
       </form>
-      <div id="manageAdminTableDiv">
+      <div id="manageAdminTableDiv-small">
         <table>
       <thead>
         <tr>
@@ -190,9 +192,9 @@ function editSubjectForm(subj, CF) {
      <tbody>
       ${subj.map(s => `
         <tr>
-          <td>${s[3]}</td>
-          <td>${s[4]}</td>
-          <td>
+          <td class="center">${s[3]}</td>
+          <td class="center">${s[4]}</td>
+          <td class="center">
           <form action="/school_staff/subjectDelete" method="post">
           <input type="hidden" name="CF" value=${CF}>
           <input type="hidden" name="subj_name" value=${s[0]}>
@@ -220,7 +222,7 @@ function openCommunicationForm(CF) {
   popupContainer = document.getElementById("popupContainer");
 
   popupContainer.innerHTML = `
-    <div class="popupMenu">
+    <div class="popupMenu-large">
       <div id="closePopup">×</div>
       <form action="/school_staff/addCommunication" method="post">
         <input type="hidden" name="CF" value=${CF}>

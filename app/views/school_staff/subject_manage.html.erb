@@ -6,81 +6,82 @@
     <%= stylesheet_link_tag "staff_subject_manage.css" %>
     <%= javascript_include_tag('staff.js') %>
 
-    <title>Document</title>
+     <title>Document</title>
 </head>
 <body>
 <div id="popupContainer"></div>
 <nav class="navbar">
-        <label class="writ">
-          name
-        </label>
-        <%= link_to school_staff_profile_url(CF: params[:CF]) do %>
+<%= link_to school_staff_home_path(CF: params[:CF]),class: 'link-profile no-underline' do%>
+        <div class="writ">
+          OneSchool
+        </div>
+<%end%>
+        <%= link_to school_staff_profile_url(CF: params[:CF]),class: 'link-profile no-underline' do %>
             <div class="profile">
                 Profile
             </div>
         <% end %>
-
       </nav>
-    <div class="inner-home">
+    <div class="home">
         <div class="upper-bottons">
-        <%= link_to school_staff_class_manage_path(CF: params[:CF]) do %>
-            <div class="up-botton" id="first-botton" onclick="show_panel('first-panel');">
+        <%= link_to school_staff_class_manage_path(CF: params[:CF]),class: 'link-profile no-underline' do %>
+            <div class="up-botton" id="first-botton" >
               Class Manage
             </div><%end%>
-            <%= link_to school_staff_subject_manage_path(CF: params[:CF]) do%>
-            <div class="up-botton" id="second-botton" onclick="show_panel('second-panel');">
+            <%= link_to school_staff_subject_manage_path(CF: params[:CF]),class: 'link-profile no-underline' do%>
+            <div class="up-botton" id="second-botton" >
                 Subject Manage
             </div><%end%>
-            <%= link_to school_staff_timetable_path(CF: params[:CF]) do%>
-            <div class="up-botton" id="second-botton" onclick="show_panel('second-panel');">
+            <%= link_to school_staff_timetable_path(CF: params[:CF]),class: 'link-profile no-underline' do%>
+            <div class="up-botton" id="third-botton">
                 Timetables
             </div><%end%>
             </div> 
 <div class="main-panel">
-
-<button id="addSubjectButton" onclick="openAddSubjectForm(<%= params[:CF].to_json %>);"> Add a New Subject</button>
-
-    <%= form_with url: staff_searchsubject_path, method: :get do |form| %>
-    <%= form.label :search, "Search for Name:" %>
+    <div class="panel" id="first-panel" style="display:flex;">
+<div class="select-add">
+    <%= form_with url: staff_searchsubject_path, method: :get,class: 'form-search'  do |form| %>
+    <%= form.label :search, "Search for Name:" , class: "label-field"%>
     <%= form.text_field :search %>
-    <%= form.submit "Search" %>
+    <%= form.submit "Search", class: 'style-button-small' %>
     <%= hidden_field_tag :school, User.where(CF: params[:CF]).pluck(:school_code) %>
     <%= hidden_field_tag :CF, params[:CF] %>
-    <% end %> 
-    <div class="panel" id="first-panel" style="display:flex;">
+    <% end %>        
+     <button id="addSubjectButton" class="style-button" onclick="openAddSubjectForm(<%= params[:CF].to_json %>);"> Add a New Subject</button>
+</div>
 
     <div id="manageAdminTableDiv">
-    <table>
+    <table class="tabella">
   <thead>
     <tr>
       <th>Name</th>
       <th>Class</th>
       <th>Teacher</th>
 
-      <th colspan="4"></th>
+      <th colspan="5"></th>
     </tr>
   </thead>
     <tbody>
 
     <% if @ret_sub == "NOT_FOUND"%>
     <% params[:search] =""%>
-    <%=link_to "reset", school_staff_subject_manage_path(CF: params[:CF])%>
+    <%=link_to "Reset Search", school_staff_subject_manage_path(CF: params[:CF])%>
 
     <% else  %>
     <% if @ret_sub.present? %>
         <% @subjects = @ret_sub %>
         <% params[:search] =""%>
-    <%=link_to "reset", school_staff_subject_manage_path(CF: params[:CF])%>
+    <%=link_to "Reset Search", school_staff_subject_manage_path(CF: params[:CF])%>
     <% else %>
         <% @subjects = Subject.where(school_code: User.where(CF: params[:CF]).pluck(:school_code).uniq.first).order(:class_code).pluck(:name, :class_code, :CFprof).uniq
 %>
     <%end%>
     <% @subjects.each do |subj| %>
     <tr>
-        <td><%= subj[0]%></td>
-        <td><%= subj[1] %></td>
-        <td><%= subj[2] %></td>
-<td><button onclick="editSubjectForm(<%= 
+        <td class="center"><%= subj[0]%></td>
+        <td class="center"><%= subj[1] %></td>
+        <td class="center"><%= subj[2] %></td>
+<td class="center"><button onclick="editSubjectForm(<%= 
   Subject.where(school_code: User.where(CF: params[:CF]).pluck(:school_code).uniq.first, class_code: subj[1], name: subj[0], CFprof: subj[2]).order(Arel.sql("CASE weekday
   WHEN 'MONDAY' THEN 1
   WHEN 'TUESDAY' THEN 2
@@ -89,7 +90,7 @@
   WHEN 'FRIDAY' THEN 5
   WHEN 'SATURDAY' THEN 6
 END")).pluck(:name, :class_code, :CFprof, :weekday,:time).uniq.to_json %>,<%= params[:CF].to_json %>);">Edit</button></td>
-<td> <%= form_tag school_staff_subject_deletee_path, method: :delete do %>
+<td class="center"> <%= form_tag school_staff_subject_deletee_path, method: :delete do %>
             <%= hidden_field_tag :subj_name, subj[0] %>
             <%= hidden_field_tag :subj_class, subj[1] %>
             <%= hidden_field_tag :subj_teacher, subj[2] %>
@@ -103,6 +104,7 @@ END")).pluck(:name, :class_code, :CFprof, :weekday,:time).uniq.to_json %>,<%= pa
                 <%= message %>
             </div>
         <% end %>
+
 </tbody>
     </table>
     </div>

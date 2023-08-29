@@ -1,6 +1,6 @@
 Feature: Managing Grades in Teacher account
 
-  Background: Successful Family Login
+  Background: Successful Teacher Login
     Given there is a teacher with email and password
     When I click on "Teacher" panel
     Then I should be on the login page

@@ -72,7 +72,7 @@
                                 <%= hidden_field_tag :justified, absence.justified %>
 
                                 <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
-                                <%= form.submit "Justify", class: "button-submit" %>
+                                <%= form.submit "Justify", class: "button-submit", id:  absence.id %>
                             <% end %>
                         <%end%>
                         <br>

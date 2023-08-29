@@ -99,12 +99,12 @@ class StudentController < ApplicationController
   def ofAge
     @student = Student.find_by(CF: params[:CF])
     @birth = @student.birthdate
-    puts @birth
+    
     @today = DateTime.now.in_time_zone("UTC")
-    puts @today
+    
 
     @diff_sec = @today - @birth
-    puts @diff_sec
+    
 
     @diff_days = @diff_sec / 86400
     @diff_years = @diff_days / 365.25

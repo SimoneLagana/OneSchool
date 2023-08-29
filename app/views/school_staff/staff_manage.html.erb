@@ -106,7 +106,7 @@
         <% 
             classes = ClassRoom.where(school_code: student.school_code).pluck(:class_code).uniq
         %>
-        <td><button onclick="editStudentForm(<%= json_string= student.to_json %>, <%= json_string= classes.to_json%>);">Edit</button></td>           
+        <td><button onclick="editStudentForm(<%= json_string= student.to_json %>, <%= json_string= classes.to_json%>, <%= params[:CF].to_json %>);">Edit</button></td>           
         <td> <%= form_tag school_staff_delete_path, method: :delete do %>
             <%= hidden_field_tag :type1, "Student" %>
             <%= hidden_field_tag :CF1, student.CF %>
@@ -122,7 +122,7 @@
         <td class="center"><%= teacher.name %></td>
         <td class= "center"><%= teacher.surname %></td>
         <td class="center"><%= teacher.mail %></td>
-        <td><button onclick="editUserForm(<%= json_string= teacher.to_json %>);">Edit</button></td>           
+        <td><button onclick="editUserForm(<%= json_string= teacher.to_json %>, <%= params[:CF].to_json %> );">Edit</button></td>           
         <td> <%= form_tag school_staff_delete_path, method: :delete do %>
             <%= hidden_field_tag :CF, @staff.CF %>
             <%= hidden_field_tag :type1, "Teacher" %>
@@ -161,10 +161,9 @@
                     Insert type of user
              
 <%= form_tag school_staff_manage_path, class: 'form-subject', method: :get do %>
-  <%= label_tag :type, "Type" %><br>
+  
   <%= select_tag :type, options_for_select([["Select type", nil]] + @tipi.reject { |t| t == "SchoolStaff" }), class: "form-field" %><br>
   <div id="class-field" style="display:none;">
-    <%= label_tag :class, "Class" %><br>
     <%= select_tag :class, options_for_select(@classi), class: "form-field" %><br>
   </div>
   <%= hidden_field_tag :CF, @staff.CF %>

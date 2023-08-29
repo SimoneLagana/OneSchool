@@ -10,18 +10,19 @@ function show_panel(id){
   }
 }
 
-function editUserForm(user) {
+function editUserForm(user,CF) {
+  
     popupContainer = document.getElementById("popupContainer");
     popupContainer.innerHTML = `
       <div class="popupMenu">
-
+  
           <div id="closePopup">&times;</div>      
           <form action="/school_staff/update" method="post">
           <input type="hidden" name="key" value=${JSON.stringify(user['CF'])}>
           <input type="hidden" name="type" value="not_student"}>
 	      <input type="text" name="name" disabled placeholder="Name" value=${JSON.stringify(user['name'])}>
           <input type="text" name="surname" disabled placeholder="Surname" value=${JSON.stringify(user['surname'])}>
-          <input type="text" name="CF1" disabled placeholder="CF1" value=${JSON.stringify(user['CF1'])}>
+          <input type="text" name="CF1" disabled placeholder="CF1" value=${JSON.stringify(user['CF'])}>
           <input type="email" name="mail" placeholder="Mail" value=${JSON.stringify(user['mail'])}>
           <br>
           <input class="submitBtn" type="submit" value="submit">
@@ -32,8 +33,8 @@ function editUserForm(user) {
     popupContainer.innerHTML = "";
     });
 }
-function editStudentForm(student,classes) {
-    console.log(JSON.stringify(classes));
+function editStudentForm(student,classes,CF) {
+    
     popupContainer = document.getElementById("popupContainer");
   
     popupContainer.innerHTML = `
@@ -46,7 +47,7 @@ function editStudentForm(student,classes) {
           <input type="hidden" name="old_class" value=${student['student_class_code']}>
 	      <input type="text" name="name" disabled placeholder="Name" value=${JSON.stringify(student['name'])}>
           <input type="text" name="surname" disabled placeholder="Surname" value=${JSON.stringify(student['surname'])}>
-          <input type="text" name="CF1" disabled placeholder="CF1" value=${JSON.stringify(student['CF1'])}>
+          <input type="text" name="CF1" disabled placeholder="CF1" value=${JSON.stringify(student['CF'])}>
           <input type="text" name="birthdate" disabled placeholder="birthdate" value=${JSON.stringify(student['birthdate'])}>
           <input type="email" name="mail" placeholder="Mail" value=${JSON.stringify(student['mail'])}>
           <select name="class">

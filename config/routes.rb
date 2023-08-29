@@ -2,6 +2,17 @@ Rails.application.routes.draw do
   get 'school/home'
   get 'school/login'
   
+  devise_for :users, controllers:{
+    registrations: "users/registrations",
+    sessions: "users/sessions",
+    omniauth_callbacks: "users/omniauth_callbacks"
+  }
+
+  #devise_for :admins, controllers: { 
+  #  registrations: "users/registrations",
+  #  sessions: "users/sessions",
+  #  omniauth_callbacks: 'users/omniauth_callbacks'
+  # }
 
   get 'oneschool/index'
   root "oneschool#index"
@@ -130,6 +141,10 @@ get 'school_staff/upgradepassword', to: 'school_staff#upgradepassword', as: 'sch
   delete "/admin/deleteSchool", to: "admin#delete_school", as: "admin_deleteschool"
   post "/admin/updateStaff", to: "admin#update_staff", as: "admin_updatestaff"
   delete "/admin/deleteStaff", to: "admin#delete_staff", as: "admin_deletestaff"
+  delete 'admin/delete_account', to: 'admin#delete_account', as: 'admin_delete_account'
+  get 'admin/profile', to: 'admin#profile', as: 'admin_profile'
+  post 'admin/changepassword', to: 'admin#changepassword', as: 'admin_changepassword'
+  get 'admin/upgradepassword', to: 'admin#upgradepassword', as: 'admin_upgradepassword'
 
   delete "admin/checklogout", to: "admin#checklogout", as: 'admin_checklogout'
   post 'admin/checklogin', to: 'admin#checklogin', as: 'admin_checklogin'

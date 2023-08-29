@@ -19,6 +19,7 @@ gem "puma", "~> 5.0"
 gem "importmap-rails"
 
 gem 'hotwire-rails'
+gem 'google-api-client', require: 'google/apis/calendar_v3'
 
 gem 'jwt'
 
@@ -34,7 +35,12 @@ gem "jbuilder"
 gem 'bcrypt', '~> 3.1.7'
 gem 'actionmailer', '~> 7.0.6'
 
+gem 'devise'
+gem 'omniauth'
 
+gem 'omniauth-google-oauth2'
+
+gem 'omniauth-rails_csrf_protection', '~> 1.0'
 
 
 # Use Redis adapter to run Action Cable in production
@@ -58,6 +64,7 @@ gem 'factory_bot_rails'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
+gem 'dotenv-rails', groups: [:development, :test]
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

@@ -195,6 +195,9 @@ class SchoolStaffController < ApplicationController
   end
 
   def search_class
+    if params[:search]==""
+      return
+    end
     @ret_class = ClassRoom.where('lower(class_code) = ? AND school_code = ?', params[:search].downcase, params[:school])
 
     if @ret_class.exists?
@@ -234,13 +237,13 @@ class SchoolStaffController < ApplicationController
     @new_class = params[:class_code].upcase
     if ClassRoom.where(school_code: @school, class_code: @new_class).exists?
       redirect_to school_staff_class_manage_path(CF: params[:CF])
-      flash[:alert]= "Classe già presente nel sistema"
+      flash[:alert]= "Classroom already present in the system"
     else
       if ClassRoom.create(school_code: @school, class_code: @new_class)
         redirect_to school_staff_class_manage_path(CF: params[:CF])
       else
         redirect_to school_staff_class_manage_path(CF: params[:CF])
-        flash[:alert]= "Errore creazione classe"
+        flash[:alert]= "Error Classroom creation"
       end
     end
   end
@@ -287,7 +290,7 @@ class SchoolStaffController < ApplicationController
 
   def edit_class
     @school = User.where(CF: params[:key]).pluck(:school_code).uniq.first
-    @old_class = params[:old_class]
+    @old_class = params[:old_class].upcase
     @new_class = params[:new_class].upcase
     if @new_class!=@old_class
       if !ClassRoom.where(school_code: @school, class_code: @new_class).exists?
@@ -310,12 +313,17 @@ class SchoolStaffController < ApplicationController
         @classroom = ClassRoom.find_by(class_code: @old_class, school_code: @school)
         if @classroom.update(class_code: @new_class)
           redirect_to school_staff_class_manage_path(CF: params[:key])
+        
+        else
+          redirect_to school_staff_class_manage_path(CF: params[:key])
+          flash[:alert]= "Update errror"
         end
       else
         redirect_to school_staff_class_manage_path(CF: params[:key])
-        flash[:alert]= "Classe già presente nel sistema"
+        flash[:alert]= "Classroom already present in the system"
       end
     end
+    return
   end
 
   def remove_student
@@ -358,6 +366,10 @@ class SchoolStaffController < ApplicationController
     @subj = Subject.new(school_code: @school, class_code: @cls, CFprof: @teacher, weekday: @day,time:@hour,name:@name)
     if @subj.save
       redirect_to school_staff_subject_manage_path(CF: params[:CF])
+      return
+    else
+      redirect_to school_staff_subject_manage_path(CF: params[:CF])
+      flash[:alert]= "Error add a new Subject"
     end
   end
   def subject_delete
@@ -430,6 +442,9 @@ class SchoolStaffController < ApplicationController
     end
   end
   def subject_search
+    if params[:search]==""
+      return
+    end
     @ret_sub = Subject.where('lower(name) = ? AND school_code = ?', params[:search].downcase, params[:school]).order(:class_code).pluck(:name, :class_code, :CFprof).uniq
     if @ret_sub!=[]
       

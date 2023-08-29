@@ -8,9 +8,10 @@ body{
     display:flex;
     flex-direction: column;
     align-items: center;
-    background-color: red;
     justify-content: center;
     height:100vh;
+    background-color: white;
+    width: 100%;
 }
 .home{
     width:100%;
@@ -19,6 +20,7 @@ body{
     align-items: center;
     justify-content: center;
     height:100%;
+
 }
 
 .upper-bottons{
@@ -29,29 +31,32 @@ body{
     align-items: center;
     gap: 180px;
     width: 90%;
-    margin-left: 5%;
+    margin-bottom: 0;
 }
 
 .up-botton{
     height: 40px;
-    background-color: wheat;
+    background-color: rgb(172, 245, 255);
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100px;
+    width: 150px;
     justify-content: center;
     font-size: 22px;
 }
 
+
 .main-panel{
     height: 300px;
-    background-color: antiquewhite;
+    background-color: rgb(172, 245, 255);
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width:90%;
+    width:700px;
     margin-left: 5%;
+    margin-top: 0;
+    border-radius: 10px;
 }
 .panel{
     width:100%;
@@ -63,8 +68,9 @@ body{
 }
 
 
+
 .navbar{
-    background-color: skyblue;
+    background-color: rgb(172, 245, 255);
     height: 70px;
     position: fixed;
     top: 0;
@@ -74,6 +80,7 @@ body{
     flex-wrap: nowrap;
     justify-content: space-between;
 }
+
 
 .writ{
     width: 300px;

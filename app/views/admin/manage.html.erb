@@ -95,7 +95,7 @@
             <div class="panel" id="second-panel" style="display:none;" >
                 <div class="select-add">
                   <%= form_with url: admin_searchstaff_path, class: 'form-search', method: :get do |form| %>
-                      <%= form.label :search, "Search for School Code:", class:'label-field' %>
+                      <%= form.label :search, "Search for School Name:", class:'label-field' %>
                       <%= form.text_field :search, class: 'text-field' %>
                       <%= form.submit "Search", class: 'style-button' %>
                   <% end %> 

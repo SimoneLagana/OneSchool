@@ -58,7 +58,7 @@
                         </td>
 
                         <td>
-                            <%= link_to family_meeting_manage_url(CF: params[:CF], CFstudent: params[:CFstudent], CFprof:@teacher.CF) do %>
+                            <%= link_to family_meeting_manage_url(CF: params[:CF], CFstudent: params[:CFstudent], CFprof:@teacher.CF), id:  @teacher.CF + "meeting_link" do %>
                                 <div class="profile">
                                     meeting
                                 </div>

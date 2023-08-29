@@ -26,6 +26,18 @@ FactoryBot.define do
       school_code { '1' }
       type { 'Teacher' }
     end
+
+    
+    
+    factory :family, class: User do
+      name { 'Maria' }
+      surname { 'Rossi' }
+      CF { '7' } # Puoi inserire un valore univoco o generarlo in modo casuale
+      mail { 'maria@Rossi' }
+      password { 'samir' }
+      school_code { '1' }
+      type { 'Family' }
+    end
     
   end
   

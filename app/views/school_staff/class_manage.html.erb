@@ -11,44 +11,46 @@
 <body>
 <div id="popupContainer"></div>
 <nav class="navbar">
-        <label class="writ">
-          name
-        </label>
-        <%= link_to school_staff_profile_url(CF: params[:CF]) do %>
+<%= link_to school_staff_home_path(CF: params[:CF]),class: 'link-profile no-underline' do%>
+        <div class="writ">
+          OneSchool
+        </div>
+<%end%>
+        <%= link_to school_staff_profile_url(CF: params[:CF]),class: 'link-profile no-underline' do %>
             <div class="profile">
                 Profile
             </div>
         <% end %>
-
       </nav>
-    <div class="inner-home">
+    <div class="home">
         <div class="upper-bottons">
-        <%= link_to school_staff_class_manage_path(CF: params[:CF]) do %>
-            <div class="up-botton" id="first-botton" onclick="show_panel('first-panel');">
+        <%= link_to school_staff_class_manage_path(CF: params[:CF]),class: 'link-profile no-underline' do %>
+            <div class="up-botton" id="first-botton" >
               Class Manage
             </div><%end%>
-            <%= link_to school_staff_subject_manage_path(CF: params[:CF]) do%>
-            <div class="up-botton" id="second-botton" onclick="show_panel('second-panel');">
+            <%= link_to school_staff_subject_manage_path(CF: params[:CF]),class: 'link-profile no-underline' do%>
+            <div class="up-botton" id="second-botton" >
                 Subject Manage
             </div><%end%>
-            <%= link_to school_staff_timetable_path(CF: params[:CF]) do%>
-            <div class="up-botton" id="second-botton" onclick="show_panel('second-panel');">
+            <%= link_to school_staff_timetable_path(CF: params[:CF]),class: 'link-profile no-underline' do%>
+            <div class="up-botton" id="third-botton">
                 Timetables
             </div><%end%>
             </div> 
 <div class="main-panel">
     <div class="panel" id="first-panel" style="display:flex;">
-    <%= form_with url: staff_searchclass_path, method: :get do |form| %>
-    <%= form.label :search, "Search for Code:" %>
-    <%= form.text_field :search %>
-    <%= form.submit "Search" %>
+<div class="select-add">
+    <%= form_with url: staff_searchclass_path, method: :get,class: 'form-search' do |form| %>
+    <%= form.label :search, "Search for Code:" , class: "label-field"%>
+    <%= form.text_field :search  %>
+    <%= form.submit "Search", class: 'style-button-small' %>
     <%= hidden_field_tag :school, User.where(CF: params[:CF]).pluck(:school_code) %>
     <%= hidden_field_tag :CF, params[:CF] %>
     <% end %> 
-<button id="addSchoolButton" onclick="openAddClassForm(<%= params[:CF].to_json %>);"> Add a New Class</button>
-
+<button id="addSchoolButton" class="style-button" onclick="openAddClassForm(<%= params[:CF].to_json %>);"> Add a New Class</button>
+</div>
     <div id="manageAdminTableDiv">
-    <table>
+    <table class="tabella">
   <thead>
     <tr>
       <th>ClassCode</th>
@@ -59,24 +61,24 @@
 
     <% if @ret_class == "NOT_FOUND"%>
     <% params[:search] =""%>
-    <%=link_to "reset", school_staff_class_manage_path(CF: params[:CF])%>
+    <%=link_to "Reset Search", school_staff_class_manage_path(CF: params[:CF])%>
 
     <% else  %>
     <% if @ret_class.present? %>
         <% @classes = @ret_class %>
         <% params[:search] =""%>
-        <%=link_to "reset", school_staff_class_manage_path(CF: params[:CF])%>
+        <%=link_to "Reset Search", school_staff_class_manage_path(CF: params[:CF])%>
     <% else %>
         <% @classes = ClassRoom.where(school_code:  User.where(CF: params[:CF]).pluck(:school_code).uniq.first).where.not(class_code: "STUDENTS_WITHOUT_CLASS").order(:class_code) %>
     <%end%>
     <% @classes.each do |cls| %>
     <tr>
-        <td><%= cls.class_code%></td>
-<td><button onclick="editClassForm(<%= cls.to_json %>,<%= params[:CF].to_json %>,
+        <td class="center"><%= cls.class_code%></td>
+<td class="center"><button onclick="editClassForm(<%= cls.to_json %>,<%= params[:CF].to_json %>,
     <%= Student.where(student_class_code: cls.class_code).to_json%>,
 <%= ClassRoom.where(school_code: User.where(CF: params[:CF]).pluck(:school_code).uniq.first).where.not(class_code:"STUDENTS_WITHOUT_CLASS").to_json %>
 );">Edit</button></td>
-<td> <%= form_tag school_staff_deleteclass_path, method: :delete do %>
+<td class="center"> <%= form_tag school_staff_deleteclass_path, method: :delete do %>
             <%= hidden_field_tag :code, cls.class_code %>
             <%= hidden_field_tag :school, cls.school_code %>
             <%= hidden_field_tag :CF, params[:CF] %>

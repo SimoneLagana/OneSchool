@@ -1,45 +1,44 @@
-//SCHOOLSTAFF HOME
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag "teacher_home.css" %>
+    <%= stylesheet_link_tag "staff_home.css" %>
     <%# <%= javascript_include_tag('school_staff.js') %> 
     <title>Home</title>
 </head>
 <body>
     <nav class="navbar">
-        <label class="writ">
-          name
-        </label>
-        <%= link_to school_staff_profile_url(CF: params[:CF]) do %>
+<%= link_to school_staff_home_path(CF: params[:CF]),class: 'link-profile no-underline' do%>
+        <div class="writ">
+          OneSchool
+        </div>
+<%end%>
+        <%= link_to school_staff_profile_url(CF: params[:CF]),class: 'link-profile no-underline' do %>
             <div class="profile">
                 Profile
             </div>
         <% end %>
-
       </nav>
     <div class="home">
         <div class="panel-container">
 
             
-            <%= link_to school_staff_communications_path(CF: params[:CF]) do %>
-            <div class="panel">
+            <%= link_to school_staff_communications_path(CF: params[:CF]),class: 'no-decoration' do %>
+            <div class="panel-btn">
                 Communications
             </div>
             <% end %>
 
-            <%= link_to school_staff_manage_path(CF: params[:CF]) do %>
-                <div class="panel">
+            <%= link_to school_staff_manage_path(CF: params[:CF], token: params[:token]),class: 'no-decoration' do %>
+                <div class="panel-btn">
                     Manage School profiles
                 </div>
             <% end %>
         
         
-            <%= link_to school_staff_class_manage_path(CF: params[:CF]) do %>
-                <div class="panel">
+            <%= link_to school_staff_class_manage_path(CF: params[:CF]),class: 'no-decoration' do %>
+                <div class="panel-btn">
                         Class schedule
                 </div>
             <% end %>

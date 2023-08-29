@@ -22,11 +22,11 @@
     <div class="home">
         <label class="title"> Login as family</label>
         <%= form_with url: family_checklogin_url, class: 'form-login', method: :post do |form| %>
-            <label class="label-field"> Email</label>
-            <%= form.email_field :mail, class: 'text-field' %>
+            <label class="label-field" > Email</label>
+            <%= form.email_field :mail, class: 'text-field' , id: 'email-field'%>
             <label class="label-field"> Password</label>
-            <%= form.password_field :password, class: 'text-field' %>
-            <%= form.submit "login", class: 'button-field' %>
+            <%= form.password_field :password, class: 'text-field', id: 'password-field' %>
+            <%= form.submit "login", class: 'button-field', id: 'login-button' %>
         <% end %>
          <% flash.each do |key, message| %>
             <div class="flash <%= key %>">

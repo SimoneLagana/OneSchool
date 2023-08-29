@@ -8,7 +8,7 @@
 
     <title>Grades</title>
 </head>
-<body>
+<body> 
     <nav class="navbar">
         <%= link_to teacher_classroom_url(CF: params[:CF], classroom: @classname) do %>
             <label class="writ">
@@ -62,5 +62,35 @@
             </tr>
         <% end %> 
     </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const SubjectSelect = document.querySelector("select[name='subject']");
+    const WeekdaySelect = document.querySelector("select[name='weekday']");
+    const TimeSelect = document.querySelector("select[name='weekday']");
+    const commonFields = document.querySelector("#common-fields");
+    const studentFields = document.querySelector("#student-fields");
+    const familyFields = document.querySelector("#family-fields");
+    const submitButton = document.querySelector("#submit-button");
+
+  SubjectSelect.addEventListener("change", function() {
+      fetch("<%= teacher_grade_url %>?" + new URLSearchParams({
+        subject: this.value
+        puts(this.value)
+        CF: "<%= @teacher.CF %>",
+      }), {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      }).then(function(response) {
+        return response.text();
+      }).then(function(html) {
+
+        const newClassSelect = new DOMParser().parseFromString(html, 'text/html').querySelector("select[name='subject']");
+        SubjectSelect.innerHTML = newClassSelect.innerHTML;
+      });
+  });
+});
+    
 </body>
 </html>

@@ -3,12 +3,22 @@
     padding:0;
     background-color: white;
 }
-
+ 
 body{
     display:flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     height:100vh;
     background-color: white;
+}
+.home{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
 }
 
 .navbar{
@@ -34,63 +44,45 @@ body{
     height: 70px;
     margin-left: 100px;
 }
-/*Home*/
-.home{
-    width:100%;
+
+.link-profile{
+    width: 100px;
+    height: 70px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    text-align: center;
+    font-size: 22px;
+    margin-right: 40px;
+}
+
+.title{
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+}
+.panel-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     gap: 30px;
 }
 
-.form-login{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
-.form-field{
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    width: 100%;
-}
 
-.label-field{
+.panel{
+    display:flex;
+    flex-direction: column;
     width: 240px;
-    text-align: left;
-    background-color: white;
-}
-.title{
-    font-size: 24px;
-}
-
-.button-field{
-    width: 80px;
-    height: 30px;
-    font-size: 18px;
-    margin-top: 30px;
+    height: 200px;
+    background-color: rgb(172, 245, 255);
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    font-size: 22px;
+    text-decoration: none;
 }
 
-.flash{
-    padding: 10px;
-    margin-bottom: 5px;
-    border-radius: 4px;
-}
-
- .alert {
-    background-color: #ff0000;
-    color: #ffffff;
-  }
-
-  .notice {
-    background-color: #00ff00;
-    color: #000000;
-  }
-
-  .no-underline {
+.no-underline {
     text-decoration: none;
   }
 .no-underline:visited{

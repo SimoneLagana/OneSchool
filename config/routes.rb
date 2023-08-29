@@ -100,18 +100,33 @@ get "school_staff/searchClass", to: "school_staff#search_class", as: "staff_sear
 delete "school_staff/deleteClass", to: "school_staff#delete_class", as: "school_staff_deleteclass"
 post "school_staff/addClass", to: "school_staff#add_class", as: "school_staff_addclass"
 post "school_staff/editClass", to: "school_staff#edit_class", as: "school_staff_editclass"
-  
+post "school_staff/removeStudent", to: "school_staff#remove_student", as: "school_staff_removestudent"
+get 'school_staff/staffManageSubject', to: 'school_staff#subject_manage', as: 'school_staff_subject_manage'
+post "school_staff/addSubject" ,to: 'school_staff#subject_add', as: 'school_staff_subject_add' 
+post "school_staff/editSubject" ,to: 'school_staff#subject_edit', as: 'school_staff_subject_edit' 
+get "school_staff/communications", to: "school_staff#communications", as: "school_staff_communications"
+get "school_staff/searchCommunication", to: "school_staff#search_communication", as: "school_staff_search_communication"
+delete "school_staff/deleteCommunication", to: "school_staff#delete_communication", as: "school_staff_delete_communication"
+post "school_staff/addCommunication", to: "school_staff#add_communication", as: "school_staff_add_communication"
+post "school_staff/subjectDelete", to: "school_staff#subject_delete", as: "school_staff_subject_delete"  
+delete "school_staff/subjectDelete", to: "school_staff#subject_delete", as: "school_staff_subject_deletee"  
+get "school_staff/subjectSearch",to: "school_staff#subject_search",as: "staff_searchsubject"
+get "schoolStaff/timetable",to: "school_staff#timetable",as: "school_staff_timetable"
+get "school_staff/timeTableSearch",to: "school_staff#search_time",as: "staff_searchtime"
+get 'school_staff/profile', to: 'school_staff#profile', as: 'school_staff_profile'
+post 'school_staff/changepassword', to: 'school_staff#changepassword', as: 'school_staff_changepassword'
+get 'school_staff/upgradepassword', to: 'school_staff#upgradepassword', as: 'school_staff_upgradepassword'
 
-  get "/oneschool", to: "oneschool#index"
 
   #admin
-  get "/admin/signup", to: "admin#signup"
-  get "admin/manage", to: "admin#manage"
-  post "/admin/create", to: "admin#create" 
-  post "/admin/createSchool", to: "admin#create_school"
-  post "/admin/createStaff", to: "admin#create_staff"
-  post "/admin/editSchool", to: "admin#edit_school"
-  post "/admin/updateSchool", to: "admin#update_school"
+  get "/admin/signup", to: "admin#signup", as: 'admin_signup'
+  get "admin/manage", to: "admin#manage", as: 'admin_manage'
+  post "/admin/create", to: "admin#create", as: 'admin_create'
+  get "admin/login", to: "admin#login", as: "admin_login"
+  post "/admin/createSchool", to: "admin#create_school", as: 'admin_create_school'
+  post "/admin/createStaff", to: "admin#create_staff", as: 'admin_create_staff'
+  post "/admin/editSchool", to: "admin#edit_school", as: 'admin_edit_school'
+  post "/admin/updateSchool", to: "admin#update_school", as: 'admin_update_school'
   delete "/admin/deleteSchool", to: "admin#delete_school", as: "admin_deleteschool"
   post "/admin/updateStaff", to: "admin#update_staff", as: "admin_updatestaff"
   delete "/admin/deleteStaff", to: "admin#delete_staff", as: "admin_deletestaff"

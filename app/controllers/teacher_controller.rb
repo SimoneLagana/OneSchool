@@ -2,21 +2,20 @@ class TeacherController < ApplicationController
   before_action :check_cookies_login, except: [:login, :checklogin]
 
   def login
-    if cookies[:teacher_info].present? && JSON.parse(cookies[:teacher_info])["islogged"] == true
-      mail=JSON.parse(cookies[:teacher_info])["mail"]
-      @teacher=@teacher=Teacher.find_by(mail: mail)
-      redirect_to teacher_home_url(CF: @teacher.CF)
+    if session[:CF].present?
+      @teacher=Teacher.find_by(CF: session[:CF])
+      redirect_to teacher_home_url
     end
   end
 
   def upgradepassword
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
     @teacher.update(password: $passk)
-    redirect_to teacher_home_url(CF: @teacher.CF)
+    redirect_to teacher_home_url
   end
 
   def changepassword
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
     pass=params[:old_password]
     $passk=params[:password]
     if(@teacher) && @teacher.password == pass
@@ -29,7 +28,7 @@ class TeacherController < ApplicationController
   end
   
   def home
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
     @classrooms=Subject.where(CFprof: @teacher.CF).pluck(:class_code).uniq
     unless(@classrooms)
       flash[:alert]= "non ci sono classi per questo insegnante, contatta la segreteria"
@@ -39,9 +38,8 @@ class TeacherController < ApplicationController
   def checklogin
     @teacher = Teacher.find_by(mail: params[:mail])
     if @teacher && @teacher.password == params[:password]
-      teacher_info = { mail: @teacher.mail, islogged: true }
-      cookies[:teacher_info] = { value: teacher_info.to_json, expires: 30.day.from_now }
-      redirect_to teacher_home_url(CF: @teacher.CF)
+      session[:CF]= @teacher.CF
+      redirect_to teacher_home_url
       
     else
       redirect_to teacher_login_url
@@ -50,29 +48,29 @@ class TeacherController < ApplicationController
   end
 
   def checklogout
-    cookies.delete(:teacher_info)
+    session.delete(:CF)
     redirect_to root_path
   end
 
   def profile
-    @teacher = Teacher.find_by(CF: params[:CF])
+    @teacher = Teacher.find_by(CF: session[:CF])
   end
 
   def check_cookies_login
-    unless cookies[:teacher_info].present?
+    unless session[:CF].present?
         redirect_to teacher_login_url, alert: "Effettua l'accesso per continuare."
     end
     
   end
   
   def classroom
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
     @classname=params[:classroom]
     @subjects=Subject.where(CFprof: @teacher.CF, class_code: params[:classroom]).pluck(:name).uniq
   end
 
   def commitment
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
 
   end
 
@@ -103,11 +101,11 @@ class TeacherController < ApplicationController
         end
         new_date += 1.hour
       end      
-    redirect_to teacher_commitment_url(CF: params[:CFprof])
+    redirect_to teacher_commitment_url
   end
   
   def meeting
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
     @meetings=Meeting.where(CFprof: @teacher.CF)
     token=generate_token(@teacher.name)
     room="ssarekde"
@@ -126,7 +124,7 @@ class TeacherController < ApplicationController
   end
 
   def requestmeeting
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
     @classname=params[:classroom]
     @confirm=""
     if(params[:confirm].present?)
@@ -149,11 +147,11 @@ class TeacherController < ApplicationController
     puts(@parent_mail)
     puts("ciaos")
     MeetingMailer.meeting_request(@parent_mail,text, student, teacher).deliver_now
-    redirect_to teacher_requestmeeting_url(CF: params[:CFprof], classroom: params[:class_code], confirm: "conferma")
+    redirect_to teacher_requestmeeting_url(classroom: params[:class_code], confirm: "conferma")
   end
 
   def grade
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
     @classname=params[:classroom]
     @subjects=[["Subject", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom]).pluck(:name).uniq
     @students=Student.where(student_class_code: params[:classroom])
@@ -184,7 +182,7 @@ class TeacherController < ApplicationController
   end
 
   def absence
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
     @classname=params[:classroom]
     @subjects=[["Subject", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom]).pluck(:name).uniq
     @students=Student.where(student_class_code: params[:classroom])
@@ -215,7 +213,7 @@ class TeacherController < ApplicationController
   end
 
   def note
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
     @students=Student.where(student_class_code: params[:classroom])
     @classname=params[:classroom]
     @notes=Note.where(CFprof: params[:CF])
@@ -230,7 +228,7 @@ class TeacherController < ApplicationController
   end
 
   def homework
-    @teacher=Teacher.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: session[:CF])
     @classname=params[:classroom]
     @subjects=[["Subject", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom]).pluck(:name).uniq
     @homeworks= Homework.where(CFprof: params[:CF], class_code: params[:classroom])

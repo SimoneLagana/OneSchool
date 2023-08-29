@@ -45,6 +45,7 @@ body{
     font-size: 22px;
 }
 
+
 .main-panel{
     height: 300px;
     background-color: rgb(172, 245, 255);
@@ -67,6 +68,7 @@ body{
 }
 
 
+
 .navbar{
     background-color: rgb(172, 245, 255);
     height: 70px;
@@ -78,6 +80,7 @@ body{
     flex-wrap: nowrap;
     justify-content: space-between;
 }
+
 
 .writ{
     width: 300px;
@@ -98,7 +101,7 @@ body{
     justify-content: center;
     text-align: center;
     font-size: 22px;
-    margin-right: 40px;
+    margin-right: 100px;
 }
 
 
@@ -152,13 +155,12 @@ body{
 
   #closePopup {
     position: fixed;
-    top: 8%;
-    left: 95%;
-     transform: translate(-50%, -50%); 
+    top: 5%;
+    left: 97%;
+    /* transform: translate(-50%, -50%); */
     cursor: pointer;
     font-size: 24px;
     border-radius: 50%;
-    background: none;
   }
  
    .submitBtn{
@@ -171,57 +173,14 @@ body{
     color: #f7f1eb;
     margin-bottom: 4px;
     width: 70%;
-    margin-top: 3%;
   }
 
   #manageAdminTableDiv{
     max-height: 500px;
     overflow-y: auto;
   }
-  #manageAdminTableDiv-small{
-    max-height: 200px;
-    overflow-y: auto;
+
+  .inner-home{
+    border-radius: 20px;
   }
-  .link-profile{
-    text-decoration: none;
-    background: none;
-}
-.select-add{
-    width: 650px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    background-color: rgb(172, 245, 255);
-    margin-bottom: 20px;
-}
-.tabella{
-    border-radius: 10px;
-    width: 650px;
-}
-.form-search{
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: 70%;
-    background-color: rgb(172, 245, 255);
-}
-
-.label-field{
-    background-color: rgb(172, 245, 255);
-}
-
-.text-field{
-    padding: 3px;
-}
-.center{
-    text-align: center;
-}
-.style-button{
-    font-size: 16px;
-    padding: 3px;
-
-}
-.style-button-small{
-    font-size: 10px;
-    padding: 3px;
-}
+  

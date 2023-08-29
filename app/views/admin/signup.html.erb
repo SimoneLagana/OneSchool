@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrati_admin</title>
+    <%= stylesheet_link_tag "login.css" %>
 </head>
 <body>
+    <nav class="navbar">
+      <label class="writ">
+        OneSchool
+      </label>
+    </nav>
     <div class="home">
         <label class="title"> Signup as admin</label>
-        <%= form_with url: "/admin/create", method: :post do |form| %>
-            <%= form.text_field :name %> 
-            <%= form.text_field :surname %>
-            <%= form.text_field :CF %>
-            <%= form.email_field :email %>
-            <%= form.password_field :password %>
-            <%= form.submit "submit" %>
+        <%= form_with url: "/admin/create", class: 'form-login', method: :post do |form| %>
+            <label class="label-field"> Name</label>
+            <%= form.text_field :name, class: 'form-field' %> 
+            <label class="label-field"> Surname</label>
+            <%= form.text_field :surname, class: 'form-field' %>
+            <label class="label-field"> CF</label>
+            <%= form.text_field :CF, class: 'form-field'%>
+            <label class="label-field"> Email</label>
+            <%= form.email_field :email, class: 'form-field' %>
+            <label class="label-field"> Password</label>
+            <%= form.password_field :password, class: 'form-field' %>
+            <%= form.submit "signup", class: 'button-field'%>
             <% end %> 
         
             <%= link_to "login", "/login" %>
-
-
         </form>
-<% if flash[:alert] %>
-  <div class="flash notice">
-    <%= flash[:alert] %>
-  </div>
-<% end %>
+      <% if flash[:alert] %>
+        <div class="flash notice">
+        <%= flash[:alert] %>
+        </div>
+      <% end %>
 
     </div>
     

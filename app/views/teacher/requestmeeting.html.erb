@@ -3,36 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag "teacher_absence.css" %>
+    <%= stylesheet_link_tag "teacher_requestmeeting.css" %>
     <%= javascript_include_tag('teacher.js') %>
 
     <title>meeting</title>
 </head>
 <body>
     <nav class="navbar">
-        <%= link_to teacher_classroom_url(CF: params[:CF], classroom: @classname) do %>
-            <label class="writ">
+        <%= link_to teacher_classroom_url(classroom: @classname), class: "link-profile no-underline" do %>
+            <label class="writ"> Classroom: 
             <%= @classname %>
             </label>
         <% end %>
-        <%= link_to teacher_profile_url(CF: params[:CF]) do %>
+        <%= link_to teacher_profile_url, class: "link-profile no-underline" do %>
             <div class="profile">
-                <%= @teacher.name %>
+                Profile
             </div>
         <% end %>
-    </nav>
+      </nav>
     <div class="home">
-        <label class="title"> Meeting </label>
-        <div class="insert-container">
-            <%= form_with url: teacher_insertmeeting_url, class: 'form-subject', method: :post do |form| %>
+        <label class="title-request"> Meeting </label>
+        <div class="request-container">
+            <%= form_with url: teacher_insertmeeting_url, class: 'form-request', method: :post do |form| %>
                 <%= hidden_field_tag :class_code, @classname %>
                 <%= hidden_field_tag :CFprof, @teacher.CF %>
                 <%= hidden_field_tag :school_code, @teacher.school_code %>
-                <label class="label-form">Indica lo studente su cui vuoi fare un meeting,
-                manderemo una mail al suo genitore associato!</label>
-                <%= select_tag :CFstudent, options_for_select(@students.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "form-field" %>
-                <%= form.text_area :text, size: "70x5" %>
-                <%= form.submit "Save homework", class: "button-submit" %>
+                <label class="request-label">Select the student to send his/her parent a meeting request</label>
+                <br>
+                <br>
+                <%= select_tag :CFstudent, options_for_select(@students.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "request-field" %>
+                <%= form.text_area :text, size: "70x5", class: 'request-text' %>
+                <%= form.submit "Send meeting request", class: "button-submit" %>
             <% end %>
         </div> 
         <div><%= @confirm %></div>

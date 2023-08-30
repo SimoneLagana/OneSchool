@@ -10,17 +10,17 @@
 </head>
 <body>
     <nav class="navbar">
-        <%= link_to teacher_classroom_url(CF: params[:CF], classroom: @classname) do %>
-            <label class="writ">
+        <%= link_to teacher_classroom_url(classroom: @classname), class: "link-profile no-underline" do %>
+            <label class="writ"> Classroom: 
             <%= @classname %>
             </label>
         <% end %>
-        <%= link_to teacher_profile_url(CF: params[:CF]) do %>
+        <%= link_to teacher_profile_url, class: "link-profile no-underline" do %>
             <div class="profile">
-                <%= @teacher.name %>
+                Profile
             </div>
-        <% end %>     
-    </nav>
+        <% end %>
+      </nav>
     <div class="home">
         <label class="title"> Absences </label>
         <div class="insert-container">

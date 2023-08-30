@@ -23,9 +23,9 @@
         <label class="title"> Login as student</label>
         <%= form_with url: student_checklogin_url, class: 'form-login', method: :post do |form| %>
             <label class="label-field"> Email</label>
-            <%= form.email_field :mail, id: 'email-field', class: 'text-field' %>
+            <%= form.email_field :mail, id: 'email-field', class: 'form-field' %>
             <label class="label-field"> Password</label>
-            <%= form.password_field :password, id: 'password-field', class: 'text-field' %>
+            <%= form.password_field :password, id: 'password-field', class: 'form-field' %>
             <%= form.submit "login", id: 'login-button', class: 'button-field' %>
         <% end %>
          <% flash.each do |key, message| %>

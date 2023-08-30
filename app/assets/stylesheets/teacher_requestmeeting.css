@@ -2,13 +2,13 @@
     margin:0;
     padding:0;
     background-color: white;
-} 
+}
  
 body{
     display:flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     height:100%;
 }
 .home{
@@ -16,100 +16,58 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-}
-.whole-panel{
-    display: flex;
-    flex-direction: row;
-    gap: 70px;
     justify-content: center;
-    margin-top: 0px;
-}
-
-
-.right-panel{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-    height: 400px;
-    gap: 50px;
-}
-
-.calendar{
-    width: 100%;
-    height: 80%;
-    background-color: aquamarine;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    font-size: 20px;
-}
-
-.calendar:link, .calendar:link:visited{
-    color:black;
-    text-decoration: none;
-}
-
-.meeting:link, .meeting:link:visited{
-    color:black;
-    text-decoration: none;
-}
-
-
-
-.meeting{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    height: 20%;
-    background-color: aqua;
-    text-align: center;
-    border-radius: 10px;
-    font-size: 20px;
-}
-
-.left-panel{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-top: 30px;
     
 }
 
-.form-class{
+.title-request{
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+}
+.request-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    width: 500px;
+    background-color: aquamarine;
+    border-radius: 10px;
+    gap: 40px;
+    height: 320px;
+}
+
+.request-label{
+    width: 100%;
+    background-color: aquamarine;
+    margin-bottom: 20px;
+}
+
+.request-field{
+    width: 220px;
+    height: 20px;
+    font-size: 18px;
     display:flex;
     flex-direction: column;
-    align-items: end;
-    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.label-class{
-    width: 240px;
-    height: 30px;
-    padding-left: 4px;
+.request-text{
+    width: 100%;
+    margin-bottom: 20px;
+
+}
+
+
+
+
+.button-submit{
     font-size: 18px;
 }
-
-.select-class{
-    width: 240px;
-    height: 30px;
-    padding-left: 4px;
-    font-size: 18px;
-}
-
-.submit-button{
-    width: 130px;
-    height: 40px;
-    font-size: 18px;
-
-
-}
-
 
 .navbar{
     background-color: skyblue;
@@ -134,13 +92,17 @@ body{
     margin-left: 100px;
 }
 
-.form-profile{
+.form-request{
     border-width: 0;
-    width: 100px;
+    width: 280px;
     height: 70px;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
     text-align: center;
+    background-color: aquamarine;
+    padding-top: 20px;
+    gap: 20px;
 }
 .profile{
     width: 100px;
@@ -152,11 +114,7 @@ body{
     font-size: 22px;
     margin-right: 100px;
 }
-
-
-
-
-
+ 
 .flash {
     padding: 10px;
     margin-bottom: 5px;

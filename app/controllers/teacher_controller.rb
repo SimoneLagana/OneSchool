@@ -32,11 +32,12 @@ class TeacherController < ApplicationController
     pass=""
   end
   
-  def home
+  def home 
     @teacher=Teacher.find_by(CF: session[:CF])
-    @classrooms=Subject.where(CFprof: @teacher.CF).pluck(:class_code).uniq
+    @classrooms=[["Select a class",nil]]+Subject.where(CFprof: @teacher.CF).pluck(:class_code).uniq
     unless(@classrooms)
-      flash[:alert]= "non ci sono classi per questo insegnante, contatta la segreteria"
+      flash[:alert]= "There aren't any classrooms for this teacher!"
+      redirect_to teacher_home_url
     end
   end
 
@@ -76,6 +77,10 @@ class TeacherController < ApplicationController
   def classroom
     @teacher=Teacher.find_by(CF: session[:CF])
     @classname=params[:classroom]
+    if @classname==""
+      flash[:alert]="select a class!"
+      redirect_to teacher_home_url
+    end
     @subjects=Subject.where(CFprof: @teacher.CF, class_code: params[:classroom]).pluck(:name).uniq
   end
 
@@ -313,6 +318,39 @@ class TeacherController < ApplicationController
     redirect_to teacher_requestmeeting_url(classroom: params[:class_code], confirm: "conferma")
   end
 
+  def timetable
+    @classname=params[:classroom]
+    @teacher=Teacher.find_by(CF: session[:CF])
+    days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY']
+    hours = (1..6).to_a
+    subjects = Subject.where('upper(class_code) = ? AND school_code = ?', @classname.upcase, @teacher.school_code).order(Arel.sql("CASE weekday
+      WHEN 'MONDAY' THEN 1
+      WHEN 'TUESDAY' THEN 2
+      WHEN 'WEDNESDAY' THEN 3
+      WHEN 'THURSDAY' THEN 4
+      WHEN 'FRIDAY' THEN 5
+      WHEN 'SATURDAY' THEN 6
+    END")).pluck(:name, :weekday, :time)
+    
+    result = hours.map do |hour|
+      days.map do |day|
+        subject = subjects.find { |s| s[1] == day && s[2].to_i == hour }
+        subject ? subject[0] : '-'
+      end
+    end
+    
+    @ret = result
+    
+    
+    
+    if @ret!=[]
+      render "timetable"
+    else
+      @ret = "NOT_FOUND"
+      render "timetable"
+    end 
+  end
+
   def grade
     @teacher=Teacher.find_by(CF: session[:CF])
     @classname=params[:classroom]
@@ -394,14 +432,30 @@ class TeacherController < ApplicationController
     @teacher=Teacher.find_by(CF: session[:CF])
     @students=Student.where(student_class_code: params[:classroom])
     @classname=params[:classroom]
-    @notes=Note.where(CFprof: params[:CF])
+    @notes=Note.where(CFprof: session[:CF])
+    if @notes.empty?
+      puts("ciao")
+    end
   end
   
   def insertnote
+    if params[:CFstudent]==""
+      flash[:alert]="select a student!"
+      redirect_to teacher_note_url(classroom: params[:classroom])
+      return
+    end
+    if !params[:date].present?
+      flash[:alert]="select date!"
+      redirect_to teacher_note_url(classroom: params[:classroom])
+      return
+    end
     @note=Note.new(CFprof: params[:CFprof], CFstudent: params[:CFstudent], date: params[:date], description: params[:description], school_code: params[:school_code])
     if @note
       @note.save
-      redirect_to teacher_note_url(CF: params[:CFprof], classroom: params[:classroom])
+      redirect_to teacher_note_url(classroom: params[:classroom])
+    else
+      flash[:alert]="error during note creation"
+      redirect_to teacher_note_url
     end
   end
 
@@ -423,8 +477,17 @@ class TeacherController < ApplicationController
     end
   end
 
+  def agenda
+    @teacher=Teacher.find_by(CF: session[:CF])
+    @classname=params[:classroom]
+    @homeworks=Homework.where(school_code: @teacher.school_code, class_code: @classname)
+    @communications=Communication.where(school_code: @teacher.school_code)
+    @news = @communications.to_a + @homeworks.to_a
+    @news=@news.sort_by(&:date).reverse
+  end
+
  def communication
-  @teacher=Teacher.find_by(CF: params[:CF])
+  @teacher=Teacher.find_by(CF: session[:CF])
   @classname=params[:classroom]
   @communications=Communication.where(school_code: @teacher.school_code)
  end

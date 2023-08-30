@@ -54,7 +54,7 @@ body{
     width: 90%;
 }
 
-.panel{
+.panel-class{
     display:flex;
     flex-direction: column;
     width: 240px;

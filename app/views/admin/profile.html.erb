@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "profile.css" %>
+    <%= javascript_include_tag('admin.js') %>
+    <title>Profile</title>
+</head>
+<body>
+    <div id="popupcontainer"></div>
+    <nav class="navbar">
+        <%= link_to admin_manage_url do %>
+            <div class="profile">
+                Home
+            </div>
+        <% end %>
+
+        <%= link_to admin_profile_url do %>
+            <div class="profile">
+                Profile
+            </div>
+        <% end %>
+        
+      </nav>
+    <div class="home">
+        <div class="main-panel">
+            <label class="profile-field"><%= @admin.name %> </label>
+            <%if !session[:admin_code].present? %>
+                <label class="profile-field"><%= @admin.surname %> </label>
+            <%end%>
+            <label class="profile-field"><%= @admin.CF %> </label>
+            <label class="profile-field"><%= @admin.mail %> </label>
+            
+            <div class="button-container">
+                <%if !session[:admin_code].present? %>
+                    <button class="profile-button" onclick="editpassword('<%= @admin.CF%>', '<%= @admin.mail%>')">Modifica password</button>
+                <%end%>
+                <%= form_tag admin_checklogout_path, method: :delete do %>
+                    <%= submit_tag 'Logout', class: 'profile-button' %> 
+                <% end %>
+                <%= form_tag admin_delete_account_path, method: :delete do %>
+                    <%= submit_tag 'Delete account', class: 'profile-button' %> 
+                <% end %> 
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

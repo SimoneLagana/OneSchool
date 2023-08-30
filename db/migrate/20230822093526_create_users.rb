@@ -9,6 +9,9 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :school_code
       t.string :type, null: false
 
+      t.string :uid
+      t.string :provider
+      
       #student
       t.datetime :birthdate
       t.string :student_class_code

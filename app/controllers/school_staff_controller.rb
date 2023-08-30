@@ -181,6 +181,7 @@ class SchoolStaffController < ApplicationController
       end
       if @student.update_attribute(:mail, params[:mail])
         redirect_to "school_staff/staffManage", allow_other_host: true
+      
       else
         render "edit"
       end
@@ -284,6 +285,9 @@ class SchoolStaffController < ApplicationController
     @com = Communication.create(title: @title, text: @text, date: @date, school_code: @cd)
     if @com.save
       redirect_to school_staff_communications_path(CF: params[:CF])
+    else
+      redirect_to school_staff_communications_path(CF: params[:CF])
+      flash[:alert]= "Error Creation"
     end
   end
   

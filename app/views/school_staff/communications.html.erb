@@ -3,41 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag "staff_class_manage.css" %>
+    <%= stylesheet_link_tag "staff_subject_manage.css" %>
     <%= javascript_include_tag('staff.js') %>
 
-    <title>Document</title>
+     <title>Document</title>
 </head>
 <body>
 <div id="popupContainer"></div>
 <nav class="navbar">
-        <label class="writ">
-          name
-        </label>
-        <%= link_to school_staff_profile_url(CF: params[:CF]) do %>
+<%= link_to school_staff_home_path(CF: params[:CF]),class: 'link-profile no-underline' do%>
+        <div class="writ">
+          OneSchool
+        </div>
+<%end%>
+        <%= link_to school_staff_profile_url(CF: params[:CF]),class: 'link-profile no-underline' do %>
             <div class="profile">
                 Profile
             </div>
         <% end %>
-
       </nav>
-    <div class="inner-home">
+    <div class="home">
         <div class="upper-bottons">
+      <%= link_to school_staff_communications_path(CF: params[:CF]),class: 'link-profile no-underline' do %>
             <div class="up-botton" id="first-botton">
                 Communications
-            </div>
+            </div><%end%>
         </div> 
 <div class="main-panel">
     <div class="panel" id="first-panel" style="display:flex;">
-    <%= form_with url: school_staff_search_communication_path, method: :get do |form| %>
-    <%= form.label :search, "Search for title:" %>
+    <div class="select-add">
+
+    <%= form_with url: school_staff_search_communication_path, method: :get,class: 'form-search' do |form| %>
+    <%= form.label :search, "Search for title:", class: "label-field" %>
     <%= form.text_field :search %>
-    <%= form.submit "Search" %>
+    <%= form.submit "Search", class: 'style-button-small' %>
     <%= hidden_field_tag :school, User.where(CF: params[:CF]).pluck(:school_code) %>
     <%= hidden_field_tag :CF, params[:CF] %>
-    <% end %> 
-    <button id="addCommunicationButton" onclick = "openCommunicationForm(<%= params[:CF].to_json %>)"> Add communication</button>
- <table>
+    <% end %>
+    <button id="addCommunicationButton" class="style-button"  onclick = "openCommunicationForm(<%= params[:CF].to_json %>)"> Add communication</button>
+ </div>
+ <table class="tabella">
   <thead>
     <tr>
       <th>Title</th>
@@ -48,20 +53,21 @@
     <% @communications== []%>
     <% if @ret_comm == "NOT_FOUND" %>
       <% params[:search] = "" %>
-      <%= link_to "reset", school_staff_communications_path(CF: params[:CF]) %>
+      <%= link_to "Reset Search", school_staff_communications_path(CF: params[:CF]) %>
     <% elsif @ret_comm.present? %>
       <% @communications = @ret_comm %>
       <% params[:search] = "" %>
-      <%= link_to "reset", school_staff_communications_path(CF: params[:CF]) %>
+      <%= link_to "Reset Search", school_staff_communications_path(CF: params[:CF]) %>
+      
     <% else %>
       <% @communications = Communication.all %>
     <% end %>
 
     <% @communications.each do |comm| %>
       <tr>
-        <td><%= comm.title %></td>
-<td><button onclick="viewComunication(<%= comm.title.to_json%>,<%= comm.text.to_json %>,<%=  comm.date.to_json %>)">View</td>
-        <td>
+        <td class="center"><%= comm.title %></td>
+<td class="center"><button onclick="viewComunication(<%= comm.title.to_json%>,<%= comm.text.to_json %>,<%=  comm.date.to_json %>)">View</td>
+        <td class= "center">
           <%= form_tag school_staff_delete_communication_path, method: :delete do %>
             <%= hidden_field_tag :CF, params[:CF] %>
             <%= hidden_field_tag :title, comm.title %>

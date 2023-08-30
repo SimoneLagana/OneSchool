@@ -14,7 +14,7 @@
         </label>
         <div class="profile">
           Profile
-        </div>
+        </div> 
       </nav>
     <div class="home">
         <label class="title"> Login as Teacher</label>
@@ -25,7 +25,10 @@
             <%= form.password_field :password, id: 'password-field', class: 'text-field' %>
             <%= form.submit "login", id: 'login-button', class: 'button-field' %>
         <% end %>
-
+        <% if cookies[:teacher].present? %>
+            <% puts(cookies[:teacher].present?) %>
+            <%= button_to  'Signup with Google', user_google_oauth2_omniauth_authorize_path, method: :post, :data => {turbo: "false"} %>
+        <% end %>
         <% flash.each do |key, message| %>
             <div class="flash <%= key %>">
                 <%= message %>

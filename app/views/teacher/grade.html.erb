@@ -21,71 +21,105 @@
             </div>
         <% end %>     
     </nav>
-    <div class="home">
-        <label class="title"> Grades </label>
-        <div class="insert-container">
-            <%= form_tag teacher_grade_url, class: 'form-subject', method: :get do %>
-                <%= select_tag :subject, options_for_select([["Select Subject", nil]] + @subjects), class: "form-field" %>
-                <%= select_tag :weekday, options_for_select(@weekdays),  class: "form-field", onchange: "this.form.submit()" %>
-                <%= select_tag :time, options_for_select(@times),  class: "form-field", onchange: "this.form.submit()" %>
-                <%= hidden_field_tag :classroom, @classname %>
-                <%= hidden_field_tag :CF, @teacher.CF %>
-            <% end %>
+<div class="home">
+  <label class="title"> Grades </label>
+  <div class="insert-container">
+    <%= form_tag teacher_grade_url, class: 'form-subject', method: :get do %>
+      <%= select_tag :subject, options_for_select([["Select subject", nil]] + @subjects.reject { |subject| subject == "Subject" }), class: "form-field" %>
+      <%= select_tag :weekday, options_for_select(@weekdays),  class: "form-field" %>
+      <%= select_tag :time, options_for_select(@times),  class: "form-field" %>
+      <%= hidden_field_tag :classroom, @classname %>
+      <%= hidden_field_tag :CF, @teacher.CF %>
+    <% end %>
 
-            <%= form_with model: @teacher, url: teacher_insertgrade_url, class: 'form-subject', method: :post do |form| %>
-                <%= hidden_field_tag :class_code, @classname %>
-                <%= hidden_field_tag :CFprof, @teacher.CF %>
-                <%= hidden_field_tag :school_code, @teacher.school_code %>
-                <%= hidden_field_tag :subject_name, @subjects %>
-                <%= hidden_field_tag :weekday, @weekdays %>
-                <%= hidden_field_tag :time, @times %>
-                <%= number_field_tag :value, nil, class: "form-field", step: "0.1" %>
-                <%= date_field_tag :date, value: Date.today, class: 'form-field'%>
-                <%= select_tag :CFstudent, options_for_select(@students.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
-                <%= form.submit "Save absence", class: "button-submit" %>
-            <% end %>
-        </div>
-        
-         <% @grades.each do |grade| %>
-            <tr class="table">
-                <td> <%= grade.date %></td>
-                <td> <%= grade.value %></td>
-                <td> <%= grade.subject_name %></td>
-                <td> <%= name=Student.where(student_class_code: grade.class_code, CF: grade.CFstudent).pluck(:name).uniq.join %></td>
-                <td> <%= surname=Student.where(student_class_code: grade.class_code, CF: grade.CFstudent).pluck(:surname).uniq.join %></td>
-                <br>
-            </tr>
-        <% end %> 
-    </div>
+    <%= form_with model: @teacher, url: teacher_insertgrade_url, class: 'form-subject', method: :post do |form| %>
+      <%= hidden_field_tag :class_code, @classname %>
+      <%= hidden_field_tag :CFprof, @teacher.CF %>
+      <%= hidden_field_tag :school_code, @teacher.school_code %>
+      <%= hidden_field_tag :subject_name, @subjects %>
+      <%= hidden_field_tag :weekday, @weekdays %>
+      <%= hidden_field_tag :time, @times %>
+      <%= number_field_tag :value, nil, class: "form-field", step: "0.5" %><br>
+      <%= date_field_tag :date, value: Date.today, class: 'form-field'%><br>
+      <%= select_tag :CFstudent, options_for_select(@students.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %><br>
+      <%= form.submit "Save grade", class: "button-submit" %><br>
+    <% end %>
+  </div>
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    const SubjectSelect = document.querySelector("select[name='subject']");
-    const WeekdaySelect = document.querySelector("select[name='weekday']");
-    const TimeSelect = document.querySelector("select[name='weekday']");
-    const commonFields = document.querySelector("#common-fields");
-    const studentFields = document.querySelector("#student-fields");
-    const familyFields = document.querySelector("#family-fields");
-    const submitButton = document.querySelector("#submit-button");
+  <% @grades.each do |grade| %>
+    <tr class="table">
+      <td> <%= grade.date %></td>
+      <td> <%= grade.value %></td>
+      <td> <%= grade.subject_name %></td>
+      <td> <%= name=Student.where(student_class_code: grade.class_code, CF: grade.CFstudent).pluck(:name).uniq.join %></td>
+      <td> <%= surname=Student.where(student_class_code: grade.class_code, CF: grade.CFstudent).pluck(:surname).uniq.join %></td><br>
+    </tr><br>
+  <% end %> 
+</div>
 
-  SubjectSelect.addEventListener("change", function() {
-      fetch("<%= teacher_grade_url %>?" + new URLSearchParams({
-        subject: this.value
-        puts(this.value)
-        CF: "<%= @teacher.CF %>",
-      }), {
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        }
-      }).then(function(response) {
-        return response.text();
-      }).then(function(html) {
+<script>
+  const subjectSelect = document.querySelector("select[name='subject']");
+  const weekdaySelect = document.querySelector("select[name='weekday']");
+  const timeSelect = document.querySelector("select[name='time']");
 
-        const newClassSelect = new DOMParser().parseFromString(html, 'text/html').querySelector("select[name='subject']");
-        SubjectSelect.innerHTML = newClassSelect.innerHTML;
-      });
+  subjectSelect.addEventListener("change", function() {
+    console.log(this.value);
+    fetch("<%= teacher_grade_url %>?" + new URLSearchParams({
+      subject: this.value,
+      CF: "<%= @teacher.CF %>",
+      classroom: "<%= @classname %>",
+    }), {
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }).then(function(response) {
+      return response.text();
+    }).then(function(html) {
+      const newWeekdaySelect = new DOMParser().parseFromString(html, 'text/html').querySelector("select[name='weekday']");
+      weekdaySelect.innerHTML = newWeekdaySelect.innerHTML;
+    });
+  });
+
+weekdaySelect.addEventListener("change", function() {
+  fetch("<%= teacher_grade_url %>?" + new URLSearchParams({
+    subject: subjectSelect.value,
+    weekday: this.value,
+    CF: "<%= @teacher.CF %>",
+    classroom: "<%= @classname %>",
+  }), {
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  }).then(function(response) {
+    return response.text();
+  }).then(function(html) {
+    const newTimeSelect = new DOMParser().parseFromString(html, 'text/html').querySelector("select[name='time']");
+    timeSelect.innerHTML = newTimeSelect.innerHTML;
   });
 });
+
+timeSelect.addEventListener("change", function() {
+  fetch("<%= teacher_grade_url %>?" + new URLSearchParams({
+    subject: subjectSelect.value,
+    weekday: weekdaySelect.value,
+    time: this.value,
+    CF: "<%= @teacher.CF %>",
+    classroom: "<%= @classname %>",
+  }), {
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  }).then(function(response) {
+    return response.text();
+  }).then(function(html) {
+    
+  });
+});
+
+
+</script>
+
+
     
 </body>
 </html>

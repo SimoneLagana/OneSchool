@@ -86,5 +86,6 @@ group :test do
   gem "database_cleaner"
    gem 'guard-compat'
   gem 'guard-cucumber'
-
+  gem 'capybara-webkit'
+  gem 'headless'
 end

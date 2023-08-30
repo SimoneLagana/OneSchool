@@ -12,6 +12,7 @@
         FactoryBot.create(:school_staff)
     end
 
+    @javascript
     Given("I login as a school staff user") do
         visit root_path
         click_link "Schoolstaff"

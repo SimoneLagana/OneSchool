@@ -8,6 +8,33 @@ require 'cucumber/rails'
 require 'capybara/rails'
   require 'capybara/cucumber'
   require 'capybara/session'
+  
+  Capybara.javascript_driver = :webkit
+  Capybara.run_server = false # Disabilita il server integrato di Capybara
+
+Capybara.app_host = "http://localhost:3000" # Imposta l'URL di base della tua app
+
+Before("@javascript") do
+  require "headless"
+  @headless = Headless.new
+  @headless.start
+end
+
+After("@javascript") do
+  @headless.destroy if @headless
+end
+
+
+
+
+
+  # if Capybara.current_driver == :webkit
+  #   require 'headless'
+  
+  #   headless = Headless.new
+  #   headless.start
+  # end
+  
 # frozen_string_literal: true
 
 # Capybara defaults to CSS3 selectors rather than XPath.

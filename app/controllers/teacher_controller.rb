@@ -81,10 +81,93 @@ class TeacherController < ApplicationController
 
   def commitment
     @teacher=Teacher.find_by(CF: session[:CF])
-  
+    @teacher_true = Teacher.find_by(name: @teacher.name, surname: @teacher.surname, school_code: @teacher.school_code)
+    @meeting = Meeting.where(CFprof: @teacher_true)
     $client_calendar= get_google_calendar_client(@teacher)
     #@calendar_list = $client_calendar.list_calendar_lists
-    @event_list =$client_calendar.list_events('mome4401@gmail.com')
+    @event_list =$client_calendar.list_events('6fb8a61d5cfb51e60783c32a6eb22acfaf8de8c8126dc7dbabb7da7568a85cc7@group.calendar.google.com')
+    #Controllo i meeting (se il mio server ne ha in più li metto su calendar, altrimenti li rimuovo da calendar):
+    @meeting.each do |meet|
+
+      if !@event_list.items.any?{ |event| event.summary == meet.title } 
+        start_date = meet.date - 2.hour
+        end_date = start_date + 1.hour
+        event = Google::Apis::CalendarV3::Event.new({
+          summary: meet.title,
+          location: "Rome, italy",
+          description: meet.link,
+          start: {
+            date_time: start_date.to_datetime.rfc3339,
+            # date_time: '2019-09-07T09:00:00-07:00',
+            time_zone: 'UTC',
+          },
+          end: {
+            date_time: end_date.to_datetime.rfc3339,
+            time_zone: 'UTC',
+          },
+          reminders: {
+            use_default: false,
+            overrides: [
+              Google::Apis::CalendarV3::EventReminder.new(reminder_method:"popup", minutes: 10),
+              Google::Apis::CalendarV3::EventReminder.new(reminder_method:"email", minutes: 20)
+            ]
+          },
+          notification_settings: {
+            notifications: [
+                            {type: 'event_creation', method: 'email'},
+                            {type: 'event_change', method: 'email'},
+                            {type: 'event_cancellation', method: 'email'},
+                            {type: 'event_response', method: 'email'}
+                           ]
+          }, 'primary': true
+        })
+        $client_calendar.insert_event('6fb8a61d5cfb51e60783c32a6eb22acfaf8de8c8126dc7dbabb7da7568a85cc7@group.calendar.google.com', event)
+                 
+      end 
+    end       
+    @event_list.items.each do |event|
+      event.summary 
+      puts event.summary.inspect
+      if event.summary.include?("Meeting con ")
+        if  !@meeting.any?{|meet| meet.title == event.summary}
+          $client_calendar.delete_event('6fb8a61d5cfb51e60783c32a6eb22acfaf8de8c8126dc7dbabb7da7568a85cc7@group.calendar.google.com',event.id)
+        end
+      end
+    end
+    @commitments = Commitment.where(CFprof:@teacher_true, type: "Commitment" )
+    @commitments.each do |commit| 
+      if !@event_list.items.any?{|event| event.summary == commit.title}
+        commit.delete
+      end
+    end
+    @event_list.items.each do |event|
+
+      if !event.summary.include?("Meeting con ")
+        puts event.summary
+        if  !@commitments.any?{|commit| commit.title == event.summary}
+          puts event.summary
+          start_time = event.start.date_time
+          end_time =  event.end.date_time
+          new_date = start_time
+          time = end_time.hour - start_time.hour
+          time = time.to_i
+          for i in 1..time
+            @commitment = Commitment.new(
+              title: event.summary,
+              date: new_date,
+              type: 'Commitment',
+              CFprof: @teacher_true.CF,
+              school_code: @teacher_true.school_code)
+            if @commitment
+              @commitment.save
+              #  puts("sas")
+            end
+            new_date += 1.hour
+          end
+        end
+      end
+    end  
+
   end
 
   def get_google_calendar_client(current_user)
@@ -122,23 +205,20 @@ class TeacherController < ApplicationController
     hours=params[:hour].to_i
     title=params[:title]
     prof=params[:CFprof]
-    start_date=DateTime.parse(date)
-    end_date=start_date + hours.hour
-    puts(end_date)
-
+    start_date = DateTime.parse(date) - 2.hour
+    end_date = start_date + hours.hour
     event = Google::Apis::CalendarV3::Event.new({
       summary: title,
       location: "Rome, italy",
       description: "",
       start: {
         date_time: start_date.to_datetime.rfc3339,
-        time_zone: "UTC"
         # date_time: '2019-09-07T09:00:00-07:00',
-        # time_zone: 'Asia/Kolkata',
+        time_zone: 'UTC',
       },
       end: {
         date_time: end_date.to_datetime.rfc3339,
-        time_zone: "UTC"
+        time_zone: 'UTC',
       },
       reminders: {
         use_default: false,
@@ -156,30 +236,31 @@ class TeacherController < ApplicationController
                        ]
       }, 'primary': true
     }) 
-    puts("mimomimo")
+    # puts("mimomimo")
     if $client_calendar
-      $client_calendar.insert_event('primary', event)
-      puts("ciao")
+      $client_calendar.insert_event('6fb8a61d5cfb51e60783c32a6eb22acfaf8de8c8126dc7dbabb7da7568a85cc7@group.calendar.google.com', event)
+      # puts("ciao")
       flash[:notice] = 'Task was successfully added.'
     end
-    puts(event)
-    puts("cciao")
+    # puts(event)
+    # puts("cciao")
        # Utilizzo un oggetto DateTime per la data iniziale
-    #new_date = DateTime.parse(params[:date])
-    #puts new_date
-    #for i in 1..num
-    #  @commitment = Commitment.new(
-    #    title: params[:title],
-    #    date: start_date,
-    #    type: 'Commitment',
-    #    CFprof: params[:CFprof],
-    #    school_code: params[:school_code])
-    #  if @commitment
-    #    @commitment.save
-    #    puts("sas")
-    #  end
-    #  new_date += 1.hour
-    #end      
+    new_date = DateTime.parse(params[:date])
+    # puts new_date
+    num = params[:hour].to_i
+    for i in 1..num
+     @commitment = Commitment.new(
+       title: params[:title],
+       date: new_date,
+       type: 'Commitment',
+       CFprof: params[:CFprof],
+       school_code: params[:school_code])
+     if @commitment
+       @commitment.save
+      #  puts("sas")
+     end
+     new_date += 1.hour
+    end      
     redirect_to teacher_commitment_url
   end
   
@@ -222,9 +303,9 @@ class TeacherController < ApplicationController
     cfparent=FamilyStudent.where(CFstudent: cfstudent).pluck(:CFfamily).uniq
     @parent_mail=Family.where(CF: cfparent).pluck(:mail).uniq
     text=params[:text]
-    puts("ciao")
-    puts(@parent_mail)
-    puts("ciaos")
+    # puts("ciao")
+    # puts(@parent_mail)
+    # puts("ciaos")
     MeetingMailer.meeting_request(@parent_mail,text, student, teacher).deliver_now
     redirect_to teacher_requestmeeting_url(classroom: params[:class_code], confirm: "conferma")
   end
@@ -252,7 +333,7 @@ class TeacherController < ApplicationController
 
   def insertgrade
     cfstudente=params[:CFstudent].join
-    puts(cfstudente)
+    # puts(cfstudente)
     @grade=Grade.new(CFprof: params[:CFprof], CFstudent: cfstudente, date: params[:date], value: params[:value], weekday: params[:weekday], time: params[:time], subject_name: params[:subject_name], class_code: params[:class_code], school_code: params[:school_code])
     if @grade
       @grade.save
@@ -283,7 +364,7 @@ class TeacherController < ApplicationController
 
   def insertabsence
     cfstudente=params[:CFstudent].join
-    puts(cfstudente)
+    # puts(cfstudente)
     @absence=Absence.new(CFprof: params[:CFprof], CFstudent: cfstudente, date: params[:date], justified: params[:justified], weekday: params[:weekday], time: params[:time], subject_name: params[:subject_name], class_code: params[:class_code], school_code: params[:school_code])
     if @absence
       @absence.save

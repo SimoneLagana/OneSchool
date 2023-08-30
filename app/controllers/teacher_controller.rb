@@ -85,6 +85,9 @@ class TeacherController < ApplicationController
     @meeting = Meeting.where(CFprof: @teacher_true)
     $client_calendar= get_google_calendar_client(@teacher)
     #@calendar_list = $client_calendar.list_calendar_lists
+
+    
+
     @event_list =$client_calendar.list_events('6fb8a61d5cfb51e60783c32a6eb22acfaf8de8c8126dc7dbabb7da7568a85cc7@group.calendar.google.com')
     #Controllo i meeting (se il mio server ne ha in più li metto su calendar, altrimenti li rimuovo da calendar):
     @meeting.each do |meet|
@@ -313,16 +316,25 @@ class TeacherController < ApplicationController
   def grade
     @teacher=Teacher.find_by(CF: session[:CF])
     @classname=params[:classroom]
-    @subjects=[["Subject", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom]).pluck(:name).uniq
+    @subjects= Subject.where(CFprof: params[:CF], class_code: params[:classroom]).pluck(:name).uniq
+    
     @students=Student.where(student_class_code: params[:classroom])
     @weekdays=[]
     @times=[]
+    
+    $subj = params[:subject]
+    $weekd = params[:weekday]
+    $tim = params[:time]
+    
     if(params[:subject].present?)
+
       @subjects=Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:name).uniq
-      @weekdays=[["Weekday", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:weekday).uniq
+      
+      @weekdays=[["Select weekday", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:weekday).uniq
+      
       if(params[:weekday].present?)
         @weekdays=Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:weekday).uniq
-        @times=[["Time", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:time).uniq
+        @times=[["Select school hour", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:time).uniq
         if(params[:time].present?)
           @times=Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday], time: params[:time]).pluck(:time).uniq
         end
@@ -332,11 +344,17 @@ class TeacherController < ApplicationController
   end
 
   def insertgrade
-    cfstudente=params[:CFstudent].join
-    # puts(cfstudente)
-    @grade=Grade.new(CFprof: params[:CFprof], CFstudent: cfstudente, date: params[:date], value: params[:value], weekday: params[:weekday], time: params[:time], subject_name: params[:subject_name], class_code: params[:class_code], school_code: params[:school_code])
-    if @grade
-      @grade.save
+
+    day= Date.parse(params[:date]).strftime('%A').upcase
+    if($weekd == day)
+      puts params[:CFstudent]
+      @grade=Grade.new(CFprof: params[:CFprof], CFstudent: params[:CFstudent].join , date: params[:date], value: params[:value], weekday: $weekd, time: $tim, subject_name: $subj, class_code: params[:class_code], school_code: params[:school_code])
+      puts @grade.inspect
+      if @grade
+        @grade.save
+        redirect_to teacher_grade_url(CF: params[:CFprof], classroom: params[:class_code])
+      end
+    else
       redirect_to teacher_grade_url(CF: params[:CFprof], classroom: params[:class_code])
     end
   end
@@ -350,10 +368,10 @@ class TeacherController < ApplicationController
     @times=[]
     if(params[:subject].present?)
       @subjects=Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:name).uniq
-      @weekdays=[["Weekday", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:weekday).uniq
+      @weekdays=[["Select weekday", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:weekday).uniq
       if(params[:weekday].present?)
         @weekdays=Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:weekday).uniq
-        e@tims=[["Time", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:time).uniq
+        e@tims=[["Select school hour", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:time).uniq
         if(params[:time].present?)
           @times=Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday], time: params[:time]).pluck(:time).uniq
         end

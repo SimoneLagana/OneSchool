@@ -112,7 +112,9 @@ class SchoolStaffController < ApplicationController
       Teacher.create(name: @name, surname: @surname, CF: @CFis, mail: @mail, password: @password, school_code:  @staffs.school_code)
     elsif($typo=="Family")
       Family.create(name: @name, surname: @surname, CF: @CFis, school_code: @staffs.school_code, mail: @mail, password: @password)
-      FamilyStudent.create(CFfamily: @family_CF, CFstudent: @CFis, school_code: @staffs.school_code)
+      if(Student.where(CF: @CFis).present?)
+        FamilyStudent.create(CFfamily: @family_CF, CFstudent: @CFis, school_code: @staffs.school_code)
+      end
     elsif($typo == "Student")
       puts "ciao!"
       Student.create(name: @name, surname: @surname, CF: @CFis, mail: @mail, password: @password, school_code: @staffs.school_code, birthdate: @birthdate, student_class_code: $classroom, student_school_code: @staffs.school_code)

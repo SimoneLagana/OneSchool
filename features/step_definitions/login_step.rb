@@ -1,76 +1,54 @@
-# Questi passi dipendono dalla tua configurazione specifica, quindi adattali di conseguenza.
+Given("I am a school staff user") do 
+  FactoryBot.create(:school)
+  FactoryBot.create(:class_room)
+  FactoryBot.create(:school_staff)
+end
 
-# Nel tuo file di step definitions di Capybara (ad esempio, student_login_steps.rb)
+And("my mail is {string}") do |mail|
+  @mail = mail
+end
 
-Given("I am on the mail page") do
+And("my password is {string}") do |pas|
+  @password = pas
+end
+
+Given("I am in the main page") do
   visit root_path
 end
 
 When("I click on the panel {string}") do |panel_name|
-  #within("#panel-student") do # Sostituisci con la classe o selettore del tuo pannello
     click_link panel_name
-  #end
-
 end
 
-Then("I go to the {string} page") do |page_path|
-  expect(current_path).to eq(page_path)
+Then("I should be in the staff login page") do 
+  expect(current_path).to eq(school_staff_login_path)
 end
 
-When("I check if the {string} cookie not exists") do
-  expect(page.driver.browser.rack_mock_session.cookie_jar[]).to be_nil
+When("I put my mail in the mail field") do 
+  fill_in 'email-field', with: @mail
 end
 
-Then("I should be on the {string} page") do |page_path|
-  expect(current_path).to eq(page_path)
+When("I put my password in the field password") do
+  fill_in 'password-field', with: @password
+ 
 end
 
-When("I put {string} in the field mail") do |email|
-  fill_in 'email-field', with: email
-end
-
-When("I put {string} in the field password") do |password|
-  fill_in 'password-field', with: password
-  puts(password)
-end
-
-And("Click on pulsante login") do
+And("I press the button to login") do
   click_button 'login-button' # Assicurati che 'Login' sia l'identificativo corretto del pulsante
 end
 
-And("I check if the login is successfull") do 
-  expect(page).to have_content('Credenziali non valide.')
+Then("I should be in the school staff home page") do 
+  expect(current_path).to eq(school_staff_home_path)
 end
 
-Then("I check if cookie using email {string} is created") do |email|
-    cookie_name = 'student_info'
-    expect(page.driver.browser.rack_mock_session.cookie_jar[cookie_name]).to be_nil
+When("I put the mail {string}") do |mail|
+  fill_in 'email-field', with: mail
 end
 
-
-Then("Vengo reindirizzato alla pagina {string}") do |page_path|
-  expect(current_path).to eq(page_path)
+And("I should get the alert {string}") do |alert|
+  expect(page).to have_content(alert)
 end
 
-
-
-#Given("I am on the {string} page") do |page|
-#    visit page
-#  end
-#  
-#  When("I check if the {string} cookie exists") do |cookie_name|
-#    expect(page).to have_cookie(cookie_name)
-#  end
-#  
-#  Then("I should see the {string} cookie") do |cookie_name|
-#    cookie = find_cookie(cookie_name)
-#    expect(cookie).not_to be_nil
-#    # Puoi aggiungere ulteriori asserzioni sui dettagli del cookie se necessario.
-#  end
-#  
-#  Then("I should be on the {string} page") do |page|
-#    expect(current_path).to eq(page)
-#  end
-#  
-#  # Aggiungi altri passi necessari per verificare ulteriori dettagli dopo il login.
-#  
+And("I put the password {string}") do |pass|
+  fill_in 'password-field', with: pass
+end

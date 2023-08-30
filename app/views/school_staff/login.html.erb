@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,10 +21,10 @@
         <label class="title"> Login as school staff</label>
         <%= form_with url: school_staff_checklogin_url, class: 'form-login', method: :post do |form| %>
             <label class="label-field"> Email</label>
-            <%= form.email_field :mail, class: 'form-field' %>
+            <%= form.email_field :mail, class: 'form-field', id: "email-field" %>
             <label class="label-field"> Password</label>
-            <%= form.password_field :password, class: 'form-field' %>
-            <%= form.submit "login", class: 'button-field' %>
+            <%= form.password_field :password, class: 'form-field', id: "password-field" %>
+            <%= form.submit "login", class: 'button-field', id: "login-button"%>
         <% end %>
         <% flash.each do |key, message| %>
             <div class="flash <%= key %>">
@@ -34,3 +35,4 @@
     
 </body>
 </html>
+

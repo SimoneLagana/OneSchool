@@ -162,7 +162,7 @@
              
 <%= form_tag school_staff_manage_path, class: 'form-subject', method: :get do %>
   
-  <%= select_tag :type, options_for_select([["Select type", nil]] + @tipi.reject { |t| t == "SchoolStaff" }), class: "form-field" %><br>
+  <%= select_tag :type, options_for_select([["Select type", nil]] + @tipi.reject { |t| t == "SchoolStaff" }), class: "form-field" %>
   <div id="class-field" style="display:none;">
     <%= select_tag :class, options_for_select(@classi), class: "form-field" %><br>
   </div>

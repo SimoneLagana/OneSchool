@@ -1,7 +1,7 @@
-Feature: Student Login and Logout
+Feature: School Staff Login and Logout
 
-  Scenario: Successful Student Login
-    Given there is a student with email and password
+  Scenario: Successful School staff Login
+    Given there is a staff user with email and password
     When I visit the student login page
     And I fill in email with "mario@rossi"
     And I fill in password with "passw"

@@ -1,0 +1,26 @@
+Feature: Managing Grades in Teacher account
+
+  Background: Successful Teacher Login
+    Given there is a teacher with email and password
+    When I click on "Teacher" panel
+    Then I should be on the login page
+    When I fill email field with "luigi@colomboi"
+    And I fill password field with "pas"
+    And I click the button to login
+
+  Scenario:  Successful grade insert
+    Given I am on the teacher home
+    When I select the class "1A"
+    And I click the button "select_btn"
+    Then I should be on the right classroom's page
+    When I click on the "Grades" panel 
+    Then I should be in the teacher's grade page
+    When I select the subject "storia"
+    And I select the desired weekday "martedì"
+    And I select the right time: "2"
+    And I select the student "Mario Rossi"
+    And I insert the date "28" "08" "2023"
+    And I set the grade to 7
+    And I click on the "Save grade"
+    Then I should have a grade for Mario for the subject "storia" on 28 08 2023
+

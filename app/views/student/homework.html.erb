@@ -43,7 +43,7 @@
                         <label class="label-field"> Inserisci i nomi di altri componenti (opzionale) </label>
                         <%= form.text_field :other, class: 'text-field' %>
                         <%= form.text_field :mail_text, class: 'text-field' %>
-                        <%= form.file_field :file, class: 'text-field'%> 
+                        <%= form.file_field :file, class: 'text-field'%>  
                         <%= form.submit "Consegna", class: 'button-field' %>
                         <%= hidden_field_tag :CF, @student.CF %>
                         <%= hidden_field_tag :CFprof, homework.CFprof %>

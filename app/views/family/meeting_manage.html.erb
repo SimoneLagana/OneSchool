@@ -135,7 +135,7 @@
                             <%= hidden_field_tag :meeting, meeting %>
 
                             <%#= select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
-                            <%= form.submit "Delete", class: "button-submit" %>
+                            <%= form.submit "Delete", class: "button-submit", id: @date.strftime('%d%m') + "_" + @time.strftime('%H') + "Del"%>
                         <% end %>
                         <br>
                         </td>  

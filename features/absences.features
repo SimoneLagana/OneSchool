@@ -1,0 +1,48 @@
+Feature: Managing Absences
+
+  Background: Successful Absences
+    Given there is a user with mail and password
+
+
+  Scenario:  Successful absence justification of an Adult student
+    Given I login as an adult student
+    And I am in the student home page
+    When I select the panel "Absences"
+    Then I should be in the student absences page
+    When I search for an absence that is not justified
+    And I select the corrisponding button to justify
+    Then the absence should be justified
+
+  Scenario:  Unsuccessful absence justification of an already justified absence as an Adult Student
+    Given I login as an adult student
+    And I am in the student home page
+    When I select the panel "Absences"
+    Then I should be in the student absences page
+    When I search for an absence that already justified
+    Then I should not have a button to justify it
+
+  Scenario: Unsuccessful absence justification of an unjustified absence as a not Adult Student
+    Given I login as a not adult student
+    And I am in the student home page
+    When I select the panel "Absences"
+    Then I should be in the student absences page
+    When I search for an absence that is not justified
+    Then I should not have a button to justify it
+
+  Scenario:  Unsuccessful absence justification of an already justified absence as a not Adult Student
+    Given I login as a not adult student
+    And I am in the student home page
+    When I select the panel "Absences"
+    Then I should be in the student absences page
+    When I search for an absence that already justified
+    Then I should not have a button to justify it
+
+  Scenario:  Successful absence justification by a parent
+    Given I login as a parent
+    And I choose one of my children
+    And I am in the child home page
+    When I select the panel "Absences"
+    Then I should be in the child absences page
+    When I search for an absence that is not justified
+    And I select the corrisponding button to justify
+    Then the absence should be justified

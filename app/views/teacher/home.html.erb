@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +37,7 @@
                 <label class="label-panel"> </label>
                 <%= form_with url: teacher_classroom_url, class: 'form-class', method: :get do |form| %>
                     <%= form.select :classroom, options_for_select(@classrooms), {},  class: "select-class"%>
-                    <%= form.submit "Go to class", class: "submit-button" %>
+                    <%= form.submit "Go to class", class: "submit-button", id: "select_btn" %>
                 <% end %>
                 <% flash.each do |key, message| %>
                     <div class="flash <%= key %>">
@@ -49,4 +50,5 @@
         
     </div>
 </body>
+
 </html>

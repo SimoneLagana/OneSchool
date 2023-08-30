@@ -13,46 +13,54 @@ body{
 }
 .home{
     width:100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding-top: 40px;
+    padding-top: 0px;
+    margin-top: 0px;
 }
 
 .main-panel{
     display:flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    width: 90%
+    width:1300px;
+    height: 500px; 
 }
 
 .title{
     font-size: 20px;
     width: 100%;
     text-align: center;
+    margin-bottom: 0px;
 }
 
 .form-title{
     width: 100%;
     font-size: 18px;
     text-align: center;
+    border-radius: 20px;
 }
 .insert-commitment{
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     gap: 10px;
+    border-radius: 20px;
     width: 280px;
     margin-right: 20px
+    
 }
 .form-subject{
     display:flex;
     flex-direction: column;
     justify-content: center;
     gap:10px;
+    border-radius: 0px 0px 20px 20px;
 }
 
 .form-field{
@@ -94,10 +102,11 @@ body{
 .button-submit{
     font-size: 18px;
     padding: 3px;
+    margin-bottom: 5px;
 }
 
 .navbar{
-    background-color: skyblue;
+    background-color: rgb(172, 245, 255);
     height: 70px;
     position: fixed;
     top: 0;

@@ -25,6 +25,8 @@
       <label class="title">Commitment</label>
       <div class="main-panel">
         <div class="show-calendar">
+                        <iframe src="https://calendar.google.com/calendar/embed?src=2dedc76bc4ea2dcd53347aac863095482d95a892bf3ebb085d537c3af3e299c7%40group.calendar.google.com&ctz=Europe%2FRome" style="border: 0" width="900" height="450" frameborder="0" scrolling="no"></iframe>
+
             <ul>
             <% @event_list.items.each do |event| %>
             <li><%= event.summary %></li>
@@ -32,6 +34,7 @@
             </ul>
         </div> 
         <div class="insert-commitment">
+        
           <label class="form-title">Insert new commitment</label>
           <%= form_with url: teacher_managecommitment_url, class: 'form-subject', method: :post do |form| %>
               <%= hidden_field_tag :CFprof, @teacher.CF %>

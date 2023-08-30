@@ -84,7 +84,7 @@ class TeacherController < ApplicationController
   
     $client_calendar= get_google_calendar_client(@teacher)
     #@calendar_list = $client_calendar.list_calendar_lists
-    @event_list =$client_calendar.list_events('mome4401@gmail.com')
+    @event_list =$client_calendar.list_events('2dedc76bc4ea2dcd53347aac863095482d95a892bf3ebb085d537c3af3e299c7@group.calendar.google.com')
   end
 
   def get_google_calendar_client(current_user)

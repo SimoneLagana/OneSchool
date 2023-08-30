@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <%= stylesheet_link_tag "teacher_absence.css" %>
+    <%= stylesheet_link_tag "teacher_commitment.css" %>
    
     <title>Commitment</title>
 </head>
@@ -22,32 +22,33 @@
         <% end %>
       </nav>
     <div class="home">
-      <div class="insert-commitment">
-        <%= form_with url: teacher_managecommitment_url, class: 'form-subject', method: :post do |form| %>
-            <%= hidden_field_tag :CFprof, @teacher.CF %>
-            <%= hidden_field_tag :school_code, @teacher.school_code %>
-            <%= form.text_field :title, class: 'form-field' %>
-            <%= datetime_field_tag :date, "#{Date.today}T#{Time.now.hour}:00", {
-            step: 3600,  # Imposta lo step a 3600 secondi (un'ora)
-        }  %>
-            
-            <label class="label-form">inserisci il numero di ore</label>
-            <%= form.number_field :hour, class: 'form-field' %>
-            <%= form.submit "Insert", class: "button-submit" %>
-        <% end %>
-      </div>
-      <ul>
-        <% @calendar_list.items.each do |calendar| %>
-        <li><%= calendar.summary %> (<%= calendar.id %>)</li>
-        <% end %>
-        </ul>
-
-        <ul>
+      <label class="title">Commitment</label>
+      <div class="main-panel">
+        <div class="show-calendar">
+            <ul>
             <% @event_list.items.each do |event| %>
-            <li><%= event.summary %> (<%= event.id %>)</li>
-        <% end %>
-</ul>
-      
+            <li><%= event.summary %></li>
+            <% end %>
+            </ul>
+        </div> 
+        <div class="insert-commitment">
+          <label class="form-title">Insert new commitment</label>
+          <%= form_with url: teacher_managecommitment_url, class: 'form-subject', method: :post do |form| %>
+              <%= hidden_field_tag :CFprof, @teacher.CF %>
+              <%= hidden_field_tag :school_code, @teacher.school_code %>
+              <label class="label-form">Title</label>
+              <%= form.text_field :title, class: 'form-field' %>
+              <label class="label-form">Data</label>
+              <%= datetime_field_tag :date, {step: 3600, }, class: 'form-field'  %>
+              <div class="hour-container">
+                  <label class="label-form">Insert duration (h)</label>
+                  <%= form.number_field :hour, class: 'number-field', min: 0 %>
+              </div>
+              <%= form.submit "Insert", class: "button-submit" %>
+          <% end %>
+        </div>
+      </div>
+           
       
     </div>
     

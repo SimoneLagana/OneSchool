@@ -11,14 +11,93 @@ body{
     justify-content: center;
     height:100%;
 }
-.home{
+.note-home{
     width:100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-top: 80px;
 }
 
+.note-title{
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.note-panel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    width: 500px;
+    background-color: aquamarine;
+    border-radius: 10px;
+    height: 320px;
+    padding-top: 10px;
+}
+
+
+.note-panel-2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    width: 500px;
+    background-color: white;
+    border-radius: 10px;
+    padding-top: 10px;
+}
+.noteclass{
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: aquamarine;
+    border-radius: 10px;
+}
+
+.note-label{
+    width: 100%;
+    background-color: aquamarine;
+}
+.whole-note{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: center;
+    gap: 70px;
+}
+
+.note-title-p{
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    background-color: aquamarine;
+}
+.note-field{
+    width: 220px;
+    height: 20px;
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.note-text{
+    width: 100%;
+}
+
+
+
+
+.button-submit{
+    font-size: 18px;
+}
 
 .navbar{
     background-color: skyblue;
@@ -43,13 +122,17 @@ body{
     margin-left: 100px;
 }
 
-.form-profile{
+.form-note{
     border-width: 0;
-    width: 100px;
-    height: 70px;
+    width: 280px;
+    display:flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
     text-align: center;
+    background-color: aquamarine;
+    padding-top: 0px;
+    gap: 10px;
 }
 .profile{
     width: 100px;
@@ -61,7 +144,7 @@ body{
     font-size: 22px;
     margin-right: 100px;
 }
-
+ 
 .flash {
     padding: 10px;
     margin-bottom: 5px;

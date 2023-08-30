@@ -10,12 +10,12 @@
 <body>
     <div id="popupcontainer"></div>
     <nav class="navbar">
-        <%= link_to teacher_home_url do %>
+        <%= link_to teacher_home_url, class: "link-profile no-underline" do %>
             <label class="writ">
-                <%= @teacher.name %>
+                Home
             </label>
         <% end %>
-        <%= link_to teacher_profile_url do %>
+        <%= link_to teacher_profile_url, class: "link-profile no-underline" do %>
             <div class="profile">
                 Profile
             </div>

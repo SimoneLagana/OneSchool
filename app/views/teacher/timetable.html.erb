@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "teacher_absence.css" %>
+    <%= javascript_include_tag('teacher.js') %>
+
+    <title>Timetable</title>
+</head>
+<body>
+    <nav class="navbar">
+        <%= link_to teacher_classroom_url(classroom: @classname), class: "link-profile no-underline" do %>
+            <label class="writ"> Classroom: 
+            <%= @classname %>
+            </label>
+        <% end %>
+        <%= link_to teacher_profile_url, class: "link-profile no-underline" do %>
+            <div class="profile">
+                Profile
+            </div>
+        <% end %>
+      </nav>
+    <div class="home">
+        <label class="title"> Timetable </label>
+        <% if @ret == "NOT_FOUND"%>
+            <label class="label-form">The class lesson timetable has not been set yet</label>
+        <% else  %>
+        <% if @ret.present? %>   
+            <table class="tabella">
+                <thead>
+                    <tr>
+                        <th>MONDAY</th>
+                        <th>TUESDAY</th>
+                        <th>WEDNESDAY</th>
+                        <th>THURSDAY</th>
+                        <th>FRIDAY</th>
+                        <th>SATURDAY</th>
+                        <th colspan="6"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @subjects = @ret %>
+                    <% params[:search] =""%>
+                    <% @subjects.each do |hour| %>
+                        <tr>
+                        <% hour.each do |day|%>
+                            <td class="center"><%=day%></td>
+                            <%end%>
+                        </tr>
+                        <%end%>
+                    <%end%>
+                    
+                </tbody>
+            </table>
+        <%end%>
+    </div>
+</body>
+</html>

@@ -9,41 +9,60 @@
 </head>
 <body>
     <nav class="navbar">
-        <%= link_to teacher_classroom_url(CF: params[:CF], classroom: @classname) do %>
-            <label class="writ">
+        <%= link_to teacher_classroom_url(classroom: @classname), class: "link-profile no-underline" do %>
+            <label class="writ"> Classroom: 
             <%= @classname %>
             </label>
         <% end %>
-        <%= link_to teacher_profile_url(CF: params[:CF]) do %>
+        <%= link_to teacher_profile_url, class: "link-profile no-underline" do %>
             <div class="profile">
                 Profile
             </div>
-        <% end %>     
-    </nav>
-    <div class="home">
-        <div class="insert-panel">
-            <%= form_with url: teacher_insertnote_url, class: 'form-note', method: :post do |form| %>
-            <label class="label-field"> Select student </label>
-            <%= form.hidden_field :CFprof, value: @teacher.CF %>
-            <%= form.hidden_field :school_code, value: @teacher.school_code %>
-            <%= form.hidden_field :classroom, value: @classname %>
-            <%= form.select :CFstudent, options_for_select(@students.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }),  class: "select-class"%>
-            <%= date_field_tag :date, value: Date.today, class: 'form-field'%>
-            <label class="label-field"> Text</label>
-            <%= form.text_area :description, size: "70x5" %>
-            <%= form.submit "submit", class: 'button-field' %>
         <% end %>
-        </div>
-        <div class= "show-panel">
-            <% @notes.each do |note| %>
-            <tr class="table">
-                <td> <%= note.date %></td>
-                <td> <%= name=Student.where(CF: note.CFstudent).pluck(:name).uniq.join %></td>
-                <td> <%= surname=Student.where(CF: note.CFstudent).pluck(:surname).uniq.join %></td>
-                <td> <%= note.description %></td>
+    </nav>
+    <div class="note-home">
+        <label class="note-title">Notes</label> 
+        <div class="whole-note"> 
+            <div class="note-panel">
+                <label class="note-title-p">Insert note</label>
+                <%= form_with url: teacher_insertnote_url, class: 'form-note', method: :post do |form| %>
                 <br>
-            </tr>
-        <% end %> 
+                    <label class="note-label"> Select student </label>
+                    <%= form.hidden_field :CFprof, value: @teacher.CF %>
+                    <%= form.hidden_field :school_code, value: @teacher.school_code %>
+                    <%= form.hidden_field :classroom, value: @classname %>
+                    <%= form.select :CFstudent, options_for_select(@students.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }),  class: "note-field"%>
+                    <%= date_field_tag :date, value: Date.today, class: 'note-field'%>
+                    <label class="note-label"> Insert text</label>
+                    <%= form.text_area :description, size: "70x5", class: 'note-text' %>
+                    <%= form.submit "submit", class: 'button-field' %>
+                <% end %>
+                <% flash.each do |key, message| %>
+                    <div class="flash <%= key %>">
+                        <%= message %>
+                    </div>
+                <% end %>
+            </div>
+            <div class= "note-panel-2">
+                <label class="note-title">Inserted notes</label>
+                <br>
+                
+                <%#<% @notes.each do |note| %>
+                <%#    <div class="noteclass">
+                <%#     <%= note.date.strftime('%Y/%m/%d') %><br>
+                <%#     <%= name=Student.where(CF: note.CFstudent).pluck(:name).uniq.join %>
+                <%#     <%= surname=Student.where(CF: note.CFstudent).pluck(:surname).uniq.join %>
+                <%#     <br>
+                <%#     <%= note.description %> <br>
+                <%#     <% if note.justified == false%>
+                <%#        <%= "not justified"%>
+                <%#     <% else %>
+                <%#        <%= "justified" %>
+                <%#    <% end %>
+                <%#    </div>
+                <%#
+                <%#<% end %>  
+            </div>
         </div>
     </div>
     

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "teacher_absence.css" %>
+    <%= javascript_include_tag('teacher.js') %>
+
+    <title>Agenda</title>
+</head>
+<body>
+    <nav class="navbar">
+        <%= link_to teacher_classroom_url(classroom: @classname), class: "link-profile no-underline" do %>
+            <label class="writ"> Classroom: 
+            <%= @classname %>
+            </label>
+        <% end %>
+        <%= link_to teacher_profile_url, class: "link-profile no-underline" do %>
+            <div class="profile">
+                Profile
+            </div>
+        <% end %>
+      </nav>
+    <div class="home-agenda">
+        <label class="title-agenda"> <%=@classname%> 's agenda </label>
+        <div class="main-agenda">
+        
+            <% @news.each do |new| %>
+
+                <% if new.is_a?(Homework) %>
+                 <%= link_to teacher_homework_url(classroom: @classname), class: "link-agenda no-underline" do %>
+                    <div class="agenda">
+                        <label class="label-agenda">Homework</label><%= new.date.strftime('%Y/%m/%d') %>
+                        <br><%= new.name%>
+                    </div>
+                    <%end%>
+                <% else %>
+                 <%= link_to teacher_communication_url(classroom: @classname), class: "link-agenda no-underline" do %>
+                    <div class="agenda">
+                        <label class="label-agenda">Communication</label><%= new.date.strftime('%Y/%m/%d') %>
+                        <br><%= new.title%>
+                    </div>
+                    <%end%>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+</body>
+</html>

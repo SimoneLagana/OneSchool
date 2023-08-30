@@ -8,12 +8,12 @@
 </head>
 <body>
     <nav class="navbar">
-        <%= link_to teacher_classroom_url(CF: params[:CF], classroom: @classname) do %>
-            <label class="writ">
+        <%= link_to teacher_classroom_url(classroom: @classname), class: "link-profile no-underline" do %>
+            <label class="writ"> Classroom: 
             <%= @classname %>
             </label>
         <% end %>
-        <%= link_to teacher_profile_url(CF: params[:CF]) do %>
+        <%= link_to teacher_profile_url, class: "link-profile no-underline" do %>
             <div class="profile">
                 Profile
             </div>
@@ -21,43 +21,43 @@
       </nav>
     <div class="home">
         <div class="panel-container">
-            <%= link_to teacher_grade_url(CF: @teacher.CF, classroom: @classname) do %>
-            <div class="panel">
+            <%= link_to teacher_grade_url(classroom: @classname), class: "no-underline" do %>
+            <div class="panel-class">
                 grades
             </div>
              <% end %>
-            <%= link_to teacher_absence_url(CF: @teacher.CF, classroom: @classname) do %>
-            <div class="panel">
+            <%= link_to teacher_absence_url(classroom: @classname), class: "no-underline" do %>
+            <div class="panel-class">
                 absences
             </div>
              <% end %>
-            <%= link_to "/login_schoolstaff" do %>
-            <div class="panel">
-                classes
+            <%= link_to teacher_timetable_url(classroom: @classname), class: "no-underline"  do %>
+            <div class="panel-class">
+                class timetable
             </div>
              <% end %>
-            <%= link_to teacher_homework_url(CF: @teacher.CF, classroom: @classname) do %>
-            <div class="panel">
+            <%= link_to teacher_homework_url(classroom: @classname), class: "no-underline" do %>
+            <div class="panel-class">
                 assignments
             </div>
              <% end %>
-            <%= link_to "/login_schoolstaff" do %>
-            <div class="panel">
+            <%= link_to teacher_agenda_url(classroom: @classname), class: "no-underline" do %>
+            <div class="panel-class">
                 agenda
             </div>
              <% end %>
-            <%= link_to teacher_communication_url(CF: @teacher.CF, classroom: @classname) do %>
-            <div class="panel">
+            <%= link_to teacher_communication_url(classroom: @classname), class: "no-underline" do %>
+            <div class="panel-class">
                 news
             </div>
              <% end %>
-            <%= link_to teacher_note_url(CF: @teacher.CF, classroom: @classname) do %>
-            <div class="panel">
+            <%= link_to teacher_note_url(classroom: @classname), class: "no-underline" do %>
+            <div class="panel-class">
                 personal notes
             </div>
              <% end %>
-             <%= link_to teacher_requestmeeting_url(CF: @teacher.CF, classroom: @classname) do %>
-            <div class="panel">
+             <%= link_to teacher_requestmeeting_url(classroom: @classname), class: "no-underline" do %>
+            <div class="panel-class">
                 request meeting
             </div>
              <% end %>

@@ -40,6 +40,8 @@ Rails.application.routes.draw do
   get 'teacher/requestmeeting', to: 'teacher#requestmeeting', as: 'teacher_requestmeeting'
   post 'teacher/insertmeeting', to: 'teacher#insertmeeting', as: 'teacher_insertmeeting'
   get 'teacher/communication', to: 'teacher#communication', as: 'teacher_communication'
+  get 'teacher/timetable', to: 'teacher#timetable', as: 'teacher_timetable'
+  get 'teacher/agenda', to: 'teacher#agenda', as: 'teacher_agenda'
 
 
   #student
@@ -62,9 +64,8 @@ Rails.application.routes.draw do
 
   get 'student/homework', to: 'student#homework', as: 'student_homework'
   post 'student/submit', to: 'student#submit', as: 'student_submit'
-
-  get 'student/prova', to: 'student#prova', as: 'student_prova'
-  
+  get 'student/timetable', to: 'student#timetable', as: 'student_timetable'
+  get 'student/agenda', to: 'student#agenda', as: 'student_agenda'
 
 
 
@@ -90,6 +91,8 @@ Rails.application.routes.draw do
   post 'family/changepassword', to: 'family#changepassword', as: 'family_changepassword'
   get 'family/upgradepassword', to: 'family#upgradepassword', as: 'family_upgradepassword'
   post 'family/justify_note', to: 'family#justify_note', as: 'family_justify_note'
+  get 'family/timetable', to: 'family#timetable', as: 'family_timetable'
+  get 'family/agenda', to: 'family#agenda', as: 'family_agenda'
 
 
 

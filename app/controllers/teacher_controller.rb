@@ -82,9 +82,9 @@ class TeacherController < ApplicationController
   def commitment
     @teacher=Teacher.find_by(CF: session[:CF])
   
-    client= get_google_calendar_client(@teacher)
-    @calendar_list = client.list_calendar_lists
-    #@event_list =client.list_events('mettete qui il vostro calendar id per avere un elenco degli eventi')
+    $client_calendar= get_google_calendar_client(@teacher)
+    #@calendar_list = $client_calendar.list_calendar_lists
+    @event_list =$client_calendar.list_events('mome4401@gmail.com')
   end
 
   def get_google_calendar_client(current_user)
@@ -118,34 +118,68 @@ class TeacherController < ApplicationController
   end
 
   def managecommitment
+    date=params[:date]
+    hours=params[:hour].to_i
+    title=params[:title]
+    prof=params[:CFprof]
+    start_date=DateTime.parse(date)
+    end_date=start_date + hours.hour
+    puts(end_date)
 
-
-    #if(!params[:hour].present?)
-    #  num=1
-    #else
-    #  num = params[:hour].to_i
-    #  if(num<=0)
-    #    num=1
+    event = Google::Apis::CalendarV3::Event.new({
+      summary: title,
+      location: "Rome, italy",
+      description: "",
+      start: {
+        date_time: start_date.to_datetime.rfc3339,
+        time_zone: "UTC"
+        # date_time: '2019-09-07T09:00:00-07:00',
+        # time_zone: 'Asia/Kolkata',
+      },
+      end: {
+        date_time: end_date.to_datetime.rfc3339,
+        time_zone: "UTC"
+      },
+      reminders: {
+        use_default: false,
+        overrides: [
+          Google::Apis::CalendarV3::EventReminder.new(reminder_method:"popup", minutes: 10),
+          Google::Apis::CalendarV3::EventReminder.new(reminder_method:"email", minutes: 20)
+        ]
+      },
+      notification_settings: {
+        notifications: [
+                        {type: 'event_creation', method: 'email'},
+                        {type: 'event_change', method: 'email'},
+                        {type: 'event_cancellation', method: 'email'},
+                        {type: 'event_response', method: 'email'}
+                       ]
+      }, 'primary': true
+    }) 
+    puts("mimomimo")
+    if $client_calendar
+      $client_calendar.insert_event('primary', event)
+      puts("ciao")
+      flash[:notice] = 'Task was successfully added.'
+    end
+    puts(event)
+    puts("cciao")
+       # Utilizzo un oggetto DateTime per la data iniziale
+    #new_date = DateTime.parse(params[:date])
+    #puts new_date
+    #for i in 1..num
+    #  @commitment = Commitment.new(
+    #    title: params[:title],
+    #    date: start_date,
+    #    type: 'Commitment',
+    #    CFprof: params[:CFprof],
+    #    school_code: params[:school_code])
+    #  if @commitment
+    #    @commitment.save
+    #    puts("sas")
     #  end
-    #end
-    #   
-    #  # Utilizzo un oggetto DateTime per la data iniziale
-    #  new_date = DateTime.parse(params[:date])
-    #  puts new_date
-    #  for i in 1..num
-    #    @commitment = Commitment.new(
-    #      title: params[:title],
-    #      date: new_date,
-    #      type: 'Commitment',
-    #      CFprof: params[:CFprof],
-    #      school_code: params[:school_code]
-    #    )
-    #    if @commitment
-    #      @commitment.save
-    #      puts("sas")
-    #    end
-    #    new_date += 1.hour
-    #  end      
+    #  new_date += 1.hour
+    #end      
     redirect_to teacher_commitment_url
   end
   

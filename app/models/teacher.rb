@@ -8,6 +8,9 @@ class Teacher < User
     def self.from_omniauth(auth,cf, name, surname)
         user = Teacher.where(provider: auth.provider, uid: auth.uid, CF: auth.uid).first
         if user
+          user.update(access_token: auth.credentials.token)
+          user.update(expires_at: auth.credentials.expires_at)
+          user.update(refresh_token: auth.credentials.refresh_token)
           return user
         else
           #registered_user = Teacher.where(provider: auth.try(:provider) || auth["provider"], uid: auth.try(:uid) || auth["uid"]).first || Teacher.where(mail: auth.try(:info).try(:email) || auth["info"]["email"]).first

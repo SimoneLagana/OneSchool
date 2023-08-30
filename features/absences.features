@@ -1,6 +1,6 @@
 Feature: Managing Absences
 
-  Background: Successful Student Login
+  Background: Successful Absences
     Given there is a user with mail and password
 
 
@@ -21,7 +21,7 @@ Feature: Managing Absences
     When I search for an absence that already justified
     Then I should not have a button to justify it
 
-  Scenario: Unsuccessful absence justification of an already justified absence as a not Adult Student
+  Scenario: Unsuccessful absence justification of an unjustified absence as a not Adult Student
     Given I login as a not adult student
     And I am in the student home page
     When I select the panel "Absences"

@@ -1,47 +1,40 @@
 # Assuming you have a step_definitions directory where you keep your step definition files
 
 # step_definitions/family_dashboard_steps.rb
-Given("there is a family with email and password") do
+Given("there is a user with email and password") do
   FactoryBot.create(:school)
-  FactoryBot.create(:class_room)
+  FactoryBot.create(:class_room, class_code: "1A", school_code: "1")
+  FactoryBot.create(:class_room, class_code: "1B", school_code: "1")
   FactoryBot.create(:student, name: "Mario", surname: "Rossi", CF: "60", mail: "mario@rossi", password: "passw", school_code: "1", birthdate: DateTime.new(2001,2,3), student_class_code: "1A", student_school_code: "1")
+  FactoryBot.create(:student, name: "Simone", surname: "Verdi", CF: "61", mail: "simone@verdi", password: "simonepas", school_code: "1", birthdate: DateTime.new(2008,2,3), student_class_code: "1A", student_school_code: "1")
   FactoryBot.create(:family, name: "Maria", surname: "Rossi", CF: "7", mail: "maria@Rossi", password: "samir", school_code: "1")
   FactoryBot.create(:family_student, id: 1, CFfamily: "7", CFstudent: "60", school_code: "1")
-  FactoryBot.create(:teacher, name: "Luigi", surname: "Colombo", CF: "40", mail: "luigi@colombo", password: "pas", school_code: "1")
-  FactoryBot.create(:subject, weekday: "TUESDAY", time: "3", school_code: "1", CFprof: "40", class_code: "1A", name: "storia")
-  FactoryBot.create(:meeting, id: 9, title: "Meeting con Enzo Esposito", date: DateTime.new(2023, 8, 30, 18, 0, 0), CFprof: "40", CFfamily: "7")
-
+  FactoryBot.create(:teacher, name: "Luigi", surname: "Colombo", CF: "40", mail: "luigi@colomboi", password: "pas", school_code: "1")
+  FactoryBot.create(:teacher, name: "Fabio", surname: "Ralli", CF: "999", mail: "fabio@ralli", password: "pas", school_code: "1")
+  FactoryBot.create(:subject, weekday: "martedì", time: "2", school_code: "1", CFprof: "40", class_code: "1A", name: "storia")
+  FactoryBot.create(:subject, weekday: "martedì", time: "3", school_code: "1", CFprof: "999", class_code: "1A", name: "inglese")
+  FactoryBot.create(:meeting, id: 9, title: "Meeting con Enzo Esposito", date: DateTime.new(2023, 8, 30, 18, 0, 0), CFprof: "999", CFfamily: "7")
+  FactoryBot.create(:school_staff)
 end
 
-When("I visit the family login page") do
-  visit family_login_path
-end
-
-And("I fill in email field with {string}") do |value|
-  fill_in 'email-field', with: value
-end
-
-And("I fill in password field with {string}") do |value|
-  fill_in 'password-field', with: value
-end
-
-And("I click login button") do
+Given("I login in a family account") do
+  visit root_path
+  click_link "Family"
+  expect(current_path).to eq(family_login_path)
+  @user = Family.all.first
+  fill_in 'email-field', with: @user.mail
+  fill_in 'password-field', with: @user.password
   click_button 'login-button'
 end
 
-Given("I am on the family page to choose a student") do
+
+And("I am on the family page to choose a student") do
   expect(current_path).to eq(family_choose_path)
 end
 
-# step_definitions/meeting_steps.rb
-# When("I choose a student at index {int}") do |index|
-#   student_link = all(".student-link")[index]
-#   student_link.wait_for_present
-#   student_link.click
-# end
-# step_definitions/meeting_steps.rb
+
 When("I select the option {string}") do |option_value|
-  find("#" + option_value).click
+  click_link option_value
 end
 
 
@@ -58,10 +51,13 @@ Then("I should be on the meeting choice page") do
 end
 
 # In your step definition file (e.g., meeting_steps.rb)
-When("I select Luigi Colombo") do
-  find("#40meeting_link").click
+When("I select the link {string}") do |full_name|
+  name, sur = full_name.split(" ")
+  @t = Teacher.find_by(name: name, surname: sur)
+  @tcode = @t.CF
+  click_link link_id = "#{@tcode}meeting_link"
+  
 end
-
 
 Then("I should be on the meeting manage page") do
   
@@ -69,23 +65,30 @@ Then("I should be on the meeting manage page") do
 end
 
 When("I book a meeting on {string} {string} at {string}") do |day, month, time|
-  puts "#" + day + month + "_" + time
+  @sel = day + month + "_" + time
   find("#" + day + month + "_" + time).click
-  puts page.body
 end
 
-Then("I shoud have a meeting booked on {string} {string} at {string}") do |day, month, time|
-  id = day + month + "_" + time + "Go"
+Then("I shoud have that meeting in the booked meeting panel") do 
+  id = @sel + "Go"
   expect(page).to have_css("##{id}")
 end
 
-When("I delete the meeting on {string} {string} at {string}") do |day, month, time|
-  puts "#" + day + month + "_" + time + "Del"
-  find("#" + day + month + "_" + time + "Del").click
-  puts page.body
+When("I delete a meeting") do 
+  @deleted_all = Meeting.where(CFprof: @t.CF, CFfamily: @user.CF)
+  @del = @deleted_all.first
+  @date = @del.date
+  @day = @date.day.to_s
+  @month = @date.strftime("%m")
+  @time = @date.hour.to_s
+  find("#" + @day + @month + "_" + @time + "Del").click
 end
 
-Then("I should have the possibility to book a meeting on {string} {string} at {string}") do |day, month, time|
-  id = day + month + "_" + time 
+Then("that meeting should exist anymore") do
+  Meeting.find_by(CFprof: @t.CF, CFfamily: @user.CF, date: @date) == nil
+end
+
+And("I should have the possibility to book that meeting again") do 
+  id = @day + @month + "_" + @time
   expect(page).to have_css("##{id}")
 end

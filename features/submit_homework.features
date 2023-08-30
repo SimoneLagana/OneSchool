@@ -1,4 +1,11 @@
 Feature: Student submit homework
-  Scenario: Student submit homework
-    Given I am logged in as a student
-    And there is an homework
+  Background: Successful School Staff Login
+    Given every user has mail and password
+
+
+  Scenario:  Successful removal of a class
+    Given I login as a student
+    Then I should be on my student home page 
+    When I choose the panel "Assignments"
+    Then I should be on the homework page
+    And I should have

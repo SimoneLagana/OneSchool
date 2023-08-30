@@ -105,7 +105,8 @@ class FamilyController < ApplicationController
     # @month = params[:month]
     # @time = params[:time]
     @teacher = Teacher.find_by(CF: params[:CFprof])
-    @title = "Meeting con " + @teacher.name + " " + @teacher.surname
+    @family = Family.find_by(CF: params[:CF])
+    @title = "Meeting con " + @family.name + " " + @family.surname
     @free = params[:free]
     @date = DateTime.parse(@free)
     @school_code = Teacher.find_by(CF: params[:CFprof]).school_code

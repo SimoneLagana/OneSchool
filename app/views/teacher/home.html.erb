@@ -38,7 +38,7 @@
                     <label class="label-class">Seleziona una classe </label>
                     <%= form.select :classroom, options_for_select(@classrooms), {},  class: "select-class"%>
                     <%= form.hidden_field :CF, value: @teacher.CF %>
-                    <%= form.submit "vai alla classe", class: "submit-button" %>
+                    <%= form.submit "vai alla classe", class: "submit-button", id: "select_btn"%>
                 <% end %>
 
                 

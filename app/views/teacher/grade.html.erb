@@ -21,6 +21,7 @@
             </div>
         <% end %>     
     </nav>
+
 <div class="home">
   <label class="title"> Grades </label>
   <div class="insert-container">
@@ -45,6 +46,7 @@
       <%= form.submit "Save grade", class: "button-submit" %><br>
     <% end %>
   </div>
+
 
   <% @grades.each do |grade| %>
     <tr class="table">

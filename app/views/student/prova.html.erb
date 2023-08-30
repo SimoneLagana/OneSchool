@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <%= javascript_include_tag('staff.js') %>
+
     <title>Document</title>
 </head>
 <body>
     <%= form_with url: root_url, class: 'form-login', method: :get do |form| %>
         <%= form.submit "login", class: 'button-field' %>
     <% end %>
+
+    <button id="be", onclick="print()"> edit </button>
 
 </body>
 </html>

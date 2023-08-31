@@ -1,4 +1,4 @@
-.panel{
+.notes-panel{
     height: 400px;
     background-color: rgb(172, 245, 255);
     display:flex;
@@ -9,4 +9,9 @@
     margin-left: 5%;
     margin-top: 0;
     border-radius: 10px;
+}
+
+.details-popup{
+    padding-left: 8px;
+    padding-right: 8px;
 }

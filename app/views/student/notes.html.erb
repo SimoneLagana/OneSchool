@@ -20,7 +20,7 @@
     </nav>
 
     
-    <div class="panel">
+    <div class="notes-panel">
           Personal notes
         <table class="notes-table">
             <thead>
@@ -53,7 +53,7 @@
 
                         <td><%= note.date.strftime('%Y/%m/%d') %></td>
 
-                        <td>
+                        <td class="details-popup">
                         <button class="profile-button" onclick="popup('<%= escape_javascript(note.description) %>');"> details </button>
 
                         </td>

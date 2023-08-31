@@ -1,0 +1,60 @@
+
+<script>
+  const subjectSelect = document.querySelector("select[name='subject']");
+  const weekdaySelect = document.querySelector("select[name='weekday']");
+  const timeSelect = document.querySelector("select[name='time']");
+
+  subjectSelect.addEventListener("change", function() {
+    console.log(this.value);
+    fetch("<%= teacher_grade_url %>?" + new URLSearchParams({
+      subject: this.value,
+      CF: "<%= @teacher.CF %>",
+      classroom: "<%= @classname %>",
+    }), {
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }).then(function(response) {
+      return response.text();
+    }).then(function(html) {
+      const newWeekdaySelect = new DOMParser().parseFromString(html, 'text/html').querySelector("select[name='weekday']");
+      weekdaySelect.innerHTML = newWeekdaySelect.innerHTML;
+    });
+  });
+
+weekdaySelect.addEventListener("change", function() {
+  fetch("<%= teacher_grade_url %>?" + new URLSearchParams({
+    subject: subjectSelect.value,
+    weekday: this.value,
+    CF: "<%= @teacher.CF %>",
+    classroom: "<%= @classname %>",
+  }), {
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  }).then(function(response) {
+    return response.text();
+  }).then(function(html) {
+    const newTimeSelect = new DOMParser().parseFromString(html, 'text/html').querySelector("select[name='time']");
+    timeSelect.innerHTML = newTimeSelect.innerHTML;
+  });
+});
+
+timeSelect.addEventListener("change", function() {
+  fetch("<%= teacher_grade_url %>?" + new URLSearchParams({
+    subject: subjectSelect.value,
+    weekday: weekdaySelect.value,
+    time: this.value,
+    CF: "<%= @teacher.CF %>",
+    classroom: "<%= @classname %>",
+  }), {
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest'
+    }
+  }).then(function(response) {
+    return response.text();
+  }).then(function(html) {
+    
+  });
+});
+</script>

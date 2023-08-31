@@ -21,19 +21,23 @@
             </div>
         <% end %>
       </nav>
-    <div class="home">
-        <label class="title-request"> Meeting </label>
+    <div class="request-home">
+        <label class="title-request"> Meeting request</label>
         <div class="request-container">
             <%= form_with url: teacher_insertmeeting_url, class: 'form-request', method: :post do |form| %>
                 <%= hidden_field_tag :class_code, @classname %>
                 <%= hidden_field_tag :CFprof, @teacher.CF %>
                 <%= hidden_field_tag :school_code, @teacher.school_code %>
                 <label class="request-label">Select the student to send his/her parent a meeting request</label>
-                <br>
-                <br>
                 <%= select_tag :CFstudent, options_for_select(@students.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "request-field" %>
+                <label class="request-label-2">email text</label>
                 <%= form.text_area :text, size: "70x5", class: 'request-text' %>
                 <%= form.submit "Send meeting request", class: "button-submit" %>
+            <% end %>
+            <% flash.each do |key, message| %>
+                <div class="flash <%= key %>">
+                    <%= message %>
+                </div>
             <% end %>
         </div> 
         <div><%= @confirm %></div>

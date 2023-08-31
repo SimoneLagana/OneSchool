@@ -95,7 +95,7 @@ class FamilyController < ApplicationController
 
  def create_link(teacher)
     random_link = SecureRandom.hex(10) #creo una stringa random di 8 caratteri
-    link="https://localhost:8000/#{random_link}"
+    link="http://localhost:8000/#{random_link}"
   end
 
  

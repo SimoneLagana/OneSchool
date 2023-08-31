@@ -11,14 +11,14 @@ class AdminController < ApplicationController
 
 
     def login
-        session[:admin_code]="google"
+        
     end
 
     def checklogin
         @admin = Admin.find_by(mail: params[:mail])
         if @admin && @admin.password == params[:password]
           session[:CF]= @admin.CF
-          redirect_to admin_home_url
+          redirect_to admin_manage_url
           
         else
           redirect_to admin_login_url
@@ -62,8 +62,10 @@ class AdminController < ApplicationController
     end
 
     def upgradepassword
-        @admin=Admin.find_by(CF: session[:CF])
+        @admin=Admin.find_by(CF: params[:CF])
+        puts("ciao")
         @admin.update(password: $passk)
+        puts("fatta")
         redirect_to admin_manage_url
     end
     
@@ -72,7 +74,7 @@ class AdminController < ApplicationController
         pass=params[:old_password]
         $passk=params[:password]
         if(@admin) && @admin.password == pass
-          PasswordMailer.email_confirm(@admin).deliver_now
+          PasswordMailer.admin_email_confirm(@admin).deliver_now
         else
           redirect_to admin_login_url
           flash[:alert]= "password inserita errata"

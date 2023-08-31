@@ -167,8 +167,37 @@ class StudentController < ApplicationController
     end
   end
 
-  def prova
+  def timetable
+    @student=Student.find_by(CF: params[:CF])
+    @classname=@student.student_class_code
+    days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY']
+    hours = (1..6).to_a
+    subjects = Subject.where('upper(class_code) = ? AND school_code = ?', @classname.upcase, @student.school_code).order(Arel.sql("CASE weekday
+      WHEN 'MONDAY' THEN 1
+      WHEN 'TUESDAY' THEN 2
+      WHEN 'WEDNESDAY' THEN 3
+      WHEN 'THURSDAY' THEN 4
+      WHEN 'FRIDAY' THEN 5
+      WHEN 'SATURDAY' THEN 6
+    END")).pluck(:name, :weekday, :time)
     
+    result = hours.map do |hour|
+      days.map do |day|
+        subject = subjects.find { |s| s[1] == day && s[2].to_i == hour }
+        subject ? subject[0] : '-'
+      end
+    end
+    
+    @ret = result
+    
+    
+    
+    if @ret!=[]
+      render "timetable"
+    else
+      @ret = "NOT_FOUND"
+      render "timetable"
+    end 
   end
 
 end

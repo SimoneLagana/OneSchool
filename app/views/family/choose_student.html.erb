@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= javascript_include_tag('family.js') %>
-    <%= stylesheet_link_tag "family_choose.css" %>
+    <%= stylesheet_link_tag "family_choose_student.css" %>
 
     <title>Document</title>
 </head>
 <body>
     <nav class="navbar">
-        <%= link_to family_choose_url(CF: params[:CF]) do %>
+        <%= link_to family_choose_url(CF: params[:CF]), class: "link-profile no-underline" do %>
             <div class="profile">
                 home
             </div>
         <% end %>
 
-         <%= link_to family_profile_url(CF: params[:CF]) do %>
+         <%= link_to family_profile_url(CF: params[:CF]), class: "link-profile no-underline" do %>
             <div class="profile">
                 Profile
             </div>

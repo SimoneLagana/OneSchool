@@ -3,51 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "student_absence.css" %>
     <title>Document</title>
 </head>
 <body>
     <nav class="navbar">
         <%= link_to student_home_url(CF: params[:CF]) do %>
+            <label class="writ">
+                <%= @student.name %>
+            </label>
+        <% end %>
+        <%= link_to student_profile_url(CF: params[:CF]) do %>
             <div class="profile">
-                home
+                Profile
             </div>
-        <% end %>
 
-
-        <%= form_tag student_checklogout_path, method: :delete do %>
-            <%= submit_tag 'Logout', class: 'profile' %>
         <% end %>
-    </nav>
+      </nav>
 
     <div class="panel">
           
-        <table>
-            <thead>
+        <table class="student-absence-container-2">
+            <thead class="options-title">
                 <tr>
-                <th> Date</th>
-                <th> Subject</th>
-                <th> Teacher</th>
-                <th> Justified</th>
+                <th class="tab-title"> Date</th>
+                <th class="tab-title"> Subject</th>
+                <th class="tab-title"> Teacher</th>
+                <th class="tab-title"> Justified</th>
                 </tr>
             </thead>
 
-            <tbody>
-
+            <tbody class="tab-body">
+            
                 <% @absences.each do |absence| %>
                     <tr>
-                        <td><%= absence.date %></td>
+                        <td class="tab-col"><%= absence.date.strftime('%Y/%m/%d') %></td>
 
-                        <td><%= absence.subject_name %></td>
+                        <td class="tab-col"><%= absence.subject_name %></td>
 
                         <% @teacher = Teacher.find_by(CF: absence.CFprof)%>
-                        <td>
+                        <td class="tab-col">
                         <%= @teacher.name %>
                         <%= @teacher.surname %>
                         <br>
                         </td>
 
-                         <td>
-                         <div id="<%= absence.id %>just">
+                         <td class="tab-col">
+                         <div class="just" id="<%= absence.id %>just">
                         <%= absence.justified %>
                         </div>
                         <br>
@@ -55,7 +57,7 @@
                         
 
                         <% @justif = absence.justified %>
-                        <td>
+                        <td class="tab-col">
                         <% if !@justif && $ofAge %>
                             <%= form_with model: @student, url: student_justify_url, class: 'form-booked', method: :post do |form| %>
                                 <%= hidden_field_tag :CF, params[:CF] %>

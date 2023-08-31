@@ -13,63 +13,80 @@ body{
 }
 
 
+.form-absence{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color:  rgb(172, 245, 255);
+    gap: 10px;
+}
 
+.tab-title{
+    padding-right: 30px;
+}
 
+.options-title{
+    border-radius: 5px;
+}
 
-.student-grade-container-2{
+.tab-body{
+    border-radius: 5px;
+}
+
+.student-absence-container-2{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
     flex-wrap: nowrap;
     width: 500px;
     background-color: white;
     border-radius: 10px;
     padding-top: 10px;
     gap: 20px;
+    background-color: rgb(172, 245, 255);
+    padding-bottom: 50px;
+    
+}
+.noteclass{
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: rgb(172, 245, 255);
+    border-radius: 10px;
 }
 
-
-.student-grade-label{
+.absence-label{
     width: 100%;
     background-color: rgb(172, 245, 255);
     text-align: left;
 }
 
-
-
-
-
-
-.student-grade{
-    display:flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap:20px;
-    max-width: 300px;
-    padding: 10px;
-    border-radius: 10px;
+.tab-row{
     background-color: rgb(172, 245, 255);
 }
 
-.student-value-container{
-    font-size: 30px;
-    background-color:  rgb(172, 245, 255);
+.just{
+    margin-top: 20px;
 }
 
-.student-grade-field-container{
-    display:flex;
-    flex-direction: column;
-    gap: 2px;
-    background-color: rgb(172, 245, 255);
+.button-submit{
+    margin-top: 18px;
 }
+
+.tab-col{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+
+
 
 .button-submit{
     font-size: 18px;
 }
 
 .navbar{
-    background-color:  rgb(172, 245, 255);
+    background-color: rgb(172, 245, 255);
     height: 70px;
     position: fixed;
     top: 0;
@@ -91,7 +108,18 @@ body{
     margin-left: 100px;
 }
 
-
+.form-note{
+    border-width: 0;
+    width: 280px;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    background-color: rgb(172, 245, 255);
+    padding-top: 0px;
+    gap: 10px;
+}
 .profile{
     width: 100px;
     height: 70px;

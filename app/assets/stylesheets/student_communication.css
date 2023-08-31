@@ -11,7 +11,7 @@ body{
     justify-content: center;
     height:100%;
 }
-.home-communication{
+.student-home-communication{
     width:100%;
     display: flex;
     flex-direction: column;
@@ -34,14 +34,14 @@ body{
 
 
 
-.title-communication{
+.student-title-communication{
     font-size: 22px;
     width: 100%;
     text-align: center;
     margin-bottom: 20px;
     margin-top: 30px;
 }
-.communication-container{
+.student-communication-container{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,7 +58,7 @@ body{
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    background-color: lightblue;
+    background-color:  rgb(172, 245, 255);
     gap: 10px;
     height: 220px;
 }
@@ -68,7 +68,7 @@ body{
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    background-color: lightblue;
+    background-color:  rgb(172, 245, 255);
     gap: 10px;
 }
 
@@ -78,11 +78,11 @@ body{
     flex-wrap: nowrap;
     justify-content: flex-start;
     width: 100%;
-    background-color: lightblue;
+    background-color:  rgb(172, 245, 255);
 }
 
 .sym{
-    background-color: lightblue;
+    background-color:  rgb(172, 245, 255);
     font-size: 18px;
 }
 .communication-text{
@@ -105,19 +105,19 @@ body{
 .noteclass{
     margin-bottom: 10px;
     padding: 10px;
-    background-color: lightblue;
+    background-color:  rgb(172, 245, 255);
     border-radius: 10px;
 }
 
 .communication-label{
     width: 100%;
-    background-color: lightblue;
+    background-color:  rgb(172, 245, 255);
     text-align: left;
 }
 
 .communication-label-1{
     width: 100%;
-    background-color: lightblue;
+    background-color:  rgb(172, 245, 255);
     text-align: left;
     margin-left: 20px;
     margin-right: 5px;
@@ -151,7 +151,7 @@ body{
 }
 
 
-.communication{
+.student-communication{
     display:flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -162,36 +162,36 @@ body{
     min-width: 400px;
     padding: 10px;
     border-radius: 10px;
-    background-color: lightblue;
+    background-color: rgb(172, 245, 255);
 }
 
-.upper-communication{
+.student-upper-communication{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     width: 100%;
     justify-content: space-between;
     gap: 20px;
-    background-color: lightblue;
+    background-color: rgb(172, 245, 255);
 }
 
-.number-comm{
+.student-number-comm{
     font-size: 18px;
-    background-color: lightblue;
+    background-color: rgb(172, 245, 255);
 }
 
-.bottom-communication{
+.student-bottom-communication{
     display: flex;
     flex-direction: column;
     gap: 20px;
     width:100%;
     align-items: flex-start;
     justify-content: flex-start;
-    background-color: lightblue;
+    background-color: rgb(172, 245, 255);
 }
 
 .navbar{
-    background-color: skyblue;
+    background-color: rgb(172, 245, 255);
     height: 70px;
     position: fixed;
     top: 0;
@@ -221,7 +221,7 @@ body{
     justify-content: flex-start;
     align-items: center;
     text-align: center;
-    background-color: lightblue;
+    background-color: rgb(172, 245, 255);
     padding-top: 0px;
     gap: 10px;
 }

@@ -19,31 +19,25 @@
         <% end %>
     </nav>
     <div class="">
-    <div class="panel">  
-        <table>
-            <thead>
-            </thead>
-
-            <tbody>
-
-                <% @student = Student.find_by(CF: params[:CF])%>
-                <% @grades = Grade.where(CFstudent: @student.CF)%>
-
-
-                <% @grades.each do |grade| %>
-                    <tr>
-                        <td>
-                        <%= grade.value %>
-                        <br>
-                        </td>
-                        
-                        <td><%= grade.subject_name %></td>
-                    </tr>
-                    <td><%= grade.date.strftime("%Y-%m-%d") %></td>
-                    
-                <% end %>
-            </tbody>
-        </table>
+    
+      <div class="student-grade-container-2">
+      <label class="student-title-grade-2">Inserted grades</label>
+      <% @student = Student.find_by(CF: params[:CF])%>
+      <% @grades = Grade.where(CFstudent: @student.CF)%>
+      <% @grades.each do |grade| %>
+        <div class="student-grade">
+          <div class="student-value-container">
+            <%= grade.value %>
+          </div>
+          <div class="student-grade-field-container">
+            <label class="student-grade-label"><%= grade.subject_name%></label>
+            <label class="student-grade-label"><%= name=@student.name %> 
+            <%= surname=@student.surname %></label>
+            <label class="student-grade-label"><%= grade.date.strftime('%Y/%m/%d') %></label>
+          </div>
+        </div>
+      <% end %> 
+    
     </div>
 
 </body>

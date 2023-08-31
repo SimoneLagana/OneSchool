@@ -7,8 +7,8 @@
     <%= javascript_include_tag('staff.js') %>
     <title>Profile</title>
 </head>
-<<body>
-<div id="popupContainer"></div>
+<body>
+<div id="popupcontainer"></div>
 <nav class="navbar">
 <%= link_to school_staff_home_path(CF: params[:CF]),class: 'link-profile no-underline' do%>
         <div class="writ">
@@ -29,7 +29,7 @@
             <label class="profile-field">Email: <%= @staff.mail %> </label>
             <label class="profile-field">SchoolCode: <%= @staff.school_code %> </label>
             <div class="button-container">
-                <button class="style-button" onclick="editpassword('<%= @staff.CF%>', '<%= @staff.mail%>')">Modifica password</button>
+                <button class="style-button" onclick="editpassword('<%= @staff.CF%>', '<%= @staff.mail%>')">Edit password</button>
                 <%= form_tag school_staff_checklogout_path, method: :delete do %>
                     <%= submit_tag 'Logout', class: 'style-button' %> 
                 <% end %> 

@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html>
 <body>
-  <h2>Conferma Cambio Password</h2>
-  <p>Hai richiesto un cambio password. Clicca sul link sottostante per confermare:</p>
+  <h2>Confirm password change</h2>
+  <p>You have just requested a password change. Click on the link below to confirm:</p>
   <% if @user.type=='Teacher' %>
-  <%= link_to 'Conferma cambio password', { controller: 'teacher', action: 'upgradepassword', CF: @user.CF, success: 'success'}, method: :get %>
+  <%= link_to 'Confirm password change', { controller: 'teacher', action: 'upgradepassword', CF: @user.CF, success: 'success'}, method: :get %>
    <% elsif @user.type=='Student' %>
-  <%= link_to 'Conferma cambio password', { controller: 'student', action: 'upgradepassword', CF: @user.CF, success: 'success'}, method: :get %>
+  <%= link_to 'Confirm password change', { controller: 'student', action: 'upgradepassword', CF: @user.CF, success: 'success'}, method: :get %>
   <% elsif @user.type=='SchoolStaff' %>
-  <%= link_to 'Conferma cambio password', { controller: 'school_staff', action: 'upgradepassword', CF: @user.CF, success: 'success'}, method: :get %>
+  <%= link_to 'Confirm password change', { controller: 'school_staff', action: 'upgradepassword', CF: @user.CF, success: 'success'}, method: :get %>
   <% elsif @user.type=='Family' %>
-  <%= link_to 'Conferma Cambio Password', { controller: 'family', action: 'upgradepassword', CF: @user.CF, success: 'success'}, method: :get %>
-  <% else %>
-   <%= link_to 'Conferma Cambio Password', { controller: 'admin', action: 'upgradepassword', CF: @user.CF, success: 'success'}, method: :get %>
+  <%= link_to 'Confirm password change', { controller: 'family', action: 'upgradepassword', CF: @user.CF, success: 'success'}, method: :get %>
   <% end %> 
 </body>
 </html>

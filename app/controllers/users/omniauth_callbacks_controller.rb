@@ -13,6 +13,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         admin=Admin.find_by(mail: auth.info.email)
       if(admin)
         session[:CF]=admin.CF
+        session[:admin_code]="google"
         redirect_to admin_manage_url
       else
         if cookies[:admin_params].present?
@@ -24,6 +25,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         end
         if admin.save
           session[:CF]=admin.CF
+          session[:admin_code]="google"
           redirect_to admin_manage_url
           return
         end

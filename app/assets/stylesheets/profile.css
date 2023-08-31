@@ -74,10 +74,10 @@ body{
     flex-wrap: nowrap;
     gap: 20px;
     width: 100%;
+    justify-content: center;
     text-decoration: none;
     background: none;
     align-items: center;
-    padding-left: 50%;
     padding-top: 5%;
 }
 .profile-field{

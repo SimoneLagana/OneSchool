@@ -23,13 +23,13 @@
       </nav>
     <div class="home">
         <div class="main-panel">
-            <label class="profile-field"><%= @student.name %> </label>
-            <label class="profile-field"><%= @student.surname %> </label>
-            <label class="profile-field"><%= @student.CF %> </label>
-            <label class="profile-field"><%= @student.mail %> </label>
-            <label class="profile-field"><%= @student.school_code %> </label>
+            <label class="profile-field">Name: <%= @student.name %> </label>
+            <label class="profile-field">Surname: <%= @student.surname %> </label>
+            <label class="profile-field">CF: <%= @student.CF %> </label>
+            <label class="profile-field">Email: <%= @student.mail %> </label>
+            <label class="profile-field">School code: <%= @student.school_code %> </label>
             <div class="button-container">
-                <button class="profile-button" onclick="editpassword('<%= @student.CF%>', '<%= @student.mail%>')">Modifica password</button>
+                <button class="profile-button" onclick="editpassword('<%= @student.CF%>', '<%= @student.mail%>')">edit password</button>
                 <%= form_tag student_checklogout_path, method: :delete do %>
                     <%= submit_tag 'Logout', class: 'profile-button' %> 
                 <% end %> 

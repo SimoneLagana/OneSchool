@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "student_agenda.css" %>
+    <%= javascript_include_tag('student.js') %>
+
+    <title>Agenda</title>
+</head>
+<body>
+    <nav class="navbar">
+        <%= link_to student_home_url(CF: params[:CF]), class: "link-profile no-underline" do %>
+            <label class="writ"> Classroom: 
+            <%= @classname %>
+            </label>
+        <% end %>
+        <%= link_to student_profile_url(CF: params[:CF]), class: "link-profile no-underline" do %>
+            <div class="profile">
+                Profile
+            </div>
+        <% end %>
+      </nav>
+    <div class="home-student-agenda">
+        <label class="title-student-agenda"> <%=@classname%> 's agenda </label>
+        <div class="main-student-agenda">
+        
+            <% @news.each do |new| %>
+
+                <% if new.is_a?(Homework) %>
+                 <%= link_to student_homework_url(CF: params[:CF],classroom: @classname), class: "link-agenda no-underline" do %>
+                    <div class="student-agenda">
+                        <label class="label-student-agenda">Homework</label><%= new.date.strftime('%Y/%m/%d') %>
+                        <br><%= new.name%>
+                    </div>
+                    <%end%>
+                <% else %>
+                 <%= link_to student_news_url(CF: params[:CF],classroom: @classname), class: "link-agenda no-underline" do %>
+                    <div class="student-agenda">
+                        <label class="label-student-agenda">Communication</label><%= new.date.strftime('%Y/%m/%d') %>
+                        <br><%= new.title%>
+                    </div>
+                    <%end%>
+                <% end %>
+            <% end %>
+        </div>
+    </div>
+</body>
+</html>

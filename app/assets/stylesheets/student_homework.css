@@ -4,21 +4,189 @@
     background-color: white;
 }
  
-body{
+body{ 
     display:flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height:100%;
 }
-
-.home{
+.home-s-homework{
     width:100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 40px;
+    padding-top: 80px;
+}
+
+.main-s-homework{
+    display:flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 60px;
+    align-items: flex-start;
+    padding-bottom: 20px;
+}
+
+.title-s-homework-2{
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+}
+.s-homework-panel{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: center;
+    gap: 20px;
+
+}
+.s-homework-label{
+    width: 100%;
+    background-color: lightblue;
+    text-align: left;
+}
+
+.list-homework-panel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    height: 100%;
+}
+
+.select-s-homework{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+.s-div{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    font-size: 18px;
+    justify-content: space-between;
+    background-color: lightblue;
+    border: none;
+}
+
+.s-color{
+    background-color: lightblue;
+}
+.show-homework{
+    background-color: lightblue;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: nowrap;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.s-homework-field-container{
+    display:flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 2px;
+    width: 100%;
+    background-color: lightblue;
+}
+
+.s-homework{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap:20px;
+    max-width: 300px;
+    min-width: 250px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: lightblue;
+}
+
+
+.s-homework-title{
+    margin-top:20px;
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+}
+.insert-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 40px;
+}
+.form-subject{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.s-date{
+    background-color: lightblue;
+}
+
+
+.form-s-homework{
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    text-align: center;
+    gap: 10px;
+    background-color: lightblue;
+}
+.table{
+    display:flex;
+    flex-direction: column;
+}
+
+.text-s-field{
+    width: 220px;
+    height: 20px;
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.text-s-field-1{
+    width: 220px;
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.file-s-field{
+    width: 220px;
+    height:20px;
+
+}
+.s-button{
+    margin-top: 0;
+    width: 100px;
+    padding: 3px;
+    font-size: 18px;
+}
+
+.button-submit{
+    font-size: 18px;
 }
 
 .navbar{
@@ -31,6 +199,11 @@ body{
     width: 100%;
     flex-wrap: nowrap;
     justify-content: space-between;
+}
+
+.s-homework-text{
+    padding: 4px;
+    border-radius: 4px;
 }
 
 .writ{
@@ -79,10 +252,19 @@ body{
     color: #000000;
   }
 
-.homework-panel{
-    display:flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 30px;
-    background-color: aqua;
+
+.label-s-homework{
+    background-color: aquamarine;
+    width: 100%;
+    text-align: left;
+}
+
+.label-s-field{
+    width: 100%;
+    text-align: left;
+    background-color: lightblue;
+}
+
+.link-students-agenda{
+    color: black;
 }

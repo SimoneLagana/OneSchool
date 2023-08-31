@@ -38,7 +38,7 @@
             <div class="panel" id="first-panel" style="display:flex;">
               <div class="select-add">
                 <%= form_with url: admin_searchschool_path, method: :get, class: 'form-search-admin' do |form| %>
-                    <%= form.label :search, "Search for Code:", class: "label-field" %>
+                    <%= form.label :search, "Search for name:", class: "label-field" %>
                     <%= form.text_field :search, class: "text-field" %>
                     <%= form.submit "Search", class: 'style-button' %>
                 <% end %> 
@@ -61,12 +61,12 @@
                     <% if @ret == "NOT_FOUND"%>
                       <% @schools="" %> 
                       <% params[:search] =""%>
-                      <%=link_to "reset", admin_manage_path%>
+                      <%=link_to "reset", admin_manage_path, class: 'button-link' %>
                     <% else  %>
                     <% if @ret.present? %>
                       <% @schools=@ret %> 
                       <% params[:search] =""%>
-                      <%=link_to "reset", admin_manage_path%>
+                      <%=link_to "reset", admin_manage_path, class: 'button-link' %>
                     <% else %>
                       <% @schools = School.all %>
                     <% end %>
@@ -81,10 +81,8 @@
                               <%= hidden_field_tag :code, school.code %>
                               <%= submit_tag 'Delete', class: 'style-button' %>
                             <% end %>
-                      <% end %>
-                <%# <%= link_to 'Delete', admin_deleteSchool_path(code: "school.code"), method: :delete,
-                  form: {data: {turbo_confirm: 'Are you sure?'}} %>
-                    </td></tr>
+                            </td></tr>
+                        <% end %>
                     <% end %>
                   </tbody>
                 </table>
@@ -119,14 +117,14 @@
                       <% if @ret_staff == "NOT_FOUND"%>
                         <% @school_staff="" %> 
                         <% params[:search] =""%>
-                        <%=link_to "reset", admin_manage_path%>
+                        <%=link_to "reset", admin_manage_path, class: 'button-link'%>
                       <script>show_panel("second-panel")</script>
 
                       <% else  %>
                       <% if @ret_staff.present? %>
                         <% @school_staff=@ret_staff %> 
                         <% params[:search] =""%>
-                        <%=link_to "reset", admin_manage_path%>
+                        <%=link_to "reset", admin_manage_path, class: 'button-link'%>
                         <script>show_panel("second-panel")</script>
                       <% else %>      
                           <% @school_staff= SchoolStaff.all%>

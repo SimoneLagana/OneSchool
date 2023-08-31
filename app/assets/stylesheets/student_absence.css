@@ -150,3 +150,13 @@ body{
     background-color: #00ff00;
     color: #000000;
   }
+
+  #closePopup {
+    position: fixed;
+    top: 5%;
+    left: 97%;
+    transform: translate(-50%, -25%);
+    cursor: pointer;
+    font-size: 24px;
+    border-radius: 50%;
+}

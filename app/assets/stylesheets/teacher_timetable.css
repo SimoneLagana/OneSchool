@@ -1,0 +1,11 @@
+#time-title{
+    background-color: lightblue;
+    width: 200px;
+    border-radius: 5px;
+    font-size: 30px;
+}
+
+#time-tabella{
+    background-color: lightblue;
+    padding: 8px 8px 8px 8px;
+}

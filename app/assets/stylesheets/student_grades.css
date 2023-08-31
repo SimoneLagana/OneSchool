@@ -3,73 +3,73 @@
     padding:0;
     background-color: white;
 }
-
+ 
 body{
     display:flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height:100vh;
-    background-color: white;
-    width: 100%;
+    height:100%;
 }
 
-.home{
-    width:100%;
+
+
+
+
+.student-grade-container-2{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height:100%;
-
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    width: 500px;
+    background-color: white;
+    border-radius: 10px;
+    padding-top: 10px;
+    gap: 20px;
 }
 
-.upper-bottons{
+
+.student-grade-label{
+    width: 100%;
+    background-color: rgb(172, 245, 255);
+    text-align: left;
+}
+
+
+
+
+
+
+.student-grade{
     display:flex;
     flex-direction: row;
-    justify-content: center;
-    height: 40px;
-    align-items: center;
-    gap: 180px;
-    width: 90%;
-    margin-bottom: 0;
-}
-
-.up-botton{
-    height: 40px;
-    background-color: rgb(172, 245, 255);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 150px;
-    justify-content: center;
-    font-size: 22px;
-}
-
-.main-panel{
-    height: 300px;
-    background-color: rgb(172, 245, 255);
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width:700px;
-    margin-left: 5%;
-    margin-top: 0;
+    flex-wrap: nowrap;
+    gap:20px;
+    max-width: 300px;
+    padding: 10px;
     border-radius: 10px;
-}
-.grades-panel{
-    width:100%;
-    height: 90%;
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: transparent;
+    background-color: rgb(172, 245, 255);
 }
 
+.student-value-container{
+    font-size: 30px;
+    background-color:  rgb(172, 245, 255);
+}
+
+.student-grade-field-container{
+    display:flex;
+    flex-direction: column;
+    gap: 2px;
+    background-color: rgb(172, 245, 255);
+}
+
+.button-submit{
+    font-size: 18px;
+}
 
 .navbar{
-    background-color: rgb(172, 245, 255);
+    background-color:  rgb(172, 245, 255);
     height: 70px;
     position: fixed;
     top: 0;
@@ -91,6 +91,7 @@ body{
     margin-left: 100px;
 }
 
+
 .profile{
     width: 100px;
     height: 70px;
@@ -99,145 +100,21 @@ body{
     justify-content: center;
     text-align: center;
     font-size: 22px;
-    margin-right: 40px;
+    margin-right: 100px;
 }
-
-
-.upper-part{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    background-color:rgb(172, 245, 255);
-}
-
-
-.item{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    padding-left:20px;
-    padding-right:10px;
-    justify-content: space-between;
-    background-color: aquamarine;
-}
-
-.field{
-    width: 80px;
-    text-align: center;
-}
-.modify{
-    display: flex;
-    gap: 20px;
-    width: 80px;
-    text-align: center;
-}
-.popupMenu {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 1px solid black;
-    border-radius: 10px; 
-    padding: 20px;
-    background-color: #fefbfb;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0px 0px 15px 0px rgba(82, 80, 80, 0.712);
-  }
-
-  #closePopup {
-    position: fixed;
-    top: 8%;
-    left: 95%;
-     transform: translate(-50%, -50%); 
-    cursor: pointer;
-    font-size: 24px;
-    border-radius: 50%;
-    background: none;
-  }
  
-  .submitBtn{
-    font-size: 15px;
-    border:none;
-    border-radius: 10px;
-    padding: 2%;
-    cursor: pointer;
-    background-color: #04AA6D;
-    color: #f7f1eb;
-    margin-bottom: 4px;
-    width: 70%;
-    margin-top: 3%;
+.flash {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
   }
-
-  .center{
-    text-align: center;
-}
-
-.search-bar{
-    padding-right: 10px;
-    background-color:rgb(172, 245, 255);
-}
-
-#manageAdminTableDiv{
-    max-height: 230px;
-    overflow-y: auto;
+  
+  .alert {
+    background-color: #ff0000;
+    color: #ffffff;
   }
-  .link-profile{
-    text-decoration: none;
-    background: none;
-}
-.select-add{
-    width: 650px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    background-color: rgb(172, 245, 255);
-    margin-bottom: 20px;
-}
-
-.form-search{
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: 70%;
-    background-color: rgb(172, 245, 255);
-}
-
-.label-field{
-    background-color: rgb(172, 245, 255);
-}
-
-.text-field{
-    padding: 3px;
-}
-.center{
-    text-align: center;
-}
-.style-button{
-    font-size: 16px;
-    padding: 3px;
-
-}
-.style-button-small{
-    font-size: 10px;
-    padding: 3px;
-}
-
-.form-container{
-    width: 500px;
-    max-height: 250px;
-    overflow-y: auto;
-}
-
-#class-field{
-    padding-top: 5px;
-}
-
-#common-fields, #student-fields, #family-fields{
-    margin-bottom: 10px;
-}
+  
+  .notice {
+    background-color: #00ff00;
+    color: #000000;
+  }

@@ -96,9 +96,8 @@ class TeacherController < ApplicationController
 
     @event_list =$client_calendar.list_events('6fb8a61d5cfb51e60783c32a6eb22acfaf8de8c8126dc7dbabb7da7568a85cc7@group.calendar.google.com')
     #Controllo i meeting (se il mio server ne ha in più li metto su calendar, altrimenti li rimuovo da calendar):
-    @meeting.each do |meet|
-
-      if !@event_list.items.any?{ |event| event.summary == meet.title } 
+    @meeting.each do |meet| 
+      if !@event_list.items.any?{ |event| (event.summary == meet.title) &&(event.start.date_time+2.hour== meet.date)} 
         start_date = meet.date - 2.hour
         end_date = start_date + 1.hour
         event = Google::Apis::CalendarV3::Event.new({
@@ -135,8 +134,6 @@ class TeacherController < ApplicationController
       end 
     end       
     @event_list.items.each do |event|
-      event.summary 
-      puts event.summary.inspect
       if event.summary.include?("Meeting con ")
         if  !@meeting.any?{|meet| meet.title == event.summary}
           $client_calendar.delete_event('6fb8a61d5cfb51e60783c32a6eb22acfaf8de8c8126dc7dbabb7da7568a85cc7@group.calendar.google.com',event.id)
@@ -145,16 +142,15 @@ class TeacherController < ApplicationController
     end
     @commitments = Commitment.where(CFprof:@teacher_true, type: "Commitment" )
     @commitments.each do |commit| 
-      if !@event_list.items.any?{|event| event.summary == commit.title}
-        commit.delete
+
+      if !@event_list.items.any?{|event| event.summary == commit.title &&(event.start.date_time.to_date== commit.date.to_date)}
+        commit.destroy
       end
     end
     @event_list.items.each do |event|
 
       if !event.summary.include?("Meeting con ")
-        puts event.summary
         if  !@commitments.any?{|commit| commit.title == event.summary}
-          puts event.summary
           start_time = event.start.date_time
           end_time =  event.end.date_time
           new_date = start_time
@@ -215,11 +211,29 @@ class TeacherController < ApplicationController
   end
 
   def managecommitment
-    date=params[:date]
-    hours=params[:hour].to_i
     title=params[:title]
-    prof=params[:CFprof]
-    start_date = DateTime.parse(date) - 2.hour
+    if title==""
+      redirect_to teacher_commitment_url
+      flash[:alert] = 'Missing the name.'
+      return
+    end
+    date=params[:date]
+    if date==""
+      redirect_to teacher_commitment_url
+      flash[:alert] = 'Missing the date.'
+      return
+    end
+    hours=params[:hour]
+    if hours==""
+      redirect_to teacher_commitment_url
+      flash[:alert] = 'Missing the duration.'
+      return
+    end
+    hours = hours.to_i
+    date = DateTime.parse(date).change(min: 0)
+    @teacher=Teacher.find_by(CF: params[:CFprof])
+    @teacher_true = Teacher.find_by(name: @teacher.name, surname: @teacher.surname, school_code: @teacher.school_code)
+    start_date = date - 2.hour
     end_date = start_date + hours.hour
     event = Google::Apis::CalendarV3::Event.new({
       summary: title,
@@ -255,19 +269,23 @@ class TeacherController < ApplicationController
       $client_calendar.insert_event('6fb8a61d5cfb51e60783c32a6eb22acfaf8de8c8126dc7dbabb7da7568a85cc7@group.calendar.google.com', event)
       # puts("ciao")
       flash[:notice] = 'Task was successfully added.'
+    else
+      flash[:notice] = 'Error on adding the task.'
+      return
     end
-    # puts(event)
-    # puts("cciao")
+      
        # Utilizzo un oggetto DateTime per la data iniziale
-    new_date = DateTime.parse(params[:date])
+    new_date = DateTime.parse(params[:date]).change(min: 0)
+     
     # puts new_date
     num = params[:hour].to_i
     for i in 1..num
+      puts new_date.inspect
      @commitment = Commitment.new(
        title: params[:title],
        date: new_date,
        type: 'Commitment',
-       CFprof: params[:CFprof],
+       CFprof: @teacher_true.CF,
        school_code: params[:school_code])
      if @commitment
        @commitment.save

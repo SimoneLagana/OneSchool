@@ -34,17 +34,31 @@ body{
 }
 
 .tab-title{
-    padding-right: 30px;
+    padding-right: 50px;
 }
 
 .options-title{
-    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-evenly;
+    align-items: baseline;
+    
 }
 
 .tab-body{
     border-radius: 5px;
     max-height: 500px;
     overflow-y: auto;
+    width: 440px;
+    align-items: center;
+
+
 }
 
 .student-absence-container-2{
@@ -52,7 +66,7 @@ body{
     flex-direction: column;
     align-items: center;
     flex-wrap: nowrap;
-    width: 390px;
+    width: 490px;
     background-color: white;
     border-radius: 10px;
     padding-top: 10px;
@@ -83,7 +97,7 @@ body{
 }
 
 .button-submit{
-    margin-top: 18px;
+    margin-top: 10px;
 }
 
 .tab-col{
@@ -175,3 +189,18 @@ body{
     font-size: 24px;
     border-radius: 50%;
 }
+
+.option {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-evenly;
+    align-items: baseline;
+}
+
+    

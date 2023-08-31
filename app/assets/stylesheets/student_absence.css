@@ -13,7 +13,16 @@ body{
 }
 
 .s-absence-panel{
-    margin-top: 110px;
+    margin-top: 20px;
+}
+
+.title-absences{
+    background-color: rgb(172, 245, 255);
+    width: 250px;
+    border-radius: 5px;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 .form-absence{
     display:flex;
@@ -43,7 +52,7 @@ body{
     flex-direction: column;
     align-items: center;
     flex-wrap: nowrap;
-    width: 500px;
+    width: 390px;
     background-color: white;
     border-radius: 10px;
     padding-top: 10px;

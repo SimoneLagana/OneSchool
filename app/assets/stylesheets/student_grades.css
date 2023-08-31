@@ -23,10 +23,12 @@ body{
     justify-content: flex-start;
     flex-wrap: nowrap;
     width: 500px;
-    background-color: white;
-    border-radius: 10px;
-    padding-top: 10px;
+    background-color: rgb(239, 243, 245);
+    border-radius: 0px 0px 10px 10px;
     gap: 20px;
+    padding-bottom: 30px;
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 
@@ -36,7 +38,15 @@ body{
     text-align: left;
 }
 
-
+.student-title-grade-2{
+    font-weight: 200;
+    font-size: 25px;
+    background-color:  rgb(172, 245, 255);
+    border-radius: 10px 10px 0px 0px;
+    width: 500px;
+    text-align: center;
+    padding-bottom: 10px;
+}
 
 
 

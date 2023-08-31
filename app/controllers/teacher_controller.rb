@@ -211,6 +211,7 @@ class TeacherController < ApplicationController
   end
 
   def managecommitment
+    @warning = false
     title=params[:title]
     if title==""
       redirect_to teacher_commitment_url
@@ -230,7 +231,11 @@ class TeacherController < ApplicationController
       return
     end
     hours = hours.to_i
-    date = DateTime.parse(date).change(min: 0)
+    date = DateTime.parse(date)
+    if date.minute != 0
+      @warning = true
+    end
+    date= date.change(min: 0)
     @teacher=Teacher.find_by(CF: params[:CFprof])
     @teacher_true = Teacher.find_by(name: @teacher.name, surname: @teacher.surname, school_code: @teacher.school_code)
     start_date = date - 2.hour
@@ -268,7 +273,11 @@ class TeacherController < ApplicationController
     if $client_calendar
       $client_calendar.insert_event('6fb8a61d5cfb51e60783c32a6eb22acfaf8de8c8126dc7dbabb7da7568a85cc7@group.calendar.google.com', event)
       # puts("ciao")
-      flash[:notice] = 'Task was successfully added.'
+      if !@warning
+        flash[:notice] = 'Task was successfully added.'
+      else
+        flash[:warning] = "Minutes setted to 00 as per school policy"
+      end
     else
       flash[:notice] = 'Error on adding the task.'
       return

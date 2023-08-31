@@ -146,3 +146,11 @@ body{
     font-size: 22px;
     margin-right: 100px;
 }
+.alert {
+    background-color: #ff0000;
+    color: #ffffff;
+  }
+  .warning {
+    background-color: #eeff00;
+    color: #ffffff;
+  }

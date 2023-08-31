@@ -71,7 +71,7 @@ class StudentController < ApplicationController
   end
 
   def grades
-    @student=Student.find_by(CF: params[:CFstudent])
+    @student=Student.find_by(CF: params[:CF])
   end
 
   def notes

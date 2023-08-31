@@ -10,16 +10,19 @@
 </head>
 <body>
     <nav class="navbar">
-        <%= link_to student_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+        <%= link_to student_home_url(CF: params[:CF]), class: "link-profile no-underline" do %>
+            <label class="writ"> Classroom: 
+            <%= @student.student_class_code %>
+            </label>
+        <% end %>
+        <%= link_to student_profile_url(CF: params[:CF]), class: "link-profile no-underline" do %>
             <div class="profile">
-                home
+                Profile
             </div>
         <% end %>
+      </nav>
 
-
-    </nav>
-
-    
+      
     <div class="notes-panel">
           Personal notes
         <table class="notes-table">
@@ -54,7 +57,7 @@
                         <td><%= note.date.strftime('%Y/%m/%d') %></td>
 
                         <td class="details-popup">
-                        <button class="profile-button" onclick="popup('<%= escape_javascript(note.description) %>');"> details </button>
+                            <button class="button-submit" onclick="popup('<%= escape_javascript(note.description) %>');"> details </button>
 
                         </td>
 
@@ -65,8 +68,6 @@
                                 <%= hidden_field_tag :CF, params[:CF] %>
                                 <%= hidden_field_tag :CFprof, params[:CFprof] %>
                                 <%= hidden_field_tag :id, note.id %>
-
-                                <%# select_tag :CFstudent, options_for_select(@student.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "student-field", multiple: true %>
                                 <%= form.submit "Justify", class: "button-submit" %>
                             <% end %>
                         <%end%>

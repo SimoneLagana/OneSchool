@@ -12,7 +12,9 @@ body{
     height:100%;
 }
 
-
+.s-absence-panel{
+    margin-top: 110px;
+}
 .form-absence{
     display:flex;
     flex-direction: column;

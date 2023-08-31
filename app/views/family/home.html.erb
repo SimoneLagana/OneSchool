@@ -9,13 +9,13 @@
 </head>
 <body>
     <nav class="navbar">
-        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
-            <div class="profile">
-                home
+        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]),class: 'link-profile no-underline' do %>
+            <div class="writ">
+                OneSchool
             </div>
         <% end %>
 
-        <%= link_to family_choose_url(CF: params[:CF]) do %>
+        <%= link_to family_choose_url(CF: params[:CF]),class: 'link-profile no-underline' do %>
             <div class="profile">
                 Change student
             </div>
@@ -23,7 +23,7 @@
 
        
 
-        <%= link_to family_profile_url(CF: params[:CF]) do %>
+        <%= link_to family_profile_url(CF: params[:CF]),class: 'link-profile no-underline' do %>
             <div class="profile">
                 Profile
             </div>
@@ -32,42 +32,37 @@
 
 
     <div class="home">
-        <div class="panel-container">
+        <div class="panel-container-family">
 
-            <%= link_to family_grades_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+            <%= link_to family_grades_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: 'no-underline' do %>
                 <div class="panel">
                     Grades
                 </div>
             <% end %>
 
-            <%= link_to family_absences_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+            <%= link_to family_absences_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: 'no-underline' do %>
             <div class="panel">
                 Absences
             </div>
              <% end %>
             
-            <%= link_to family_meeting_choice_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+            <%= link_to family_meeting_choice_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: 'no-underline' do %>
                 <div class="panel">
                     Meeting
                 </div>
             <% end %>
 
 
-            <%= link_to "/login_schoolstaff" do %>
+
+            <%= link_to family_news_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: 'no-underline' do %>
             <div class="panel">
-                agenda
+                Comunication
             </div>
              <% end %>
 
-            <%= link_to family_news_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+            <%= link_to family_notes_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: 'no-underline' do %>
             <div class="panel">
-                news
-            </div>
-             <% end %>
-
-            <%= link_to family_notes_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
-            <div class="panel">
-                personal notes
+                Personal Notes
             </div>
              <% end %>
         </div>

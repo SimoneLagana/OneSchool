@@ -175,3 +175,15 @@ body{
     background-color: #00ff00;
     color: #000000;
   }
+  .no-decoration{
+    text-decoration: none;
+    background: none;
+}
+.panel-container-family{
+    display: grid;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 30px;
+    grid-template-columns: 30% 30% 30%;
+
+}

@@ -23,16 +23,16 @@
       </nav>
     <div class="home">
       <label class="title">Commitment</label>
+          <% flash.each do |key, message| %>
+            <div class="flash <%= key %>">
+                <%= message %>
+            </div>
+        <% end %>
       <div class="main-panel">
         <div class="show-calendar">
 
-        <iframe src="https://calendar.google.com/calendar/embed?src=6fb8a61d5cfb51e60783c32a6eb22acfaf8de8c8126dc7dbabb7da7568a85cc7%40group.calendar.google.com&ctz=Europe%2FRome" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+        <iframe src="https://calendar.google.com/calendar/embed?src=6fb8a61d5cfb51e60783c32a6eb22acfaf8de8c8126dc7dbabb7da7568a85cc7%40group.calendar.google.com&ctz=Europe%2FRome" sstyle="border: 0" width="900" height="450" frameborder="0" scrolling="no"></iframe>
 
-            <ul>
-            <% @event_list.items.each do |event| %>
-            <li><%= event.summary %></li>
-            <% end %>
-            </ul>
         </div> 
         <div class="insert-commitment">
         
@@ -43,7 +43,7 @@
               <label class="label-form">Title</label>
               <%= form.text_field :title, class: 'form-field' %>
               <label class="label-form">Data</label>
-              <%= datetime_field_tag :date, {step: 3600, }, class: 'form-field'  %>
+              <%= datetime_field_tag :date, step: 3600 , class: 'form-field'  %>
               <div class="hour-container">
                   <label class="label-form">Insert duration (h)</label>
                   <%= form.number_field :hour, class: 'number-field', min: 0 %>
@@ -55,6 +55,6 @@
            
       
     </div>
-    
+
 </body>
 </html>

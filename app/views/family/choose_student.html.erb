@@ -25,7 +25,7 @@
     </nav>
 
     <div class = "panel">
-        <label class = "label" for="scelta">Seleziona un'opzione:</label>
+        <label class = "label" for="scelta">Select an option:</label>
         <% @family = Family.find_by(CF: params[:CF]) %>
         <% @family_students = FamilyStudent.select(:CFstudent, :CFfamily).where(CFfamily: @family.CF).distinct %>
         

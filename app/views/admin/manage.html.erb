@@ -12,9 +12,9 @@
 <body>
     <div id="popupContainer"></div>
     <nav class="navbar">
-      <label class="writ">
+      <div class="writ">
         OneSchool
-      </label>
+      </div>
       <%= link_to admin_profile_url, class: 'link-profile no-underline'  do %>
       <div class="profile">
         Profile
@@ -23,6 +23,16 @@
     </nav>
     <div class="admin-home">
         <label class="title">Manage school and school staff's accounts</label>
+        <% flash.each do |key, message| %>
+            <div class="flash <%= key %>">
+              <% if key !="alertt" && key != "noticee"%>
+              <script>show_panel("second-panel")</script>
+              <%else%>
+              <script>show_panel("first-panel")</script>
+              <%end%>
+                <%= message %>
+            </div>
+        <% end %>
         <div class="admin-upper-bottons">
             <div class="admin-up-botton" id="first-botton" onclick="show_panel('first-panel');">
                 school

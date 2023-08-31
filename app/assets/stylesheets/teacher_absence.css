@@ -30,8 +30,29 @@ body{
     gap: 70px;
 }
 
+#select-1, #select-2, #select-3{
+    width: 220px;
+    height: 20px;
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 
 
+
+.absence-field-s{
+    width:220px !important;
+    height: 20px !important;
+    font-size: 18px !important;
+    display:flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 
 .title-absence{
     font-size: 22px;
@@ -161,7 +182,7 @@ body{
 }
 
 .navbar{
-    background-color: skyblue;
+    background-color:rgb(172, 245, 255);;
     height: 70px;
     position: fixed;
     top: 0;

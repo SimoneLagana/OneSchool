@@ -22,12 +22,12 @@
         <% end %>
       </nav>
     <div class="home-timetable">
-        <label class="title-timetable"> Timetable </label>
+        <label class="title-timetable" id="time-title"> Timetable </label>
         <% if @ret == "NOT_FOUND"%>
             <label class="timetable-label">The class lesson timetable has not been set yet</label>
         <% else  %>
         <% if @ret.present? %>   
-            <table class="tabella">
+            <table class="tabella" id="time-tabella">
                 <thead>
                     <tr>
                         <th>MONDAY</th>

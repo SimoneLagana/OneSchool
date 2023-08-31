@@ -27,7 +27,7 @@
 
             <%= link_to student_grades_url(CF: params[:CF]) , class: "no-underline" do %>
             <div class="panel">
-                grades
+                Grades
             </div>
              <% end %>
 
@@ -45,30 +45,30 @@
 
             <%= link_to student_agenda_url(CF: params[:CF]), class: "no-underline" do %>
             <div class="panel">
-                agenda
+                Agenda
             </div>
              <% end %>
 
             <%= link_to student_news_url(CF: params[:CF]), class: "no-underline" do %>
             <div class="panel">
-                news
+                News
             </div>
              <% end %>
 
             <%= link_to student_notes_url(CF: params[:CF]), class: "no-underline" do %>
             <div class="panel">
-                personal notes
+                Personal notes
             </div>
              <% end %>
 
              <%= link_to student_timetable_url(CF: params[:CF]), class: "no-underline" do %>
             <div class="panel">
-                class timetable
+                Class timetable
             </div>
              <% end %>
 
             <% if $ofAge %>
-                <%= link_to student_meeting_choice_url(CF: params[:CF]) do %>
+                <%= link_to student_meeting_choice_url(CF: params[:CF]), class: "no-underline"  do %>
                     <div class="panel" id="meeting_panel">
                         Meeting
                     </div>

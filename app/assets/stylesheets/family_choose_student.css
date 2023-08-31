@@ -51,22 +51,22 @@ body{
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-    
-
     width: 90%;
 }
 
 .panel{
     display:flex;
     flex-direction: column;
-    width: 240px;
-    height: 200px;
+    width: 500px;
+    height: fit-content;
     background-color: rgb(172, 245, 255);
     justify-content: center;
     align-items: center;
     border-radius: 10px;
     font-size: 18px;
     text-decoration: none;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 .navbar{
@@ -122,9 +122,15 @@ body{
   
 
   .option {
-    background-color: rgb(172, 245, 255);
+    /* background-color: rgb(172, 245, 255); */
+    background-color: white;
     text-decoration: none;
-  }
+    width: 200px;
+    border-radius: 10px;
+    text-align: center; 
+    margin-bottom: 8px;
+}
+
 
   .label {
     padding-bottom: 7px;
@@ -138,4 +144,5 @@ body{
     background-color: rgb(172, 245, 255);
     text-decoration: none;
     color: black
+
    }

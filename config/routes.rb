@@ -66,6 +66,11 @@ Rails.application.routes.draw do
   post 'student/submit', to: 'student#submit', as: 'student_submit'
   get 'student/timetable', to: 'student#timetable', as: 'student_timetable'
   get 'student/agenda', to: 'student#agenda', as: 'student_agenda'
+  get 'student/meeting_manage', to: 'student#meeting_manage', as: 'student_meeting_manage'
+  post 'student/add_student_meeting', to: 'student#add_student_meeting', as: 'add_student_meeting'
+  get 'student/meeting_choice', to: 'student#meeting_choice', as: 'student_meeting_choice'
+  delete "student/delete_meeting", to: "student#delete_meeting", as: 'delete_student_meeting'
+
 
 
 

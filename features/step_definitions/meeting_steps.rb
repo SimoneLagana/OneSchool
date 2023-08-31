@@ -13,7 +13,7 @@ Given("there is a user with email and password") do
   FactoryBot.create(:teacher, name: "Fabio", surname: "Ralli", CF: "999", mail: "fabio@ralli", password: "pas", school_code: "1")
   FactoryBot.create(:subject, weekday: "martedì", time: "2", school_code: "1", CFprof: "40", class_code: "1A", name: "storia")
   FactoryBot.create(:subject, weekday: "martedì", time: "3", school_code: "1", CFprof: "999", class_code: "1A", name: "inglese")
-  FactoryBot.create(:meeting, id: 9, title: "Meeting con Enzo Esposito", date: DateTime.new(2023, 8, 30, 18, 0, 0), CFprof: "999", CFfamily: "7")
+  FactoryBot.create(:meeting, id: 9, title: "Meeting con Enzo Esposito", date: DateTime.new(2023, 9, 5, 18, 0, 0), CFprof: "999", CFfamily: "7")
   FactoryBot.create(:school_staff)
 end
 
@@ -78,13 +78,14 @@ When("I delete a meeting") do
   @deleted_all = Meeting.where(CFprof: @t.CF, CFfamily: @user.CF)
   @del = @deleted_all.first
   @date = @del.date
-  @day = @date.day.to_s
+
+  @day = @date.strftime("%d")
   @month = @date.strftime("%m")
   @time = @date.hour.to_s
   find("#" + @day + @month + "_" + @time + "Del").click
 end
 
-Then("that meeting should exist anymore") do
+Then("that meeting should not exist anymore") do
   Meeting.find_by(CFprof: @t.CF, CFfamily: @user.CF, date: @date) == nil
 end
 

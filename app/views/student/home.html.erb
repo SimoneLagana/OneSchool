@@ -67,6 +67,14 @@
                 class timetable
             </div>
              <% end %>
+
+            <% if $ofAge %>
+                <%= link_to student_meeting_choice_url(CF: params[:CF]) do %>
+                    <div class="panel" id="meeting_panel">
+                        Meeting
+                    </div>
+                <% end %>
+            <%end%>
         </div>
     </div>
     

@@ -1,7 +1,20 @@
 class StudentController < ApplicationController
   before_action :check_cookies_login, except: [:login, :checklogin]
   before_action :ofAge, except: [:login, :checklogin, :logout, :checklogout]
+  before_action :inClass, except: [:login, :checklogin, :logout, :checklogout]
+
+  $inClass = true
   $ofAge = false
+
+  def inClass
+    @student = Student.find_by(CF: params[:CF])
+    if(@student.student_class_code == "STUDENTS_WITHOUT_CLASS")
+      $inClass = false
+    else 
+      $inClass = true
+    end
+    puts $inClass
+  end
 
   def login
     if cookies[:student_info].present? && JSON.parse(cookies[:student_info])["islogged"] == true

@@ -1,5 +1,17 @@
 class FamilyController < ApplicationController
   before_action :check_cookies_login, except: [:login, :checklogin]
+  before_action :onlyChild, except: [:login, :checklogin, :logout, :checklogout]
+  $onlyChild = false
+
+  def onlyChild
+    @family = Family.find_by(CF: params[:CF])
+    @studrel = FamilyStudent.where(CFfamily: @family.CF).distinct.pluck(:CFstudent)
+    if @studrel.length > 1
+      $onlyChild = false
+    else 
+      $onlyChild = true
+    end
+  end
 
   def login
     if cookies[:family_info].present? && JSON.parse(cookies[:family_info])["islogged"] == true
@@ -19,6 +31,9 @@ class FamilyController < ApplicationController
         redirect_to family_choose_url(CF: @family.CF)
       else
         @studentCF = @studrel[0]
+        puts @studentCF
+        puts "hhhhhhhhhhhhh"
+        $onlyChild = true
         redirect_to family_home_url(CF: @family.CF, CFstudent: @studentCF)
       end
     else

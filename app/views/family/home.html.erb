@@ -15,15 +15,16 @@
             </div>
         <% end %>
 
-        <%= link_to family_choose_url(CF: params[:CF]) do %>
-            <div class="profile">
-                Change student
-            </div>
-        <% end %>
-
+        <% if $onlyChild == false%>
+            <%= link_to family_choose_url(CF: params[:CF]) do %>
+                <div class="profile">
+                    Change student
+                </div>
+            <% end %>
+        <%end%>
        
 
-        <%= link_to family_profile_url(CF: params[:CF]) do %>
+        <%= link_to family_profile_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
             <div class="profile">
                 Profile
             </div>
@@ -52,12 +53,6 @@
                 </div>
             <% end %>
 
-
-            <%= link_to "/login_schoolstaff" do %>
-            <div class="panel">
-                agenda
-            </div>
-             <% end %>
 
             <%= link_to family_news_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
             <div class="panel">

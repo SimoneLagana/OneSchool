@@ -9,38 +9,38 @@
     <title>Document</title>
 </head>
 <body>
-    <nav class="navbar">
-        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+    <nav class="navbar" id = "absencenav">
+        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: "link-profile no-underline" do %>
             <div class="profile">
                 home
             </div>
         <% end %>
 
         <% if $onlyChild == false%>
-            <%= link_to family_choose_url(CF: params[:CF]) do %>
+            <%= link_to family_choose_url(CF: params[:CF]), class: "link-profile no-underline" do %>
                 <div class="profile">
                     Change student
                 </div>
             <% end %>
         <% end %>
 
-        <%= link_to family_profile_url(CF: params[:CF],  CFstudent: params[:CFstudent]) do %>
+        <%= link_to family_profile_url(CF: params[:CF],  CFstudent: params[:CFstudent]), class: "link-profile no-underline" do %>
             <div class="profile">
                 Profile
             </div>
         <% end %>
     </nav>
 
-    <table>
+    <table class ="student-absence-container-2">
             <thead>
                 <tr>
-                <th>Teacher</th>
-                <th>Subject</th>
-                <th>Select</th>
+                <th class="tab-title">Teacher</th>
+                <th class="tab-title">Subject</th>
+                <th class="tab-title">Select</th>
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="tab-body">
 
                 <% @family = Family.find_by(CF: params[:CF]) %>
                 <% @student = Student.find_by(CF: params[:CFstudent])%>
@@ -53,17 +53,17 @@
                 <% @unique_subjects.each do |unique_subject| %>
                     
                     <tr>
-                        <td>
+                        <td class="tab-col">
                             <% @teacher = Teacher.find_by(CF: unique_subject[1]) %>
                             <%= @teacher.name%>
                             <%= @teacher.surname%>
                         </td>
 
-                        <td>
+                        <td class="tab-col">
                             <%= unique_subject[0]%>
                         </td>
 
-                        <td>
+                        <td class="tab-col">
                             <%= link_to family_meeting_manage_url(CF: params[:CF], CFstudent: params[:CFstudent], CFprof:@teacher.CF), id:  @teacher.CF + "meeting_link" do %>
                                 <div class="profile">
                                     meeting

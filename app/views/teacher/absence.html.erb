@@ -11,9 +11,9 @@
 <body>
     <nav class="navbar">
         <%= link_to teacher_classroom_url(classroom: @classname), class: "link-profile no-underline" do %>
-            <label class="writ"> Classroom: 
+            <div class="writ"> Classroom: 
             <%= @classname %>
-            </label>
+            </div>
         <% end %>
         <%= link_to teacher_profile_url, class: "link-profile no-underline" do %>
             <div class="profile">
@@ -25,19 +25,19 @@
         <label class="title-absence"> Absences </label>
         <div class="whole-absence">
             <div class="absence-container">
-                <%= form_tag teacher_absence_url, class: 'form-absence-1', method: :get do %>
-                    <label class="absence-label">Insert a new absence</label>
-                    <%= select_tag :subject, options_for_select(@subjects, @subject), class: "absence-field", onchange: "this.form.submit()" %>
-                    <%= select_tag :weekday, options_for_select(@weekdays,@weekday),  class: "absence-field", onchange: "this.form.submit()" %>
-                    <%= select_tag :time, options_for_select(@times, @time),  class: "absence-field", onchange: "this.form.submit()" %>
-                    <%= hidden_field_tag :classroom, @classname %>
-                    <%= hidden_field_tag :CF, @teacher.CF %>
-                    <% flash.each do |key, message| %>
-                        <div class="flash <%= key %>">
-                        <%= message %>
-                        </div>
-                    <% end %>
-                <% end %>
+                <%= form_with url: teacher_absence_url, class: 'form-absence-1', method: :get do %>
+                       <label class="absence-label">Insert a new absence</label>
+                       <%= select_tag :subject, options_for_select(@subjects, @subject), id: "select-1", onchange: "this.form.submit()" %>
+                       <%= select_tag :weekday, options_for_select(@weekdays,@weekday),  id: "select-2", onchange: "this.form.submit()" %>
+                       <%= select_tag :time, options_for_select(@times, @time),  id: "select-3", onchange: "this.form.submit()" %>
+                       <%= hidden_field_tag :classroom, @classname %>
+                       <%= hidden_field_tag :CF, @teacher.CF %>
+                       <% flash.each do |key, message| %>
+                           <div class="flash <%= key %>">
+                           <%= message %>
+                           </div>
+                       <% end %>
+                   <% end %>
                 <%= form_with url: teacher_insertabsence_url, class: 'form-absence', method: :post do |form| %>
                     <%= hidden_field_tag :class_code, @classname %>
                     <%= hidden_field_tag :CFprof, @teacher.CF %>

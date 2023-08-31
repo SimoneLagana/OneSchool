@@ -10,27 +10,25 @@
 <body>
     <div id="popupcontainer"></div>
     <nav class="navbar">
-        <%= link_to admin_manage_url do %>
-            <div class="profile">
-                Home
-            </div>
-        <% end %>
-
-        <%= link_to admin_profile_url do %>
-            <div class="profile">
-                Profile
-            </div>
-        <% end %>
-        
-      </nav>
+     <%= link_to admin_manage_url, class: 'link-profile no-underline'  do %>
+      <label class="writ">
+        OneSchool
+      </label>
+      <%end%>
+      <%= link_to admin_profile_url, class: 'link-profile no-underline'  do %>
+      <div class="profile">
+        Profile
+      </div>
+      <% end %>
+    </nav>
     <div class="home">
         <div class="main-panel">
-            <label class="profile-field"><%= @admin.name %> </label>
+            <label class="profile-field">Name:<%= @admin.name %> </label>
             <%if !session[:admin_code].present? %>
-                <label class="profile-field"><%= @admin.surname %> </label>
+                <label class="profile-field">Surname:<%= @admin.surname %> </label>
             <%end%>
-            <label class="profile-field"><%= @admin.CF %> </label>
-            <label class="profile-field"><%= @admin.mail %> </label>
+            <label class="profile-field">CF:<%= @admin.CF %> </label>
+            <label class="profile-field">Email: <%= @admin.mail %> </label>
             
             <div class="button-container">
                 <%if !session[:admin_code].present? %>

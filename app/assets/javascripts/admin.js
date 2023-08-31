@@ -126,8 +126,7 @@ function editpassword(CF, email) {
           <form action="/admin/changepassword" method="post">
             <input type="text" id="CF" name="CF" hidden value=${CF}>
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" value=${email}><br>
-
+            <input type="email" id="email" name="email" disabled value=${email}><br>
             <label for="old_password">Insert old password</label>
             <input type="password" id="old_password" name="old_password" required><br>
             <label for="password">Insert new password</label>

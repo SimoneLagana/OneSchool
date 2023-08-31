@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag "teacher_communication.css" %>
+    <%= stylesheet_link_tag "student_communication.css" %>
     <%= javascript_include_tag('teacher.js') %>
 
     <title>communications</title>
@@ -21,17 +21,17 @@
             </div>
         <% end %>
       </nav>
-    <div class="home-communication">
-        <label class="title-communication"> communications </label>
-        <div class="communication-container">
-            <% @communications.each do |communication| %>
-               <div class="communication">
-                   <div class="upper-communication">
-                       <label class="number-comm">Communication n <%=communication.id%></label>
-                       <label class="number-comm"><%=school_name=School.where(code: communication.school_code).pluck(:name).uniq.join %> </label>
-                       <label class="number-comm"><%= communication.date.strftime('%Y/%m/%d')%> </label>
+    <div class="student-home-communication">
+        <label class="student-title-communication"> communications </label>
+        <div class="student-communication-container">
+            <% @news.each do |communication| %>
+               <div class="student-communication">
+                   <div class="student-upper-communication">
+                       <label class="student-number-comm">Communication n <%=communication.id%></label>
+                       <label class="student-number-comm"><%=school_name=School.where(code: communication.school_code).pluck(:name).uniq.join %> </label>
+                       <label class="student-number-comm"><%= communication.date.strftime('%Y/%m/%d')%> </label>
                    </div>
-                   <div class="bottom-communication">
+                   <div class="student-bottom-communication">
                        <%=communication.title%>
                        <%=communication.text%>
                    </div>

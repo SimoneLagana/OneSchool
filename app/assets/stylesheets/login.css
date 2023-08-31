@@ -99,6 +99,7 @@ body{
 
   .no-underline {
     text-decoration: none;
+    color:black;
   }
 .no-underline:visited{
     color:black;

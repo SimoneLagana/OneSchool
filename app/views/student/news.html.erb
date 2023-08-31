@@ -3,59 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag "news.css" %>
-    <%= javascript_include_tag('family.js') %>
+    <%= stylesheet_link_tag "teacher_communication.css" %>
+    <%= javascript_include_tag('teacher.js') %>
 
-    <title>Document</title>
+    <title>communications</title>
 </head>
 <body>
     <nav class="navbar">
-        <%= link_to student_home_url(CF: params[:CF]) do %>
+        <%= link_to teacher_classroom_url(classroom: @classname), class: "link-profile no-underline" do %>
+            <label class="writ"> Classroom: 
+            <%= @classname %>
+            </label>
+        <% end %>
+        <%= link_to teacher_profile_url, class: "link-profile no-underline" do %>
             <div class="profile">
-                home
+                Profile
             </div>
         <% end %>
-
-
-        <%= form_tag student_checklogout_path, method: :delete do %>
-            <%= submit_tag 'Logout', class: 'profile' %>
-        <% end %>
-    </nav>
-
-    
-
-    <div class="panel">
-          
-        <table>
-            <thead>
-                <tr>
-                <th> Titolo </th>
-                <th> Teacher</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <div id="popup" class="popup">
-        
-                </div>      
-                <% @news.each do |news| %>
-                    <tr>
-                        
-
-                        <td>
-                        <button class="profile-button" onclick="popup('<%= news.text %>')"> <%= news.title %></button>
-                        
-                        </td>
-                        <td><%= news.date %></td>
-                  
-                    </tr>
-                <% end %>
-            </tbody>
-        </table>
-
-        
-
+      </nav>
+    <div class="home-communication">
+        <label class="title-communication"> communications </label>
+        <div class="communication-container">
+            <% @communications.each do |communication| %>
+               <div class="communication">
+                   <div class="upper-communication">
+                       <label class="number-comm">Communication n <%=communication.id%></label>
+                       <label class="number-comm"><%=school_name=School.where(code: communication.school_code).pluck(:name).uniq.join %> </label>
+                       <label class="number-comm"><%= communication.date.strftime('%Y/%m/%d')%> </label>
+                   </div>
+                   <div class="bottom-communication">
+                       <%=communication.title%>
+                       <%=communication.text%>
+                   </div>
+               </div>
+            <% end %>
+        </div> 
     </div>
-
 </body>
 </html>

@@ -1,5 +1,0 @@
-Feature: Student prova
-  Scenario: Student successfully logs in
-    Given the user is on the page "student/prova"
-    When the user clicks the "login" button in the form
-    Then the user is directed to the page index

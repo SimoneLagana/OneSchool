@@ -146,6 +146,18 @@ class StudentController < ApplicationController
   end
 
   def submit
+    if !params[:mail_text].present?
+      flash[:alert]="insert text"
+      redirect_to student_homework_url(CF: params[:CF])
+      return
+    end
+
+    if !params[:file].present?
+      flash[:alert]="insert file"
+      redirect_to student_homework_url(CF: params[:CF])
+      return
+    end
+
     @student=Student.find_by(CF:params[:CF])
     names=params[:other]
     student_name= @student.name + @student.surname + names
@@ -153,17 +165,39 @@ class StudentController < ApplicationController
     @teacher=Teacher.find_by(CF: params[:CFprof])
     puts(@teacher.mail)
     @homework=Homework.find_by(CFprof: @teacher.CF, school_code: @student.school_code, class_code: @student.student_class_code, date: params[:date], weekday: params[:weekday], time: params[:time], subject_name: params[:subject_name])
+    weekday=@homework.weekday
+    time=@homework.time
+    subject=@homework.subject_name
+    date=@homework.date
+    name=@homework.name
+    text=@homework.text
     @homework.delete
+    @homework=Homework.create(CFprof: @teacher.CF, school_code: @student.school_code, class_code: @student.student_class_code, date: date, weekday: weekday, time: time, subject_name: subject, text: text, name: name, delivered: true)
+    if @homework
+      @homework.file.attach(params[:file])
+      begin
+        if @homework.save
+          SubmitMailer.submit_homework(@teacher, student_name, @text, @homework).deliver_now
+          @homework.update(delivered: true)
 
-    @homework=Homework.create(CFprof: @teacher.CF, school_code: @student.school_code, class_code: @student.student_class_code, date: params[:date], weekday: params[:weekday], time: params[:time], subject_name: params[:subject_name], delivered: true)
-    @homework.file.attach(params[:file])
-    @homework.save
-    SubmitMailer.submit_homework(@teacher, student_name, @text, @homework).deliver_now
-    @homework.update(delivered: true)
-    if (params[:subject].present?)
-      redirect_to student_homework_url(CF: @student.CF, subject: params[:subject])
+          if (params[:subject].present?)
+            redirect_to student_homework_url(CF: @student.CF, subject: params[:subject])
+          else
+            redirect_to student_homework_url(CF: @student.CF)
+          end
+          
+        else
+          flash[:alert] = "error while saving homework"
+          redirect_to student_homework_url(CF: @student.CF)
+        end
+      rescue ActiveRecord::RecordNotUnique => e
+        flash[:alert] = "This homework is already inserted."
+        redirect_to student_homework_url(CF: @student.CF)
+      end
     else
+      flash[:alert]="error during homework submission"
       redirect_to student_homework_url(CF: @student.CF)
+      return
     end
   end
 
@@ -199,6 +233,7 @@ class StudentController < ApplicationController
       render "timetable"
     end 
   end
+
 
   def meeting_manage
    
@@ -281,6 +316,17 @@ class StudentController < ApplicationController
       @meeting.destroy
       redirect_to student_meeting_manage_url(CF: params[:CF], CFprof: params[:CFprof])
     end
+
+
+
+  def agenda
+    @student=Student.find_by(CF: params[:CF])
+    @classname=@student.student_class_code
+    @homeworks=Homework.where(school_code: @student.school_code, class_code: @classname)
+    @communications=Communication.where(school_code: @student.school_code)
+    @news = @communications.to_a + @homeworks.to_a
+    @news=@news.sort_by(&:date).reverse
+  end
 
 
 end

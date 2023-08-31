@@ -23,12 +23,12 @@
       </nav>
     <div class="home">
         <div class="main-panel">
-            <label class="profile-field"><%= @teacher.name %> </label>
+            <label class="profile-field">Name: <%= @teacher.name %> </label>
             <%if !session[:teacher_code].present? %>
-                <label class="profile-field"><%= @teacher.surname %> </label>
+                <label class="profile-field">Surname: <%= @teacher.surname %> </label>
             <%end%>
-            <label class="profile-field"><%= @teacher.mail %> </label>
-            <label class="profile-field"><%= @teacher.school_code %> </label>
+            <label class="profile-field">Email: <%= @teacher.mail %> </label>
+            <label class="profile-field">School code: <%= @teacher.school_code %> </label>
             <div class="button-container">
             <% puts (session[:teacher_code].present?)%>
                 <%if !session[:teacher_code].present? %>

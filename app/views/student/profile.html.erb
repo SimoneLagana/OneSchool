@@ -29,9 +29,9 @@
             <label class="profile-field">Email: <%= @student.mail %> </label>
             <label class="profile-field">School code: <%= @student.school_code %> </label>
             <div class="button-container">
-                <button class="profile-button" onclick="editpassword('<%= @student.CF%>', '<%= @student.mail%>')">edit password</button>
+                <button class="style-button" onclick="editpassword('<%= @student.CF%>', '<%= @student.mail%>')">edit password</button>
                 <%= form_tag student_checklogout_path, method: :delete do %>
-                    <%= submit_tag 'Logout', class: 'profile-button' %> 
+                    <%= submit_tag 'Logout', class: 'style-button' %> 
                 <% end %> 
             </div>
             

@@ -226,6 +226,15 @@ body{
     font-size: 24px;
     border-radius: 50%;
   }
+
+  .button-link{
+    margin-top: 2px;
+    border: 2px solid black;
+    padding: 2px;
+    text-decoration: none;
+    color: black;
+
+  }
  
    .submitBtn{
     font-size: 15px;

@@ -1,0 +1,158 @@
+*{
+    margin:0;
+    padding:0;
+    background-color: white;
+}
+ 
+body{ 
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height:100%;
+}
+.home-student-agenda{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px;
+}
+
+.main-student-agenda{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 20px;
+    gap: 20px;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.title-student-agenda{
+    margin-top:20px;
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+}
+.insert-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 40px;
+}
+.form-subject{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-field{
+    width: 220px;
+    height: 20px;
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.table{
+    display:flex;
+    flex-direction: column;
+}
+
+.student-field{
+    width: 220px;
+    height: 100px;
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.button-submit{
+    font-size: 18px;
+}
+
+.navbar{
+    background-color: skyblue;
+    height: 70px;
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.writ{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-size: 22px;
+    height: 70px;
+    margin-left: 100px;
+}
+
+.form-profile{
+    border-width: 0;
+    width: 100px;
+    height: 70px;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.profile{
+    width: 100px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-size: 22px;
+    margin-right: 100px;
+}
+
+.flash {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+  }
+  
+  .alert {
+    background-color: #ff0000;
+    color: #ffffff;
+  }
+  
+  .notice {
+    background-color: #00ff00;
+    color: #000000;
+  }
+
+.student-agenda{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 200px;
+    background-color: aquamarine;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.label-student-agenda{
+    background-color: aquamarine;
+    width: 100%;
+    text-align: left;
+}
+
+.link-students-agenda{
+    color: black;
+}

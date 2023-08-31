@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= javascript_include_tag('family.js') %>
-    <%= stylesheet_link_tag "news.css" %>
+    <%= stylesheet_link_tag "student_notes.css" %>
 
     <title>Document</title>
 </head>
@@ -17,18 +17,18 @@
         <% end %>
 
 
-
     </nav>
 
-    <div class="panel">
-          
-        <table>
+    
+    <div class="notes-panel">
+          Personal notes
+        <table class="notes-table">
             <thead>
                 <tr>
                 <th> Code</th>
                 <th> Teacher</th>
                 <th> Date</th>
-                <th> Deatils</th>
+                <th> Details</th>
                 <th> Justify</th>
                 </tr>
             </thead>
@@ -51,9 +51,9 @@
                         <br>
                         </td>
 
-                        <td><%= note.date %></td>
+                        <td><%= note.date.strftime('%Y/%m/%d') %></td>
 
-                        <td>
+                        <td class="details-popup">
                         <button class="profile-button" onclick="popup('<%= escape_javascript(note.description) %>');"> details </button>
 
                         </td>

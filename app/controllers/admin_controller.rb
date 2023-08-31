@@ -88,11 +88,17 @@ class AdminController < ApplicationController
         cookies[:admin_params]={value: admin_params.to_json, expires: 30.day.from_now}
         session[:CF]= params[:CF]
         @admin = Admin.new(admin_params)
-        if @admin.save
-            redirect_to admin_manage_url
-        else
-            flash[:alert] = "Si è verificato un errore durante la creazione del post."
-        end
+        begin
+            if @admin.save
+              redirect_to admin_manage_url
+            else
+              flash[:alert] = "error while creating admin"
+              redirect_to admin_signup_url
+            end
+          rescue ActiveRecord::RecordNotUnique => e
+            flash[:alert] = "This admin is already inserted."
+            redirect_to admin_login_url
+          end
     end
 
     def create_school

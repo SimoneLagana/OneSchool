@@ -11,7 +11,7 @@ class AdminController < ApplicationController
 
 
     def login
-        
+        session[:admin_code]="google"
     end
 
     def checklogin
@@ -102,23 +102,105 @@ class AdminController < ApplicationController
     end
 
     def create_school
+        if params[:address] ==""
+            redirect_to admin_manage_path 
+            flash[:alertt] = "Insert an address"
+            return
+        end
+
+        if params[:name] ==""
+            redirect_to admin_manage_path 
+            flash[:alertt] = "Insert a name"
+            return
+        end
+
+        if params[:code] ==""
+            redirect_to admin_manage_path 
+            flash[:alertt] = "Insert a code"
+            return            
+        end
+
+
+        if School.where(code: params[:code]).exists?
+            redirect_to admin_manage_path 
+            flash[:alertt] = "School already registred"
+            return
+        end
+
+        if params[:school_type]==""
+            redirect_to admin_manage_path 
+            flash[:alertt] = "Insert a school type"
+            return            
+        end
+                
         school_params = {address: params[:address], name: params[:name], code: params[:code],school_type: params[:school_type]}
 
         @school = School.new(school_params)
         if @school.save
             @classroom = ClassRoom.create(school_code: params[:code],class_code: "STUDENTS_WITHOUT_CLASS")
             redirect_to "/admin/manage"
+            flash[:noticee] = "School correctly registred"
         end
     end
 
     def create_staff
+        if params[:name] == ""
+            redirect_to "/admin/manage"
+            flash[:alert] = "Missing the name"
+            return
+        end
+        if params[:surname] == ""
+            redirect_to "/admin/manage"
+            flash[:alert] = "Missing the surname"
+            return
+        end   
+        if params[:CF] == ""
+            redirect_to "/admin/manage"
+            flash[:alert] = "Missing the CF"
+            return
+        end
+        if User.where(CF: params[:CF]).exists?
+            redirect_to "/admin/manage"
+            flash[:alert] = "User already registered"
+            return
+        end
+        if params[:mail] == ""
+            redirect_to "/admin/manage"
+            flash[:alert] = "Missing the mail"
+            return
+        end
+        if User.where(mail: params[:mail]).exists?
+            redirect_to "/admin/manage"
+            flash[:alert] = "User already registered"
+            return
+        end
+        if params[:password] == ""
+            redirect_to "/admin/manage"
+            flash[:alert] = "Missing the password"
+            return
+        end
+        if params[:school_code] == ""
+            redirect_to "/admin/manage"
+            flash[:alert] = "Missing the School code"
+            return
+        end
+        if !School.where(code: params[:school_code]).exists?
+            redirect_to "/admin/manage"
+            flash[:alert] = "School doesn't exist"
+            return
+        end          
         staff_params = {name: params[:name], surname: params[:surname], CF: params[:CF],mail: params[:mail],
             password: params[:password], school_code: params[:school_code]}
 
         @school_staff = SchoolStaff.new(staff_params)
         if @school_staff.save
+            flash[:notice] = "School staff correctly registred"
+            redirect_to "/admin/manage"
+        else
+            flash[:alert] = "Error on create"
             redirect_to "/admin/manage"
         end
+    
     end
 
     def edit_staff
@@ -127,12 +209,24 @@ class AdminController < ApplicationController
 
     def update_staff
         @school_staff = SchoolStaff.find(params[:key])
-        staff_params = {name: params[:name], surname: params[:surname], CF: params[:CF],mail: params[:mail],
+        if User.where(mail: params[:mail]).where.not(CF: params[:key]).exists?
+            redirect_to "/admin/manage"
+            flash[:alert] = "Email already registered,please insert another one"
+            return
+        end
+        if !School.where(code: params[:school_code]).exists?
+            redirect_to "/admin/manage"
+            flash[:alert] = "School doesn't exist"
+            return
+        end            
+        staff_params = {name: params[:name], surname: params[:surname], mail: params[:mail],
             password: params[:password], school_code: params[:school_code]}
         if @school_staff.update(staff_params)
           redirect_to "/admin/manage"
+          flash[:notice] = "Updated informations"
         else
-          render 'edit'
+            redirect_to "/admin/manage"
+            flash[:alert] = "Error on update, check and fill correctly all the fields"
         end
     end
 
@@ -140,8 +234,11 @@ class AdminController < ApplicationController
         @school_staff = SchoolStaff.find(params[:CF])
         if @school_staff.destroy
             redirect_to "/admin/manage"
+            flash[:notice] = "Deleted account"
+
         else
-            render 'delete'
+            redirect_to "/admin/manage"
+            flash[:alert] = "Error on delete"
         end
     end   
 
@@ -150,13 +247,20 @@ class AdminController < ApplicationController
     end
 
     def update_school
+        if School.where(code: params[:code]).exists?
+            redirect_to admin_manage_path 
+            flash[:alertt] = "School already registred"
+            return
+        end
         @school = School.find(params[:key])
         @new_school = params[:code]        
-        school_params = {address: params[:address], name: params[:name], code: @new_school,school_type: params[:school_type]}
+        school_params = {address: params[:address], name: params[:name], code: params[:key],school_type: params[:school_type]}
         if @school.update(school_params)
           redirect_to "/admin/manage"
+          flash[:noticee] = "School correctly updated"
         else
-          render 'edit'
+            redirect_to "/admin/manage"
+            flash[:alertt] = "Error on update"
         end
     end
 
@@ -181,8 +285,11 @@ class AdminController < ApplicationController
         @familystudent.delete_all
         if @school.destroy
             redirect_to "/admin/manage"
+            flash[:noticee] = "School correctly deleted"
+
         else
-            render 'delete'
+            redirect_to "/admin/manage"
+            flash[:noticee] = "Error on delete"
         end
     end       
     def school_params

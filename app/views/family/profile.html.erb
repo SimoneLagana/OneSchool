@@ -10,17 +10,19 @@
 <body>
     <div id="popupcontainer"></div>
     <nav class="navbar">
-        <%= link_to family_home_url(CF: params[:CF]) do %>
+        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
             <div class="profile">
                 Home
             </div>
         <% end %>
 
-        <%= link_to family_choose_url(CF: params[:CF]) do %>
-            <label class="profile">
-                Choose student
-            </label>
-        <% end %>
+        <% if $onlyChild == false%>
+            <%= link_to family_choose_url(CF: params[:CF]) do %>
+                <div class="profile">
+                    Change student
+                </div>
+            <% end %>
+        <%end%>
         
       </nav>
     <div class="home">

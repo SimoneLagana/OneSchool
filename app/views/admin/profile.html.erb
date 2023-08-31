@@ -10,13 +10,13 @@
 <body>
     <div id="popupcontainer"></div>
     <nav class="navbar">
-        <%= link_to admin_manage_url do %>
-            <div class="profile">
-                Home
+        <%= link_to admin_manage_url,class: 'link-profile no-underline' do %>
+            <div class="writ">
+                OneSchool
             </div>
         <% end %>
 
-        <%= link_to admin_profile_url do %>
+        <%= link_to admin_profile_url,class: 'link-profile no-underline' do %>
             <div class="profile">
                 Profile
             </div>

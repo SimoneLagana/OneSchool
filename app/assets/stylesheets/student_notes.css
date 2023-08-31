@@ -3,15 +3,22 @@
     background-color: rgb(172, 245, 255);
     display:flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     width:400px;
     margin-left: 5%;
     margin-top: 0;
     border-radius: 10px;
+    padding-top: 30px;
+    margin-top: 50px;
+}
+
+.form-booked-note-s{
+    align-items: center;
 }
 
 .details-popup{
     padding-left: 8px;
     padding-right: 8px;
+    padding-bottom: 17px;
 }

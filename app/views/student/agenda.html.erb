@@ -12,7 +12,7 @@
     <nav class="navbar">
         <%= link_to student_home_url(CF: params[:CF]), class: "link-profile no-underline" do %>
             <label class="writ"> Classroom: 
-            <%= @classname %>
+            <%= @student.student_class_code %>
             </label>
         <% end %>
         <%= link_to student_profile_url(CF: params[:CF]), class: "link-profile no-underline" do %>

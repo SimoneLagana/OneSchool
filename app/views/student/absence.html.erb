@@ -8,20 +8,19 @@
 </head>
 <body>
     <nav class="navbar">
-        <%= link_to student_home_url(CF: params[:CF]) do %>
-            <label class="writ">
-                <%= @student.name %>
+        <%= link_to student_home_url(CF: params[:CF]), class: "link-profile no-underline" do %>
+            <label class="writ"> Classroom: 
+            <%= @student.student_class_code %>
             </label>
         <% end %>
-        <%= link_to student_profile_url(CF: params[:CF]) do %>
+        <%= link_to student_profile_url(CF: params[:CF]), class: "link-profile no-underline" do %>
             <div class="profile">
                 Profile
             </div>
-
         <% end %>
       </nav>
 
-    <div class="panel">
+    <div class="s-absence-panel">
           
         <table class="student-absence-container-2">
             <thead class="options-title">

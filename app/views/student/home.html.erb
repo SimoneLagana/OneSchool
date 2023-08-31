@@ -12,9 +12,16 @@
 <body>
     <nav class="navbar">
         <%= link_to student_home_url(CF: params[:CF]), class: "link-profile no-underline" do %>
-            <label class="writ"> Classroom: 
-            <%= @student.student_class_code %>
-            </label>
+            <% if $inClass == false%>
+                <label class="writ"> Classroom: 
+                NO CLASS
+                </label>
+            <%else%>
+                <label class="writ"> Classroom: 
+                <%= @student.student_class_code %>
+                </label>
+            <%end%>
+            
         <% end %>
         <%= link_to student_profile_url(CF: params[:CF]), class: "link-profile no-underline" do %>
             <div class="profile">
@@ -22,32 +29,52 @@
             </div>
         <% end %>
       </nav>
+
+
     <div class="home">
+            <% if $inClass == false%>
+                <div class="flash warning">
+                    You are not part of any class!
+                </div>
+            <%end%>
         <div class="panel-container">
 
-            <%= link_to student_grades_url(CF: params[:CF]) , class: "no-underline" do %>
-            <div class="panel">
-                Grades
-            </div>
-             <% end %>
 
-            <%= link_to student_absence_url(CF: params[:CF]), class: "no-underline" do %>
-            <div class="panel">
-                Absences
-            </div>
-             <% end %>
+            <% if $inClass == true%>
+                <%= link_to student_grades_url(CF: params[:CF]) , class: "no-underline" do %>
+                <div class="panel">
+                    Grades
+                </div>
+                <% end %>
+            <%end%>
+
             
-            <%= link_to student_homework_url(CF: params[:CF]), class: "no-underline" do %>
-            <div class="panel">
-                Homeworks
-            </div>
-             <% end %>
 
-            <%= link_to student_agenda_url(CF: params[:CF]), class: "no-underline" do %>
-            <div class="panel">
-                Agenda
-            </div>
-             <% end %>
+            <% if $inClass == true%>
+                <%= link_to student_absence_url(CF: params[:CF]), class: "no-underline" do %>
+                <div class="panel">
+                    Absences
+                </div>
+                <% end %>
+            <% end %>
+            
+            <% if $inClass == true%>
+                <%= link_to student_homework_url(CF: params[:CF]), class: "no-underline" do %>
+                <div class="panel">
+                    Homeworks
+                </div>
+                <% end %>
+            <%end%>
+
+
+            <% if $inClass == true%>
+                <%= link_to student_agenda_url(CF: params[:CF]), class: "no-underline" do %>
+                <div class="panel">
+                    Agenda
+                </div>
+                <% end %>
+            <%end%>
+
 
             <%= link_to student_news_url(CF: params[:CF]), class: "no-underline" do %>
             <div class="panel">
@@ -55,25 +82,35 @@
             </div>
              <% end %>
 
-            <%= link_to student_notes_url(CF: params[:CF]), class: "no-underline" do %>
-            <div class="panel">
-                Personal notes
-            </div>
-             <% end %>
 
-             <%= link_to student_timetable_url(CF: params[:CF]), class: "no-underline" do %>
-            <div class="panel">
-                Class timetable
-            </div>
-             <% end %>
+            <% if $inClass == true%>
+                <%= link_to student_notes_url(CF: params[:CF]), class: "no-underline" do %>
+                <div class="panel">
+                    Personal notes
+                </div>
+                <% end %>
+            <%end%>
 
-            <% if $ofAge %>
-                <%= link_to student_meeting_choice_url(CF: params[:CF]), class: "no-underline"  do %>
+            <% if $inClass == true%>    
+                <%= link_to student_timetable_url(CF: params[:CF]), class: "no-underline" do %>
+                <div class="panel">
+                    Class timetable
+                </div>
+                <% end %>
+            <%end%>
+
+
+            <% if $ofAge && $inClass%>
+                <%= link_to student_meeting_choice_url(CF: params[:CF]), class: "no-underline" do %>
+
                     <div class="panel" id="meeting_panel">
                         Meeting
                     </div>
                 <% end %>
             <%end%>
+
+            
+
         </div>
     </div>
     

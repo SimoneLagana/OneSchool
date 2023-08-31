@@ -15,6 +15,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         session[:CF]=admin.CF
         session[:admin_code]="google"
         redirect_to admin_manage_url
+        return
       else
         if cookies[:admin_params].present?
           name=JSON.parse(cookies[:admin_params])["name"]
@@ -29,9 +30,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
           redirect_to admin_manage_url
           return
         end
-        
         redirect_to root_path
-        
+        return
       end
     else
       cf=JSON.parse(cookies[:teacher])

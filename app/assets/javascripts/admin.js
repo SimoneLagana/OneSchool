@@ -51,7 +51,7 @@ function editStaffForm(staff) {
           <input type="hidden" name="key" class="text-field" value=${JSON.stringify(staff['CF'])}>
 	      <input type="text" name="name" class="text-field" placeholder="Name" value=${JSON.stringify(staff['name'])}>
           <input type="text" name="surname" class="text-field" placeholder="Surname" value=${JSON.stringify(staff['surname'])}>
-          <input type="text" name="CF" class="text-field" placeholder="CF" value=${JSON.stringify(staff['CF'])}>
+          <input type="text" name="CF" class="text-field" placeholder="CF" disabled value=${JSON.stringify(staff['CF'])}>
           <input type="email" name="mail" class="text-field" placeholder="Mail" value=${JSON.stringify(staff['mail'])}>
           <input type="password" name="password" class="text-field" placeholder="Password" value=${JSON.stringify(staff['password'])}>
           <input type="text" name="school_code" class="text-field" placeholder="School Code" value=${JSON.stringify(staff['school_code'])}>
@@ -104,7 +104,7 @@ function editSchoolForm(school) {
           <input type="hidden" name="key" value=${JSON.stringify(school['code'])}>
           <input type="text" name="address" class="text-field" placeholder="Address" value=${JSON.stringify(school['address'])}>
           <input type="text" name="name" class="text-field" placeholder="Name" value=${JSON.stringify(school['name'])}>
-          <input type="text" name="code" class="text-field" placeholder="code" value=${JSON.stringify(school['code'])}>
+          <input type="text" name="code" class="text-field" placeholder="code" disabled value=${JSON.stringify(school['code'])}>
           <input type="text" name="school_type" class="text-field" placeholder="School Type" value=${JSON.stringify(school['school_type'])}>
           <br>
           <input class="submitBtn" type="submit" value="submit">

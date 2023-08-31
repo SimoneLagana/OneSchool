@@ -34,6 +34,8 @@ body{
 
 .tab-body{
     border-radius: 5px;
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .student-absence-container-2{

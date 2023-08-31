@@ -11,6 +11,12 @@
     border-radius: 10px;
     padding-top: 30px;
     margin-top: 50px;
+
+}
+
+.student-notes-body{
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .form-booked-note-s{

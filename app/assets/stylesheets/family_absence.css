@@ -103,11 +103,17 @@ body{
     height: 70px;
     position: fixed;
     top: 0;
-    display: flex;
+    /* display: flex; */
     flex-direction: row;
     width: 100%;
     flex-wrap: nowrap;
     justify-content: space-between;
+
+}
+
+#absencenav {
+    display: grid;
+    grid-template-columns: 82% 9% 9%;
 }
 
 .writ{

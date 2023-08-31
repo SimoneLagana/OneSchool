@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="navbar" id = "absencenav">
         <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: "link-profile no-underline" do %>
             <div class="profile">
                 Home
@@ -31,15 +31,16 @@
         <% end %>
     </nav>
 
-    <div class="panel">
+    <div class="title-absences">Student absences</div>
+    <div class= "s-absence-panel">
           
-        <table>
-            <thead>
+        <table class="student-absence-container-2">
+            <thead class="options-title">
                 <tr>
-                <th> Date</th>
-                <th> Subject</th>
-                <th> Teacher</th>
-                <th> Justify</th>
+                <th class="tab-title"> Date</th>
+                <th class="tab-title"> Subject</th>
+                <th class="tab-title"> Teacher</th>
+                <th class="tab-title"> Justify</th>
                 </tr>
             </thead>
 
@@ -47,7 +48,7 @@
 
                 <% @absences.each do |absence| %>
                     <tr>
-                        <td class="tab-col"><%= absence.date.strftime('%Y/%m/%d') %></td>
+                        <td class="tab-col"><%= absence.date.strftime('%d/%m/%Y') %></td>
 
                         <td class="tab-col"><%= absence.subject_name %></td>
 
@@ -98,6 +99,6 @@
             </tbody>
         </table>
     </div>
-
+    </div>
 </body>
 </html>

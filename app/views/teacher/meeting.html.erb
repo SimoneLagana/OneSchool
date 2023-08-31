@@ -19,25 +19,30 @@
             <div class="profile">
                 Profile
             </div>
-        <% end %>
+        <% end %>  
       </nav>
-    <div class="home">
-        
-      <div class="meeting-screen" id="contenitor">
-        <%= link_to @link_teacher do %>
-            Link meeting
-        <% end %>
-      </div>
-      <% @meetings.each do |meeting| %>
-            <tr class="table">
-            <td> <%= meeting.title %></td>
-            <td> <%= meeting.date %></td>
-            <td> <%= Family.where(CF: meeting.CFfamily).pluck(:name).uniq.join %></td>
-            <td> <%= Family.where(CF: meeting.CFfamily).pluck(:surname).uniq.join %></td>
-             <td> <%= link_to meeting.link do %>link<%end%></td>
-            <br>  
-            </tr>
-        <% end %> 
+    <div class="home-meeting">
+        <label class="title-meeting">List of incumbent meetings</label>
+
+        <div class="meeting-container">
+            <% @meetings.each do |meeting| %>
+                <div class="meeting-box">
+                    <div class="upper-meeting">
+                           
+                           <label class="number-meet"><%=school_name=School.where(code: @teacher.school_code).pluck(:name).uniq.join %> </label>
+                           <label class="number-meet"><%= meeting.date.strftime('%Y/%m/%d %A %H:%M')%> </label>
+                       </div>
+                       <div class="bottom-meeting">
+                       <label class="number-meet">Riunione con <%= Family.where(CF: meeting.CFfamily).pluck(:name).uniq.join %> 
+                                <%= Family.where(CF: meeting.CFfamily).pluck(:surname).uniq.join %></label>
+                           <div class="meeting-label">Join meeting on this link <%= link_to meeting.link, class: 'color-link' do %>go to meeting<%end%></div>
+                           
+                       </div>
+                </div>
+            <% end %>
+        </div>
+
+
       
     </div>
     

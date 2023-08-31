@@ -11,57 +11,16 @@ body{
     justify-content: center;
     height:100%;
 }
-.note-home{
+.home-note{
     width:100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding-top: 80px;
-}
-
-.note-title{
-    font-size: 20px;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
-}
-.note-panel{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
-    width: 500px;
-    background-color: aquamarine;
-    border-radius: 10px;
-    height: 320px;
-    padding-top: 10px;
-}
-
-
-.note-panel-2{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
-    width: 500px;
     background-color: white;
-    border-radius: 10px;
-    padding-top: 10px;
-}
-.noteclass{
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: aquamarine;
-    border-radius: 10px;
 }
 
-.note-label{
-    width: 100%;
-    background-color: aquamarine;
-}
 .whole-note{
     display: flex;
     flex-direction: row;
@@ -71,11 +30,112 @@ body{
     gap: 70px;
 }
 
+.note-title-3{
+    font-size: 22px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+.note-title{
+    font-size: 22px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.note-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    width: 600px;
+    gap: 30px;
+    background-color: lightblue;
+    border-radius: 10px;
+    height: 400px;
+    padding-top: 10px;
+    padding-left: 20px;
+}
+.form-note-1{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: lightblue;
+    gap: 10px;
+    height: 300px;
+}
+
+
+
+.note-inner-form{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    width: 100%;
+    background-color: lightblue;
+}
+
+.sym-note{
+    background-color: lightblue;
+    font-size: 18px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.sym-note-2{
+    background-color: lightblue;
+    font-size: 18px;
+    
+    margin-top: 20px;
+}
+
+
+.note-container-2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    width: 400px;
+    background-color: white;
+    border-radius: 10px;
+    padding-top: 10px;
+    gap: 20px;
+}
+.noteclass{
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: lightblue;
+    border-radius: 10px;
+}
+
+.note-label{
+    width: 100%;
+    background-color: lightblue;
+    text-align: left;
+}
+
+.note-label-1{
+    width: 100%;
+    background-color: lightblue;
+    text-align: left;
+    margin-left: 20px;
+    margin-right: 5px;
+}
+
 .note-title-p{
     font-size: 20px;
     width: 100%;
     text-align: center;
-    background-color: aquamarine;
+    margin-bottom: 20px;
+    background-color: lightblue;
 }
 .note-field{
     width: 220px;
@@ -88,14 +148,48 @@ body{
     text-align: center;
 }
 
-.note-text{
-    width: 100%;
+.note-student-field{
+    width: 220px;
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 
+.note{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap:20px;
+    max-width: 300px;
+    min-width: 250px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: lightblue;
+}
 
+.justification-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    border-radius: 4px;
+    font-size: 18px;
+    background-color: rgb(184, 233, 249);
+}
 
-.button-submit{
+.note-field-container{
+    display:flex;
+    flex-direction: column;
+    gap: 2px;
+    background-color: lightblue;
+}
+
+.button-submit-note{
     font-size: 18px;
 }
 
@@ -130,7 +224,7 @@ body{
     justify-content: flex-start;
     align-items: center;
     text-align: center;
-    background-color: aquamarine;
+    background-color: lightblue;
     padding-top: 0px;
     gap: 10px;
 }

@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Confirm password change</h2>
+  <p>You have just requested a password change. Click on the link below to confirm:</p>
+    <%= link_to 'Confirm change password', { controller: 'admin', action: 'upgradepassword', CF: @admin.CF, success: 'success'}, method: :get %>
+ 
+</body>
+</html>

@@ -34,13 +34,13 @@
             
             <div class="button-container">
                 <%if !session[:admin_code].present? %>
-                    <button class="profile-button" onclick="editpassword('<%= @admin.CF%>', '<%= @admin.mail%>')">Modifica password</button>
+                    <button class="style-button" onclick="editpassword('<%= @admin.CF%>', '<%= @admin.mail%>')">Modifica password</button>
                 <%end%>
                 <%= form_tag admin_checklogout_path, method: :delete do %>
-                    <%= submit_tag 'Logout', class: 'profile-button' %> 
+                    <%= submit_tag 'Logout', class: 'style-button' %> 
                 <% end %>
                 <%= form_tag admin_delete_account_path, method: :delete do %>
-                    <%= submit_tag 'Delete account', class: 'profile-button' %> 
+                    <%= submit_tag 'Delete account', class: 'style-button' %> 
                 <% end %> 
             </div>
             

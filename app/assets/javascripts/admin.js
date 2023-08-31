@@ -22,7 +22,7 @@ function openSchoolForm() {
     popupContainer.innerHTML = `
       <div class="popupMenu">
 
-          <div id="closePopup">&times;</div>
+          <div id="closePopup-admin">&times;</div>
           <label>Insert school</label>      
           <form action="/admin/createSchool" class="create-form" method="post">
           <input type="text" name="address" class="text-field" placeholder="Address">
@@ -34,7 +34,7 @@ function openSchoolForm() {
         </form>
     </div>
     `;  
-    document.querySelector("#closePopup").addEventListener("click", function() {
+    document.querySelector("#closePopup-admin").addEventListener("click", function() {
     popupContainer.innerHTML = "";
     });
 }
@@ -45,7 +45,7 @@ function editStaffForm(staff) {
     popupContainer.innerHTML = `
       <div class="popupMenu">
 
-          <div id="closePopup">&times;</div>
+          <div id="closePopup-admin">&times;</div>
           <label>Edit school staff</label>   
           <form action="/admin/updateStaff" class="create-form" method="post">
           <input type="hidden" name="key" class="text-field" value=${JSON.stringify(staff['CF'])}>
@@ -60,7 +60,7 @@ function editStaffForm(staff) {
         </form>
     </div>
     `;  
-    document.querySelector("#closePopup").addEventListener("click", function() {
+    document.querySelector("#closePopup-admin").addEventListener("click", function() {
     popupContainer.innerHTML = "";
     });
 }
@@ -73,7 +73,7 @@ function openStaffForm() {
     popupContainer.innerHTML = `
       <div class="popupMenu">
 
-          <div id="closePopup">&times;</div>
+          <div id="closePopup-admin">&times;</div>
           <label>Insert school staff</label>      
           <form action="/admin/createStaff" class="create-form" method="post">
           <input type="text" name="name" class="text-field" placeholder="Name">
@@ -87,7 +87,7 @@ function openStaffForm() {
         </form>
     </div>
     `;  
-    document.querySelector("#closePopup").addEventListener("click", function() {
+    document.querySelector("#closePopup-admin").addEventListener("click", function() {
     popupContainer.innerHTML = "";
     });
 }
@@ -98,7 +98,7 @@ function editSchoolForm(school) {
     popupContainer.innerHTML = `
       <div class="popupMenu">
 
-          <div id="closePopup">&times;</div>
+          <div id="closePopup-admin">&times;</div>
           <label>Edit school</label> 
           <form action="/admin/updateSchool" class="create-form" method="post">
           <input type="hidden" name="key" value=${JSON.stringify(school['code'])}>
@@ -111,7 +111,7 @@ function editSchoolForm(school) {
         </form>
     </div>
     `;  
-    document.querySelector("#closePopup").addEventListener("click", function() {
+    document.querySelector("#closePopup-admin").addEventListener("click", function() {
     popupContainer.innerHTML = "";
     });
 }
@@ -124,14 +124,14 @@ function editpassword(CF, email) {
       <div class="popupMenu">
         <div id="closePopup">&times;</div>
           <form action="/admin/changepassword" method="post">
-            <input type="text" id="CF" name="CF" value=${CF}>
+            <input type="text" id="CF" name="CF" hidden value=${CF}>
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" value=${email}>
+            <input type="email" id="email" name="email" value=${email}><br>
 
-            <label for="old_password">Inserisci vecchia password</label>
-            <input type="password" id="old_password" name="old_password" required>
-            <label for="password">Inserisci nuova password</label>
-            <input type="password" id="password" name="password" required>
+            <label for="old_password">Insert old password</label>
+            <input type="password" id="old_password" name="old_password" required><br>
+            <label for="password">Insert new password</label>
+            <input type="password" id="password" name="password" required><br>
             <input type="submit" value="Submit">
           </form>
       </div>

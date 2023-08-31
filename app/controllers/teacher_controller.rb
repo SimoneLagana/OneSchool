@@ -4,6 +4,7 @@ require "google/api_client/client_secrets.rb"
 class TeacherController < ApplicationController
   before_action :check_cookies_login, except: [:login, :checklogin]
   $has_logged =false
+
   def login
     #cookies.delete(:teacher)
     session.delete(:CF)
@@ -31,7 +32,7 @@ class TeacherController < ApplicationController
     end
     pass=""
   end
-  
+   
   def home 
     @teacher=Teacher.find_by(CF: session[:CF])
     @classrooms=[["Select a class",nil]]+Subject.where(CFprof: @teacher.CF).pluck(:class_code).uniq
@@ -199,10 +200,15 @@ class TeacherController < ApplicationController
           access_token: client.authorization.access_token,
           refresh_token: client.authorization.refresh_token,
           expires_at: client.authorization.expires_at.to_i
-        )
+        ) 
       end
-    rescue => e
-      flash[:error] = 'Your token has been expired. Please login again with google.'
+    rescue Google::Apis::AuthorizationError => e
+      # L'access token o il refresh token sono scaduti o non validi
+      flash[:error] = 'Your token has expired or is invalid. Please login again with Google.'
+      redirect_to teacher_login_url
+    rescue StandardError => e
+      # Altri errori possono essere gestiti qui
+      flash[:error] = 'An error occurred while connecting to Google Calendar.'
       redirect_to teacher_login_url
     end
     client
@@ -274,10 +280,12 @@ class TeacherController < ApplicationController
   
   def meeting
     @teacher=Teacher.find_by(CF: session[:CF])
-    @meetings=Meeting.where(CFprof: @teacher.CF)
+    @meetings=Meeting.where(CFprof: @teacher.CF).order(date: :asc)
     token=generate_token(@teacher.name)
     room="ssarekde"
-    @link_teacher="https://localhost:8000/#{room}?jwt=#{token}"
+    random_link = SecureRandom.hex(10) #creo una stringa random di 8 caratteri
+    @link_teacher="http://localhost:8000/#{random_link}"
+    
 
   end
 
@@ -297,13 +305,24 @@ class TeacherController < ApplicationController
     @confirm=""
     if(params[:confirm].present?)
       @confirm="email inviata al genitore!"
-      
     end
     @students= Student.where(student_class_code: @classname)
     
   end
 
   def insertmeeting
+    if !params[:CFstudent].present?
+      flash[:alert]="select a student"
+      redirect_to teacher_requestmeeting_url(classroom: params[:class_code])
+      return
+    end
+    
+    if !params[:text].present?
+      flash[:alert]="write text"
+      redirect_to teacher_requestmeeting_url(classroom: params[:class_code])
+      return
+    end
+
     @confirm=""  
     cfstudent=params[:CFstudent]
     student=Student.find_by(CF: cfstudent)
@@ -311,9 +330,6 @@ class TeacherController < ApplicationController
     cfparent=FamilyStudent.where(CFstudent: cfstudent).pluck(:CFfamily).uniq
     @parent_mail=Family.where(CF: cfparent).pluck(:mail).uniq
     text=params[:text]
-    # puts("ciao")
-    # puts(@parent_mail)
-    # puts("ciaos")
     MeetingMailer.meeting_request(@parent_mail,text, student, teacher).deliver_now
     redirect_to teacher_requestmeeting_url(classroom: params[:class_code], confirm: "conferma")
   end
@@ -354,126 +370,262 @@ class TeacherController < ApplicationController
   def grade
     @teacher=Teacher.find_by(CF: session[:CF])
     @classname=params[:classroom]
-    @subjects= Subject.where(CFprof: params[:CF], class_code: params[:classroom]).pluck(:name).uniq
+    @subjects= [["Subject", nil]]+Subject.where(CFprof: session[:CF], class_code: params[:classroom]).pluck(:name).uniq
     
     @students=Student.where(student_class_code: params[:classroom])
     @weekdays=[]
     @times=[]
-    
-    $subj = params[:subject]
-    $weekd = params[:weekday]
-    $tim = params[:time]
-    
+    @weekday=""
+    @subject=""
+    @time="" 
     if(params[:subject].present?)
 
-      @subjects=Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:name).uniq
-      
-      @weekdays=[["Select weekday", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:weekday).uniq
+      @subject=Subject.where(CFprof: session[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:name).uniq
+      @weekdays=[["Select weekday", nil]]+Subject.where(CFprof: session[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:weekday).uniq
       
       if(params[:weekday].present?)
-        @weekdays=Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:weekday).uniq
-        @times=[["Select school hour", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:time).uniq
+        @weekday=Subject.where(CFprof: session[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:weekday).uniq
+        @times=[["Select school hour", nil]]+Subject.where(CFprof: session[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:time).uniq
         if(params[:time].present?)
-          @times=Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday], time: params[:time]).pluck(:time).uniq
+          @time=Subject.where(CFprof: session[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday], time: params[:time]).pluck(:time).uniq
         end
       end
     end
-    @grades =  Grade.where(CFprof: params[:CF], class_code: params[:classroom])
+    @grades =  Grade.where(CFprof: session[:CF], class_code: params[:classroom])
   end
 
   def insertgrade
+    if !params[:subject_name].present?
+      flash[:alert]="select a subject"
+      redirect_to teacher_grade_url(classroom: params[:class_code])
+      return
+    end
+    puts(params[:weekday])
+    if params[:weekday]==""
+      flash[:alert]="select a weekday"
+      redirect_to teacher_grade_url(classroom: params[:class_code], subject: params[:subject_name])
+      return
+    end
 
+
+    if params[:time]==""
+      flash[:alert]="select class hour"
+      redirect_to teacher_grade_url(classroom: params[:class_code], subject: params[:subject_name], weekday: params[:weekday])
+      return
+    end
+
+    if !params[:value].present?
+      flash[:alert]="select a grade value!"
+      redirect_to teacher_grade_url(classroom: params[:class_code], subject: params[:subject_name], weekday: params[:weekday], time: params[:time])
+      return
+    end
+
+    if !params[:date].present?
+      flash[:alert]="select a date"
+      redirect_to teacher_grade_url(classroom: params[:class_code], subject: params[:subject_name], weekday: params[:weekday], time: params[:time])
+      return
+    end
+
+    if !params[:CFstudent].present?
+      flash[:alert]="select a student"
+      redirect_to teacher_grade_url(classroom: params[:class_code], subject: params[:subject_name], weekday: params[:weekday], time: params[:time])
+      return
+    end
+
+    selected_weekday=params[:weekday]
     day= Date.parse(params[:date]).strftime('%A').upcase
-    if($weekd == day)
-      puts params[:CFstudent]
-      @grade=Grade.new(CFprof: params[:CFprof], CFstudent: params[:CFstudent].join , date: params[:date], value: params[:value], weekday: $weekd, time: $tim, subject_name: $subj, class_code: params[:class_code], school_code: params[:school_code])
-      puts @grade.inspect
-      if @grade
-        @grade.save
-        redirect_to teacher_grade_url(CF: params[:CFprof], classroom: params[:class_code])
+    if day==selected_weekday
+      cfstudente=params[:CFstudent].join
+      @grade=Grade.new(CFprof: params[:CFprof], CFstudent: params[:CFstudent].join , date: params[:date], value: params[:value], weekday: params[:weekday], time: params[:time], subject_name: params[:subject_name], class_code: params[:class_code], school_code: params[:school_code])
+      begin
+        if @grade.save
+          redirect_to teacher_grade_url(classroom: params[:class_code])
+        else
+          flash[:alert] = "error while saving grade"
+          redirect_to teacher_grade_url(classroom: params[:class_code])
+        end
+      rescue ActiveRecord::RecordNotUnique => e
+        flash[:alert] = "This grade is already inserted."
+        redirect_to teacher_grade_url(classroom: params[:class_code])
       end
     else
-      redirect_to teacher_grade_url(CF: params[:CFprof], classroom: params[:class_code])
+      flash[:alert]="error weekday and date don't match"
+      redirect_to teacher_grade_url(classroom: params[:class_code])
     end
+
+    
   end
 
   def absence
     @teacher=Teacher.find_by(CF: session[:CF])
     @classname=params[:classroom]
-    @subjects=[["Subject", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom]).pluck(:name).uniq
+    @subjects=[["Subject", nil]]+Subject.where(CFprof: session[:CF], class_code: params[:classroom]).pluck(:name).uniq
     @students=Student.where(student_class_code: params[:classroom])
     @weekdays=[]
+    @weekday=""
+    @time=""
+    @subject=""
     @times=[]
     if(params[:subject].present?)
-      @subjects=Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:name).uniq
-      @weekdays=[["Select weekday", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:weekday).uniq
+      @subject=Subject.where(CFprof: session[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:name).uniq
+      @weekdays=[["Select weekday", nil]]+Subject.where(CFprof: session[:CF], class_code: params[:classroom], name: params[:subject]).pluck(:weekday).uniq
       if(params[:weekday].present?)
-        @weekdays=Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:weekday).uniq
-        e@tims=[["Select school hour", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:time).uniq
+        @weekday=Subject.where(CFprof: session[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:weekday).uniq
+        @times=[["Select school hour", nil]]+Subject.where(CFprof: session[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday]).pluck(:time).uniq
         if(params[:time].present?)
-          @times=Subject.where(CFprof: params[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday], time: params[:time]).pluck(:time).uniq
+          @time=Subject.where(CFprof: session[:CF], class_code: params[:classroom], name: params[:subject], weekday: params[:weekday], time: params[:time]).pluck(:time).uniq
         end
       end
     end
-    @absences =  Absence.where(CFprof: params[:CF], class_code: params[:classroom])
+    @absences =  Absence.where(CFprof: session[:CF], class_code: params[:classroom])
   end
 
   def insertabsence
-    cfstudente=params[:CFstudent].join
-    # puts(cfstudente)
-    @absence=Absence.new(CFprof: params[:CFprof], CFstudent: cfstudente, date: params[:date], justified: params[:justified], weekday: params[:weekday], time: params[:time], subject_name: params[:subject_name], class_code: params[:class_code], school_code: params[:school_code])
-    if @absence
-      @absence.save
-      redirect_to teacher_absence_url(CF: params[:CFprof], classroom: params[:class_code])
+    if !params[:subject_name].present?
+      flash[:alert]="select a subject"
+      redirect_to teacher_absence_url(classroom: params[:class_code])
+      return
     end
+    puts(params[:weekday])
+    if params[:weekday]==""
+      flash[:alert]="select a weekday"
+      redirect_to teacher_absence_url(classroom: params[:class_code], subject: params[:subject_name])
+      return
+    end
+    if params[:time]==""
+      flash[:alert]="select class hour"
+      redirect_to teacher_absence_url(classroom: params[:class_code], subject: params[:subject_name], weekday: params[:weekday])
+      return
+    end
+    if !params[:date].present?
+      flash[:alert]="select a date"
+      redirect_to teacher_absence_url(classroom: params[:class_code], subject: params[:subject_name], weekday: params[:weekday], time: params[:time])
+      return
+    end
+
+    if !params[:CFstudent].present?
+      flash[:alert]="select a student"
+      redirect_to teacher_absence_url(classroom: params[:class_code], subject: params[:subject_name], weekday: params[:weekday], time: params[:time])
+      return
+    end
+    selected_weekday=params[:weekday]
+    day= Date.parse(params[:date]).strftime('%A').upcase
+    if day==selected_weekday
+      cfstudente=params[:CFstudent].join
+      @absence=Absence.new(CFprof: params[:CFprof], CFstudent: cfstudente, date: params[:date], justified: params[:justified], weekday: params[:weekday], time: params[:time], subject_name: params[:subject_name], class_code: params[:class_code], school_code: params[:school_code])
+      begin
+        if @absence.save
+          redirect_to teacher_absence_url(classroom: params[:class_code])
+        else
+          flash[:alert] = "error while saving absence"
+          redirect_to teacher_absence_url(classroom: params[:class_code])
+        end
+      rescue ActiveRecord::RecordNotUnique => e
+        flash[:alert] = "This absence is already inserted."
+        redirect_to teacher_absence_url(classroom: params[:class_code])
+      end
+    else
+      flash[:alert]="error weekday and date don't match"
+      redirect_to teacher_absence_url(classroom: params[:class_code])
+    end
+    
+    # puts(cfstudente)
+    
+    
   end
 
   def note
     @teacher=Teacher.find_by(CF: session[:CF])
-    @students=Student.where(student_class_code: params[:classroom])
     @classname=params[:classroom]
+    @students=Student.where(student_class_code: @classname)
+    
     @notes=Note.where(CFprof: session[:CF])
-    if @notes.empty?
-      puts("ciao")
-    end
   end
   
   def insertnote
-    if params[:CFstudent]==""
+    if !params[:CFstudent].present?
       flash[:alert]="select a student!"
-      redirect_to teacher_note_url(classroom: params[:classroom])
+      redirect_to teacher_note_url(classroom: params[:class_code])
       return
     end
     if !params[:date].present?
       flash[:alert]="select date!"
-      redirect_to teacher_note_url(classroom: params[:classroom])
+      redirect_to teacher_note_url(classroom: params[:class_code])
       return
     end
-    @note=Note.new(CFprof: params[:CFprof], CFstudent: params[:CFstudent], date: params[:date], description: params[:description], school_code: params[:school_code])
+    if !params[:description].present?
+      flash[:alert]="insert description!"
+      redirect_to teacher_note_url(classroom: params[:class_code])
+      return
+    end
+    @note=Note.new(CFprof: params[:CFprof], CFstudent: params[:CFstudent].join, date: DateTime.parse(params[:date]), description: params[:description], school_code: params[:school_code])
     if @note
-      @note.save
-      redirect_to teacher_note_url(classroom: params[:classroom])
+      begin
+        if @note.save
+          redirect_to teacher_note_url(classroom: params[:class_code])
+        else
+          flash[:alert] = "error while saving note"
+          redirect_to teacher_note_url(classroom: params[:class_code])
+        end
+      rescue ActiveRecord::RecordNotUnique => e
+        flash[:alert] = "This note is already inserted."
+        redirect_to teacher_note_url(classroom: params[:class_code])
+      end
     else
       flash[:alert]="error during note creation"
-      redirect_to teacher_note_url
+      redirect_to teacher_note_url(classroom: params[:class_code])
     end
   end
 
   def homework
     @teacher=Teacher.find_by(CF: session[:CF])
     @classname=params[:classroom]
-    @subjects=[["Subject", nil]]+Subject.where(CFprof: params[:CF], class_code: params[:classroom]).pluck(:name).uniq
-    @homeworks= Homework.where(CFprof: params[:CF], class_code: params[:classroom])
+    @subjects=[["Subject", nil]]+Subject.where(CFprof: session[:CF], class_code: params[:classroom]).pluck(:name).uniq
+    @subject=""
+    if params[:subject_name].present?
+      @subject=params[:subject_name]
+    end
+    @homeworks= Homework.where(CFprof: session[:CF], class_code: params[:classroom])
   end
 
   def managehomework
+    if !params[:subject_name].present?
+      flash[:alert]="insert subject!"
+      redirect_to teacher_homework_url(classroom: params[:class_code])
+      return
+    end
+
+    if !params[:date].present?
+      flash[:alert]="select a date"
+      redirect_to teacher_homework_url(classroom: params[:class_code], subject: params[:subject_name])
+      return
+    end
+
+    if !params[:name].present?
+      flash[:alert]="select a title for your assignment"
+      redirect_to teacher_homework_url(classroom: params[:class_code], subject: params[:subject_name])
+      return
+    end
+
+    if !params[:text].present?
+      flash[:alert]="insert a text for your assignment"
+      redirect_to teacher_homework_url(classroom: params[:class_code], subject: params[:subject_name])
+      return
+    end
     @subjects=Subject.where(CFprof: params[:CFprof], class_code: params[:class_code], name: params[:subject_name]).first
     weekday=@subjects.weekday
     time=@subjects.time
     @homework=Homework.new(CFprof: params[:CFprof],delivered: params[:delivered], date: params[:date], text: params[:text], name: params[:name], weekday: weekday, time: time, subject_name: params[:subject_name], class_code: params[:class_code], school_code: params[:school_code])
-    if @homework
-      @homework.save
-      redirect_to teacher_homework_url(CF: params[:CFprof], classroom: params[:class_code])
+    begin
+      if @homework.save
+        redirect_to teacher_homework_url(classroom: params[:class_code])
+      else
+        flash[:alert] = "error while saving homework"
+        redirect_to teacher_homework_url(classroom: params[:class_code])
+      end
+    rescue ActiveRecord::RecordNotUnique => e
+      flash[:alert] = "This homework is already inserted."
+      redirect_to teacher_homework_url(classroom: params[:class_code])
     end
   end
 

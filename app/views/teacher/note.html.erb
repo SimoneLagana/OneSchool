@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag "profile.css" %>
+    <%= stylesheet_link_tag "teacher_note.css" %>
     <%= javascript_include_tag('teacher.js') %>
     <title>Note</title>
 </head>
@@ -20,22 +20,30 @@
             </div>
         <% end %>
     </nav>
-    <div class="note-home">
+    <div class="home-note"> 
         <label class="note-title">Notes</label> 
         <div class="whole-note"> 
-            <div class="note-panel">
+            <div class="note-container">
                 <label class="note-title-p">Insert note</label>
-                <%= form_with url: teacher_insertnote_url, class: 'form-note', method: :post do |form| %>
-                <br>
-                    <label class="note-label"> Select student </label>
+                <%= form_with url: teacher_insertnote_url, class: 'form-note-1', method: :post do |form| %>
+                    
                     <%= form.hidden_field :CFprof, value: @teacher.CF %>
                     <%= form.hidden_field :school_code, value: @teacher.school_code %>
-                    <%= form.hidden_field :classroom, value: @classname %>
-                    <%= form.select :CFstudent, options_for_select(@students.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }),  class: "note-field"%>
-                    <%= date_field_tag :date, value: Date.today, class: 'note-field'%>
-                    <label class="note-label"> Insert text</label>
+                    <%= form.hidden_field :class_code, value: @classname %>
+                    <div class="note-inner-form">
+                        <div class="sym-note">
+                            <label class="note-label"> Select student </label>
+                            <%= select_tag :CFstudent, options_for_select(@students.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "note-student-field", multiple: true %>
+                        </div>
+                        <div class="sym-note-2">
+                            <label class="note-label-1"> Date </label>
+                            <%= datetime_field_tag :date, class: 'note-field'%>
+                        </div>
+                    </div>
+                  
+                    <label class="note-label"> Description </label>
                     <%= form.text_area :description, size: "70x5", class: 'note-text' %>
-                    <%= form.submit "submit", class: 'button-field' %>
+                    <%= form.submit "Save note", class: 'button-submit-note' %>
                 <% end %>
                 <% flash.each do |key, message| %>
                     <div class="flash <%= key %>">
@@ -43,25 +51,28 @@
                     </div>
                 <% end %>
             </div>
-            <div class= "note-panel-2">
+            <div class= "note-container-2">
                 <label class="note-title">Inserted notes</label>
-                <br>
-                
-                <%#<% @notes.each do |note| %>
-                <%#    <div class="noteclass">
-                <%#     <%= note.date.strftime('%Y/%m/%d') %><br>
-                <%#     <%= name=Student.where(CF: note.CFstudent).pluck(:name).uniq.join %>
-                <%#     <%= surname=Student.where(CF: note.CFstudent).pluck(:surname).uniq.join %>
-                <%#     <br>
-                <%#     <%= note.description %> <br>
-                <%#     <% if note.justified == false%>
-                <%#        <%= "not justified"%>
-                <%#     <% else %>
-                <%#        <%= "justified" %>
-                <%#    <% end %>
-                <%#    </div>
-                <%#
-                <%#<% end %>  
+                <% if @notes.present?%>
+                    <% @notes.each do |note| %>
+                      <div class="note">
+                        <div class="justification-container">
+                            <% if note.justified == true%>
+                                 <%= "justified" %>
+                            <% else %>
+                                <%= "not justified"%>
+                            <% end %> 
+                        </div>
+                        <div class="note-field-container">
+                          <label class="note-label"><%= name=Student.where(CF: note.CFstudent).pluck(:name).uniq.join %> 
+                          <%= surname=Student.where(CF: note.CFstudent).pluck(:surname).uniq.join %></label>
+                          <label class="note-label"><%= note.date.strftime('%Y/%m/%d') %>
+                        </div>
+                      </div>
+                    <% end %> 
+                <% else %>
+                    <%= "there aren't any notes yet" %>
+                <% end %>
             </div>
         </div>
     </div>

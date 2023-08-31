@@ -13,16 +13,17 @@ body{
     background-color: white;
     width: 100%;
 }
-.home{
+.admin-home{
     width:100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     height:100%;
+    padding-top: 100px;
 }
 
-.upper-bottons{
+.admin-upper-bottons{
     display:flex;
     flex-direction: row;
     justify-content: center;
@@ -34,7 +35,7 @@ body{
     margin-bottom: 0;
 }
 
-.up-botton{
+.admin-up-botton{
     height: 40px;
     background-color: rgb(172, 245, 255);
     display: flex;
@@ -45,14 +46,14 @@ body{
     font-size: 22px;
 }
 
-.main-panel{
+.admin-main-panel{
     height: 300px;
     background-color: rgb(172, 245, 255);
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width:700px;
+    width:750px;
     margin-left: 5%;
     margin-top: 0;
     border-radius: 10px;
@@ -144,10 +145,10 @@ body{
 
 
 
-.form-search{
+.form-search-admin{
     flex-direction: row;
     flex-wrap: nowrap;
-    width: 70%;
+    
     background-color: rgb(172, 245, 255);
 }
 
@@ -210,6 +211,15 @@ body{
   #closePopup {
     position: fixed;
     top: 0%;
+    left: 90%;
+    /* transform: translate(-50%, -50%); */
+    cursor: pointer;
+    font-size: 24px;
+    border-radius: 50%;
+  }
+  #closePopup-admin {
+    position: fixed;
+    top: 5%;
     left: 90%;
     /* transform: translate(-50%, -50%); */
     cursor: pointer;

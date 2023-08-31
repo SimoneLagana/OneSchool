@@ -35,11 +35,12 @@ body{
 
 
 .student-title-communication{
-    font-size: 22px;
-    width: 100%;
+    background-color: rgb(172, 245, 255);
+    width: 250px;
+    border-radius: 5px;
+    font-size: 30px;
     text-align: center;
     margin-bottom: 20px;
-    margin-top: 30px;
 }
 .student-communication-container{
     display: flex;
@@ -188,6 +189,9 @@ body{
     align-items: flex-start;
     justify-content: flex-start;
     background-color: rgb(172, 245, 255);
+    background-color: white;
+    border-radius: 5px;
+    height: 150px;
 }
 
 .navbar{

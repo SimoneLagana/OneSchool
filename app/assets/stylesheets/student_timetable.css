@@ -161,7 +161,7 @@ body{
 }
 
 .navbar{
-    background-color: skyblue;
+    background-color: rgb(172, 245, 255);
     height: 70px;
     position: fixed;
     top: 0;
@@ -221,3 +221,15 @@ body{
     background-color: #00ff00;
     color: #000000;
   }
+
+  #time-title{
+    background-color: lightblue;
+    width: 200px;
+    border-radius: 5px;
+    font-size: 30px;
+}
+
+#time-tabella{
+    background-color: lightblue;
+    padding: 8px 8px 8px 8px;
+}

@@ -188,6 +188,9 @@ body{
     align-items: flex-start;
     justify-content: flex-start;
     background-color: lightblue;
+    background-color: white;
+    border-radius: 5px;
+    height: 150px;
 }
 
 .navbar{

@@ -1,0 +1,243 @@
+*{
+    margin:0;
+    padding:0;
+    background-color: white;
+}
+
+body{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height:100vh;
+    background-color: white;
+    width: 100%;
+}
+
+.home{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height:100%;
+
+}
+
+.upper-bottons{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 40px;
+    align-items: center;
+    gap: 180px;
+    width: 90%;
+    margin-bottom: 0;
+}
+
+.up-botton{
+    height: 40px;
+    background-color: rgb(172, 245, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 150px;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.main-panel{
+    height: 300px;
+    background-color: rgb(172, 245, 255);
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:700px;
+    margin-left: 5%;
+    margin-top: 0;
+    border-radius: 10px;
+}
+.panel{
+    width:100%;
+    height: 90%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: transparent;
+}
+
+
+.navbar{
+    background-color: rgb(172, 245, 255);
+    height: 70px;
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.writ{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-size: 22px;
+    height: 70px;
+    margin-left: 100px;
+}
+
+.profile{
+    width: 100px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-size: 22px;
+    margin-right: 40px;
+}
+
+
+.upper-part{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    background-color:rgb(172, 245, 255);
+}
+
+
+.item{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    padding-left:20px;
+    padding-right:10px;
+    justify-content: space-between;
+    background-color: aquamarine;
+}
+
+.field{
+    width: 80px;
+    text-align: center;
+}
+.modify{
+    display: flex;
+    gap: 20px;
+    width: 80px;
+    text-align: center;
+}
+.popupMenu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    border-radius: 10px; 
+    padding: 20px;
+    background-color: #fefbfb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 0px 15px 0px rgba(82, 80, 80, 0.712);
+  }
+
+  #closePopup {
+    position: fixed;
+    top: 8%;
+    left: 95%;
+     transform: translate(-50%, -50%); 
+    cursor: pointer;
+    font-size: 24px;
+    border-radius: 50%;
+    background: none;
+  }
+ 
+  .submitBtn{
+    font-size: 15px;
+    border:none;
+    border-radius: 10px;
+    padding: 2%;
+    cursor: pointer;
+    background-color: #04AA6D;
+    color: #f7f1eb;
+    margin-bottom: 4px;
+    width: 70%;
+    margin-top: 3%;
+  }
+
+  .center{
+    text-align: center;
+}
+
+.search-bar{
+    padding-right: 10px;
+    background-color:rgb(172, 245, 255);
+}
+
+#manageAdminTableDiv{
+    max-height: 230px;
+    overflow-y: auto;
+  }
+  .link-profile{
+    text-decoration: none;
+    background: none;
+}
+.select-add{
+    width: 650px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    background-color: rgb(172, 245, 255);
+    margin-bottom: 20px;
+}
+
+.form-search{
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 70%;
+    background-color: rgb(172, 245, 255);
+}
+
+.label-field{
+    background-color: rgb(172, 245, 255);
+}
+
+.text-field{
+    padding: 3px;
+}
+.center{
+    text-align: center;
+}
+.style-button{
+    font-size: 16px;
+    padding: 3px;
+
+}
+.style-button-small{
+    font-size: 10px;
+    padding: 3px;
+}
+
+.form-container{
+    width: 500px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+#class-field{
+    padding-top: 5px;
+}
+
+#common-fields, #student-fields, #family-fields{
+    margin-bottom: 10px;
+}

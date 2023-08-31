@@ -200,4 +200,87 @@ class StudentController < ApplicationController
     end 
   end
 
+  def meeting_manage
+   
+    @student=Student.find_by(CF: params[:CF])
+    @teacher=Teacher.find_by(CF: params[:CFteacher])
+    @familystud = FamilyStudent.find_by(CFstudent: params[:CF])
+    @family = Family.find_by(CF: @familystud.CFfamily)
+    
+    @start_hour = 16
+    @end_hour = 19
+    @today = Date.today
+    @time_slots = []
+
+    # Crea un elenco di tutti i giorni della prossima settimana per ogni ora nell'intervallo
+    (@today..@today + 6).each do |day|
+      (@start_hour..@end_hour).each do |hour|
+        @iso = DateTime.new(day.year, day.month, day.day, hour, 0, 0, '+00:00')
+        @utc_time = @iso.strftime("%Y-%m-%d %H:%M:%S %z")
+        @time_slots << @utc_time
+      end
+    end
+
+    
+    @commit_datetime = Commitment.where(CFprof: params[:CFprof]).pluck(:date)
+    @iso_commit = []
+
+    @commit_datetime.each do |toiso|
+        @iso = toiso.strftime("%Y-%m-%d %H:%M:%S %z")
+        @iso_commit << @iso
+    end
+
+    @free_slots = @time_slots - @iso_commit
+    @iso_meeting =[]
+
+    @my_meeting = Meeting.where(CFprof: params[:CFprof]).where(CFfamily: @family.CF).pluck(:date)
+    @my_meeting.each do |toiso|
+      @my_iso = toiso.strftime("%Y-%m-%d %H:%M:%S %z")
+      @iso_meeting << @my_iso
+    end
+  end
+
+  def create_link(teacher)
+    random_link = SecureRandom.hex(10) #creo una stringa random di 8 caratteri
+    link="http://localhost:8000/#{random_link}"
+  end
+
+  def meeting_choice
+    @student=Student.find_by(CF: params[:CF])
+    @familystud = FamilyStudent.find_by(CFstudent: params[:CF])
+    @family = Family.find_by(CF: @familystud.CFfamily)
+  end
+
+  def add_student_meeting
+    @teacher = Teacher.find_by(CF: params[:CFprof])
+    @student=Student.find_by(CF: params[:CF])
+    @familystud = FamilyStudent.find_by(CFstudent: params[:CF])
+    @family = Family.find_by(CF: @familystud.CFfamily)
+    @title = "Meeting con " + @family.name + " " + @family.surname
+    @free = params[:free]
+    @date = DateTime.parse(@free)
+    @school_code = Teacher.find_by(CF: params[:CFprof]).school_code
+    #genera link casuale
+    meeting_link=create_link(@teacher)
+
+
+    @meeting_par = {CFfamily: @family.CF, date: @date, CFprof: params[:CFprof], title: @title, link: meeting_link}
+
+    @meeting = Meeting.new(@meeting_par)
+    if @meeting.save
+        redirect_to student_meeting_manage_url(CF: params[:CF], CFprof: params[:CFprof])
+    end
+  end
+
+
+    def delete_meeting
+      @student=Student.find_by(CF: params[:CF])
+      @familystud = FamilyStudent.find_by(CFstudent: params[:CF])
+      @family = Family.find_by(CF: @familystud.CFfamily)
+      @meeting = Meeting.find_by(CFprof: params[:CFprof], CFfamily: @family.CF, date: params[:meeting])
+      @meeting.destroy
+      redirect_to student_meeting_manage_url(CF: params[:CF], CFprof: params[:CFprof])
+    end
+
+
 end

@@ -14,7 +14,13 @@ class FamilyController < ApplicationController
     if @family && @family.password == params[:password]
       family_info = { mail: @family.mail, islogged: true }
       cookies[:family_info] = { value: family_info.to_json, expires: 30.day.from_now }
-      redirect_to family_choose_url(CF: @family.CF)
+      @studrel = FamilyStudent.where(CFfamily: @family.CF).distinct.pluck(:CFstudent)
+      if @studrel.length > 1
+        redirect_to family_choose_url(CF: @family.CF)
+      else
+        @studentCF = @studrel[0]
+        redirect_to family_home_url(CF: @family.CF, CFstudent: @studentCF)
+      end
     else
       redirect_to family_login_url
       flash[:alert] = 'Credenziali non valide.'

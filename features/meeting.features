@@ -30,6 +30,6 @@ Scenario:  Successful meeting cancellation
     When I select the link "Fabio Ralli"
     Then I should be on the meeting manage page
     When I delete a meeting
-    Then that meeting should exist anymore
+    Then that meeting should not exist anymore
     And I should have the possibility to book that meeting again
     

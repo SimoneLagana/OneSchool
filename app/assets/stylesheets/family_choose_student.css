@@ -66,6 +66,7 @@ body{
     align-items: center;
     border-radius: 10px;
     font-size: 18px;
+    text-decoration: none;
 }
 
 .navbar{
@@ -119,3 +120,19 @@ body{
     color: #fff;
   }
   
+
+  .option {
+    background-color: rgb(172, 245, 255);
+    text-decoration: none;
+  }
+
+  .label {
+    background-color: rgb(172, 245, 255);
+    text-decoration: none;
+  }
+
+   .student-link {
+    background-color: rgb(172, 245, 255);
+    text-decoration: none;
+    color: black
+   }

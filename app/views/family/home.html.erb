@@ -15,15 +15,16 @@
             </div>
         <% end %>
 
-        <%= link_to family_choose_url(CF: params[:CF]),class: 'link-profile no-underline' do %>
-            <div class="profile">
-                Change student
-            </div>
-        <% end %>
-
+        <% if $onlyChild == false%>
+            <%= link_to family_choose_url(CF: params[:CF]),class: 'link-profile no-underline' do %>
+                <div class="profile">
+                    Change student
+                </div>
+            <% end %>
+        <%end%>
        
 
-        <%= link_to family_profile_url(CF: params[:CF]),class: 'link-profile no-underline' do %>
+        <%= link_to family_profile_url(CF: params[:CF], CFstudent: params[:CFstudent]),class: 'link-profile no-underline' do %>
             <div class="profile">
                 Profile
             </div>

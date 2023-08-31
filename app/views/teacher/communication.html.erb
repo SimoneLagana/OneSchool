@@ -11,9 +11,9 @@
 <body>
     <nav class="navbar">
         <%= link_to teacher_classroom_url(classroom: @classname), class: "link-profile no-underline" do %>
-            <label class="writ"> Classroom: 
+            <div class="writ"> Classroom: 
             <%= @classname %>
-            </label>
+            </div>
         <% end %>
         <%= link_to teacher_profile_url, class: "link-profile no-underline" do %>
             <div class="profile">
@@ -22,7 +22,7 @@
         <% end %>
       </nav>
     <div class="home-communication">
-        <label class="title-communication"> communications </label>
+        <label class="title-communication"> Communications </label>
         <div class="communication-container">
             <% @communications.each do |communication| %>
                <div class="communication">

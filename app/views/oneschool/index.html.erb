@@ -13,13 +13,14 @@
       </label>
       <%= link_to admin_login_url, class: 'link-profile no-underline'  do %>
       <div class="profile">
-        Admin signup
+        Admin login
       </div>
       <% end %>
     </nav>
    
     <div class="home">
-        <label class="title">Welcome to Oneschool! please select your role</label>
+        <label class="title" id="welcome-title">Welcome to ONESCHOOL</label>
+        <label> Please select your role</label>
         <div class="panel-container">
             <%= link_to school_staff_login_url, class: 'no-underline'  do %>
               <div class="panel">

@@ -115,10 +115,13 @@ body{
 
 
 .s-homework-title{
-    margin-top:20px;
-    font-size: 20px;
-    width: 100%;
+    background-color: lightblue;
+    width: 200px;
+    border-radius: 5px;
+    font-size: 30px;
     text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 .insert-container{
     display: flex;
@@ -190,7 +193,7 @@ body{
 }
 
 .navbar{
-    background-color: skyblue;
+    background-color: rgb(172, 245, 255);
     height: 70px;
     position: fixed;
     top: 0;

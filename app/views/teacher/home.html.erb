@@ -11,9 +11,9 @@
 </head>
 <body>
     <nav class="navbar">
-        <label class="writ">
+        <div class="writ">
           <%= name=School.where(code: @teacher.school_code).pluck(:name).first %>
-        </label>
+        </div>
         <%= link_to teacher_profile_url, class: "link-profile no-underline" do %>
             <div class="profile">
                 Profile

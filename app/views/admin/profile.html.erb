@@ -25,12 +25,12 @@
       </nav>
     <div class="home">
         <div class="main-panel">
-            <label class="profile-field"><%= @admin.name %> </label>
+            <label class="profile-field">Name:<%= @admin.name %> </label>
             <%if !session[:admin_code].present? %>
-                <label class="profile-field"><%= @admin.surname %> </label>
+                <label class="profile-field">Surname:<%= @admin.surname %> </label>
             <%end%>
-            <label class="profile-field"><%= @admin.CF %> </label>
-            <label class="profile-field"><%= @admin.mail %> </label>
+            <label class="profile-field">CF:<%= @admin.CF %> </label>
+            <label class="profile-field">Email: <%= @admin.mail %> </label>
             
             <div class="button-container">
                 <%if !session[:admin_code].present? %>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= stylesheet_link_tag "teacher_absence.css" %>
+    <%= stylesheet_link_tag "teacher_timetable.css" %>
     <%= javascript_include_tag('teacher.js') %>
 
     <title>Timetable</title>
@@ -11,9 +12,9 @@
 <body>
     <nav class="navbar">
         <%= link_to teacher_classroom_url(classroom: @classname), class: "link-profile no-underline" do %>
-            <label class="writ"> Classroom: 
+            <div class="writ"> Classroom: 
             <%= @classname %>
-            </label>
+            </div>
         <% end %>
         <%= link_to teacher_profile_url, class: "link-profile no-underline" do %>
             <div class="profile">
@@ -22,12 +23,12 @@
         <% end %>
       </nav>
     <div class="home">
-        <label class="title"> Timetable </label>
+        <label class="title" id="time-title"> Timetable </label>
         <% if @ret == "NOT_FOUND"%>
             <label class="label-form">The class lesson timetable has not been set yet</label>
         <% else  %>
         <% if @ret.present? %>   
-            <table class="tabella">
+            <table class="tabella" id="time-tabella">
                 <thead>
                     <tr>
                         <th>MONDAY</th>

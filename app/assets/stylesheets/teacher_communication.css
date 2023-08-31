@@ -11,17 +11,18 @@ body{
     justify-content: center;
     height:100%;
 }
-.home-grade{
+.home-communication{
     width:100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding-top: 80px;
+    justify-content: flex-start;
+    padding-top: 110px;
     background-color: white;
+   
 }
 
-.whole-grade{
+.whole-communication{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -33,53 +34,69 @@ body{
 
 
 
-.title-grade{
+.title-communication{
     font-size: 22px;
     width: 100%;
     text-align: center;
     margin-bottom: 20px;
+    margin-top: 30px;
 }
-.grade-container{
+.communication-container{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     flex-wrap: nowrap;
-    width: 500px;
     gap: 30px;
-    background-color: aquamarine;
+    
     border-radius: 10px;
-    height: 400px;
     padding-top: 10px;
     padding-left: 20px;
 }
-.form-grade-1{
+.form-communication-1{
     display:flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    background-color: aquamarine;
+    background-color: lightblue;
     gap: 10px;
-    height: 280px;
+    height: 220px;
 }
 
-.form-grade{
+.form-communication{
     display:flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    background-color: aquamarine;
+    background-color: lightblue;
     gap: 10px;
 }
 
+.communication-inner-form{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    width: 100%;
+    background-color: lightblue;
+}
 
-.grade-container-2{
+.sym{
+    background-color: lightblue;
+    font-size: 18px;
+}
+.communication-text{
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.communication-container-2{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     flex-wrap: nowrap;
-    width: 500px;
+    width: 400px;
     background-color: white;
     border-radius: 10px;
     padding-top: 10px;
@@ -88,24 +105,31 @@ body{
 .noteclass{
     margin-bottom: 10px;
     padding: 10px;
-    background-color: aquamarine;
+    background-color: lightblue;
     border-radius: 10px;
 }
 
-.grade-label{
+.communication-label{
     width: 100%;
-    background-color: aquamarine;
+    background-color: lightblue;
     text-align: left;
 }
 
+.communication-label-1{
+    width: 100%;
+    background-color: lightblue;
+    text-align: left;
+    margin-left: 20px;
+    margin-right: 5px;
+}
 
-.grade-title-p{
+.communication-title-p{
     font-size: 20px;
     width: 100%;
     text-align: center;
     margin-bottom: 20px;
 }
-.grade-field{
+.communication-field{
     width: 220px;
     height: 20px;
     font-size: 18px;
@@ -116,7 +140,7 @@ body{
     text-align: center;
 }
 
-.grade-student-field{
+.communication-student-field{
     width: 220px;
     font-size: 18px;
     display:flex;
@@ -127,31 +151,43 @@ body{
 }
 
 
-.grade{
-    display:flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap:20px;
-    max-width: 300px;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: aquamarine;
-}
-
-.value-container{
-    font-size: 30px;
-    background-color: aquamarine;
-}
-
-.grade-field-container{
+.communication{
     display:flex;
     flex-direction: column;
-    gap: 2px;
-    background-color: aquamarine;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap:20px;
+    min-height: 200px;
+    max-width: 600px;
+    min-width: 400px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: lightblue;
 }
 
-.button-submit{
+.upper-communication{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: lightblue;
+}
+
+.number-comm{
     font-size: 18px;
+    background-color: lightblue;
+}
+
+.bottom-communication{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width:100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: lightblue;
 }
 
 .navbar{
@@ -185,7 +221,7 @@ body{
     justify-content: flex-start;
     align-items: center;
     text-align: center;
-    background-color: aquamarine;
+    background-color: lightblue;
     padding-top: 0px;
     gap: 10px;
 }

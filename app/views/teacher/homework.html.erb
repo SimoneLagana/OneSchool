@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%= stylesheet_link_tag "teacher_absence.css" %>
+    <%= stylesheet_link_tag "teacher_homework.css" %>
     <%= javascript_include_tag('teacher.js') %>
 
-    <title>homeworks</title>
+    <title>homework</title>
 </head>
 <body>
     <nav class="navbar">
@@ -21,31 +21,53 @@
             </div>
         <% end %>
       </nav>
-    <div class="home">
-        <label class="title"> homeworks </label>
-        <div class="insert-container">
-            <%= form_with url: teacher_managehomework_url, class: 'form-subject', method: :post do |form| %>
-                <%= hidden_field_tag :class_code, @classname %>
-                <%= hidden_field_tag :CFprof, @teacher.CF %>
-                <%= hidden_field_tag :school_code, @teacher.school_code %>
-                <%= select_tag :subject_name, options_for_select(@subjects), class: "form-field" %>
-                <%= datetime_field_tag :date, class: 'form-field', step: 900%>
-                <%= form.text_field :name, class: 'form-field' %>
-                <%= form.text_area :text, size: "70x5" %>
-                <%= hidden_field_tag :delivered, false %>
-                <%= form.submit "Save homework", class: "button-submit" %>
-            <% end %>
-        </div> 
-        
-         <% @homeworks.each do |homework| %>
-            <tr class="table">
-                <td> <%= homework.date %></td>
-                <td> <%= homework.subject_name %></td>
-                <td> <%= homework.name %></td>
-                <td> <%= homework.text %></td>
-                <br>
-            </tr>
-        <% end %> 
+    <div class="home-homework">
+        <label class="title-homework"> homeworks </label>
+        <div class="whole-homework">
+            
+            <div class="homework-container">
+                <%= form_with url: teacher_managehomework_url, class: 'form-homework', method: :post do |form| %>
+                    <label class="homework-label">Insert a new absence</label>
+                    <%= hidden_field_tag :class_code, @classname %>
+                    <%= hidden_field_tag :CFprof, @teacher.CF %>
+                    <%= hidden_field_tag :school_code, @teacher.school_code %>
+                    <div class="homework-inner-form">
+                        <%= select_tag :subject_name, options_for_select(@subjects, @subject), class: "homework-field" %>
+                        <div class="sym">
+                            <label class="homework-label-1"> Submission date  </label>
+                            <%= datetime_field_tag :date, class: 'homework-field', step: 900%>
+                        </div>
+                    </div>
+                    <label class="homework-label">Assignment name</label>
+                    <%= form.text_field :name, class: 'homework-field' %>
+                    <label class="homework-label">Assignment description</label>
+                    <%= form.text_area :text, size: "70x5" %>
+                    <%= hidden_field_tag :delivered, false %>
+                    <%= form.submit "Save homework", class: "button-submit" %>
+                    <% flash.each do |key, message| %>
+                        <div class="flash <%= key %>">
+                        <%= message %>
+                        </div>
+                    <% end %>
+                <% end %>
+
+
+            </div> 
+            <div class="homework-container-2">
+                <label class="title-homework-2">Inserted homeworks</label>
+                <% @homeworks.each do |homework| %>
+                  <div class="homework">
+                    <div class="homework-field-container">
+                      <label class="homework-label"><%= homework.subject_name %></label>
+                      <label class="homework-label"><%= homework.name %> </label>
+                      <label class="homework-label"><%= homework.date.strftime('%Y/%m/%d') %></label>
+                    </div>
+                    <div class="homework-text">
+                    <%= homework.text%>
+                    </div>
+                  </div>
+                <% end %> 
+            </div> 
     </div>
 </body>
 </html>

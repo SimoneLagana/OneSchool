@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "student_timetable.css" %>
+    <%= javascript_include_tag('student.js') %>
+
+    <title>Timetable</title>
+</head>
+<body>
+    <nav class="navbar">
+        <%= link_to student_home_url(CF: params[:CF]), class: "link-profile no-underline" do %>
+            <label class="writ"> Classroom: 
+            <%= @student.student_class_code %>
+            </label>
+        <% end %>
+        <%= link_to student_profile_url(CF: params[:CF]), class: "link-profile no-underline" do %>
+            <div class="profile">
+                Profile
+            </div>
+        <% end %>
+      </nav>
+    <div class="home-timetable">
+        <label class="title-timetable"> Timetable </label>
+        <% if @ret == "NOT_FOUND"%>
+            <label class="timetable-label">The class lesson timetable has not been set yet</label>
+        <% else  %>
+        <% if @ret.present? %>   
+            <table class="tabella">
+                <thead>
+                    <tr>
+                        <th>MONDAY</th>
+                        <th>TUESDAY</th>
+                        <th>WEDNESDAY</th>
+                        <th>THURSDAY</th>
+                        <th>FRIDAY</th>
+                        <th>SATURDAY</th>
+                        <th colspan="6"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @subjects = @ret %>
+                    <% params[:search] =""%>
+                    <% @subjects.each do |hour| %>
+                        <tr>
+                        <% hour.each do |day|%>
+                            <td class="center"><%=day%></td>
+                            <%end%>
+                        </tr>
+                        <%end%>
+                    <%end%>
+                    
+                </tbody>
+            </table>
+        <%end%>
+    </div>
+</body>
+</html>

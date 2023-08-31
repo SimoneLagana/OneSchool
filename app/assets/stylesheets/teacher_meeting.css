@@ -3,23 +3,179 @@
     padding:0;
     background-color: white;
 }
-
+ 
 body{
     display:flex;
     flex-direction: column;
     align-items: center;
-    
     justify-content: center;
-    height:100vh;
+    height:100%;
 }
-.home{
+.home-meeting{
     width:100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height:100%;
+    justify-content: flex-start;
+    padding-top: 90px;
+    background-color: white;
+   
+}
+
+
+.title-meeting{
+    font-size: 22px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+.meeting-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 30px;
+    
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-left: 20px;
+}
+.form-meeting-1{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: lightblue;
+    gap: 10px;
+    height: 220px;
+}
+
+.form-meeting{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: lightblue;
+    gap: 10px;
+}
+
+.meeting-inner-form{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    width: 100%;
+    background-color: lightblue;
+}
+
+.sym{
+    background-color: lightblue;
+    font-size: 18px;
+}
+.meeting-text{
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.meeting-container-2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    width: 400px;
+    background-color: white;
+    border-radius: 10px;
+    padding-top: 10px;
     gap: 20px;
+}
+
+
+.meeting-label{
+    width: 100%;
+    background-color: lightblue;
+    text-align: left;
+    font-size: 16px;
+}
+
+.meeting-label-1{
+    width: 100%;
+    background-color: lightblue;
+    text-align: left;
+    margin-left: 20px;
+    margin-right: 5px;
+}
+
+.meeting-title-p{
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.meeting-field{
+    width: 220px;
+    height: 20px;
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.meeting-student-field{
+    width: 220px;
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.color-link{
+    background-color: lightblue;
+}
+
+.meeting-box{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap:20px;
+    max-width: 600px;
+    min-width: 400px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: lightblue;
+}
+
+.upper-meeting{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    font-size: 18px;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: lightblue;
+}
+
+.number-meet{
+    font-size: 18px;
+    background-color: lightblue;
+}
+
+.bottom-meeting{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width:100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: lightblue;
 }
 
 .navbar{
@@ -45,6 +201,18 @@ body{
     margin-left: 100px;
 }
 
+.form-note{
+    border-width: 0;
+    width: 280px;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    background-color: lightblue;
+    padding-top: 0px;
+    gap: 10px;
+}
 .profile{
     width: 100px;
     height: 70px;
@@ -55,15 +223,19 @@ body{
     font-size: 22px;
     margin-right: 100px;
 }
-
-.meeting-screen{
-    background-color: aquamarine;
-
-}
-
-.meeting-button{
-    width: 180px;
-    font-size: 18px;
-    border-radius: 5px;
-    margin-top: 70px;
-}
+ 
+.flash {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+  }
+  
+  .alert {
+    background-color: #ff0000;
+    color: #ffffff;
+  }
+  
+  .notice {
+    background-color: #00ff00;
+    color: #000000;
+  }

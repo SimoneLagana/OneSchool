@@ -43,7 +43,7 @@
             <div class="left-panel">
                 <label class="label-panel"> </label>
                 <%= form_with url: teacher_classroom_url, class: 'form-class', method: :get do |form| %>
-                    <%= form.select :classroom, options_for_select(@classrooms), {},  class: "select-class"%>
+                    <%= form.select :classroom, options_for_select(@classrooms), {}, id: "select-class", class: "teacher-select-class"%>
                     <%= form.submit "Go to class", class: "submit-button-teacher-home", id: "select_btn" %>
                 <% end %>
                 <% flash.each do |key, message| %>

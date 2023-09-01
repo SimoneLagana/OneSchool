@@ -22,7 +22,7 @@ RSpec.describe TeacherController, type: :controller do
       expect(response).to redirect_to(teacher_absence_url(classroom: '1A'))
       expect(flash[:alert]).to be_present
       expect(flash[:alert]).to eq("select a subject")
-      puts("test succeeded")
+      
      
     end
     it 'tries to create and absence when the field date does not match the weekday' do
@@ -48,7 +48,7 @@ RSpec.describe TeacherController, type: :controller do
       expect(response).to redirect_to(teacher_absence_url(classroom: '1A'))
       expect(flash[:alert]).to be_present
       expect(flash[:alert]).to eq("error weekday and date don't match")
-      puts("test succeeded")
+      
     end
   end
 

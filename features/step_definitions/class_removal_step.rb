@@ -48,7 +48,7 @@
 
     Then("I should not have that class anymore") do 
         @int = ClassRoom.find_by(class_code: @code, school_code: "1")
-        puts "la nuova classe è #{@int}" # Aggiungi il segno di uguaglianza qui
+        puts "la nuova classe è #{@int}" 
         expect(@int).to be_nil
       end
 

@@ -36,9 +36,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       cf=JSON.parse(cookies[:teacher])
       teacher=Teacher.find_by(CF: cf)
-      puts(teacher.name)
-      puts(teacher.surname)
-      puts(cf)
+      
       @user = Teacher.from_omniauth(request.env["omniauth.auth"],cf, teacher.name, teacher.surname)
       
       if @user.persisted?
@@ -72,7 +70,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def generic_callback(provider)
-    puts(provider)
+    
   end
   
   protected

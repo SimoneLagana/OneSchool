@@ -8,7 +8,7 @@ class Homework < ApplicationRecord
     validates :time, presence: true
     validates :date, presence: true
     validates :CFprof, presence: true
-    #validates :delivered, presence: true
+    
     validates :subject_name, presence: true
 
     def valid_foreign_key

@@ -309,10 +309,21 @@ class TeacherController < ApplicationController
     @teacher=Teacher.find_by(CF: session[:CF])
     @meetings=Meeting.where(CFprof: @teacher.CF).order(date: :asc)
     token=generate_token(@teacher.name)
+  
     random_link = SecureRandom.hex(10) 
     @link_teacher="http://localhost:8000/#{random_link}"
     
 
+  end
+
+  def generate_token(name)
+      payload = {
+        iss: 'localhost',
+        room: name,
+        exp: Time.now.to_i + 3600, 
+      }
+      jwt = JWT.encode payload, 'la_tua_chiave_segreta', 'HS256'
+      jwt
   end
 
   def requestmeeting

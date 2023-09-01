@@ -58,18 +58,4 @@ Given("there is a new teacher with mail and password") do
 
 
   
-  #When ("I fill in and submit an absence to a student") do
-  #  select('storia', from: 'select-1')
-  #  puts(page.body)
-  #  find("select-2").select('martedì', from: 'select-2')
-  #  select('1A', from: 'select-3')
-  #  
-  #  fill_in 'date-abs', with: DateTime.today
-#
-  #end
-
-  #date-abs
-  #  select-time-abs
-  #  select-weekday-abs
-  #  select-subject-abs
- #abs-submit
+ 

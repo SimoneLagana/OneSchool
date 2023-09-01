@@ -36,11 +36,11 @@ body{
     gap: 10px;
 }
 
-.tab-title{
+.man-tab-title{
     padding-right: 40px;
 }
 
-.options-title{
+.man-options-title{
     display: flex;
     flex-direction: row;
     align-self: center;
@@ -54,9 +54,9 @@ body{
     
 }
 
-.tab-body{
+.man-tab-body{
     border-radius: 5px;
-    max-height: 500px;
+    max-height: 400px;
     overflow-y: auto;
     width: 440px;
     align-items: center;
@@ -64,7 +64,7 @@ body{
 
 }
 
-.student-absence-container-2{
+.student-meetmanage-container-2{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -103,7 +103,7 @@ body{
     margin-top: 10px;
 }
 
-.tab-col{
+.man-tab-col{
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -193,7 +193,7 @@ body{
     border-radius: 50%;
 }
 
-.option {
+.man-option {
     display: flex;
     flex-direction: row;
     align-self: center;
@@ -219,7 +219,7 @@ body{
     padding-top: 100px;
 }
 
-#bookingPanel {
+#man-bookingPanel {
     float: left;
     margin-bottom: 70px;
 }

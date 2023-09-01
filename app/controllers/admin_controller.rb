@@ -18,6 +18,7 @@ class AdminController < ApplicationController
         @admin = Admin.find_by(mail: params[:mail])
         if @admin && @admin.password == params[:password]
           session[:CF]= @admin.CF
+          session.delete(:admin_code)
           redirect_to admin_manage_url
           
         else
@@ -90,6 +91,7 @@ class AdminController < ApplicationController
         @admin = Admin.new(admin_params)
         begin
             if @admin.save
+                session.delete(:admin_code)
               redirect_to admin_manage_url
             else
               flash[:alert] = "error while creating admin"

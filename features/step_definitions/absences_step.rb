@@ -14,10 +14,6 @@ Given("there is a user with mail and password") do
     FactoryBot.create(:absence_sv_j)
   end
   
-  
-
-
-
 
   Given("I login as an adult student") do
     visit root_path
@@ -54,10 +50,6 @@ Given("there is a user with mail and password") do
   Then("the absence should be justified") do
     @first.justified == true
   end
-
-
-
-
 
   When("I search for an absence that already justified") do
     @ab = Absence.where(CFstudent: @user.CF, justified: true)

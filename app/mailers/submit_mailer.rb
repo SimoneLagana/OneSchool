@@ -1,6 +1,5 @@
 class SubmitMailer < ApplicationMailer
     def submit_homework(teacher, student, text, homework)
-        puts("salo")
         @teacher=teacher
         @student_name=student
         @text=text
@@ -10,6 +9,5 @@ class SubmitMailer < ApplicationMailer
             #attachments[@homework.file.filename.to_s] = File.read(file_path)
           end
         mail(to: @teacher.mail, subject: "Homework Delivery")
-        puts("inviata!")
     end
 end

@@ -10,7 +10,6 @@ FactoryBot.define do
       class_code { "1A" }
       CFprof { "40" }
       subject_name { "storia" }
-    
     end
   end
   

@@ -42,7 +42,7 @@ Rails.application.routes.draw do
   get 'teacher/communication', to: 'teacher#communication', as: 'teacher_communication'
   get 'teacher/timetable', to: 'teacher#timetable', as: 'teacher_timetable'
   get 'teacher/agenda', to: 'teacher#agenda', as: 'teacher_agenda'
-
+  
 
   #student
   get 'student/login', to: 'student#login', as: 'student_login'

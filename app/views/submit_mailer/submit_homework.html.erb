@@ -4,6 +4,6 @@
   <h2>Homework delivery from <%= @student_name%> </h2>
   <p><%= @text%></p>
   
-  <p><%= link_to 'Scarica il file allegato', rails_blob_url(@homework.file, disposition: "attachment")  %></p>
+  <p><%= link_to 'Download your linked file', rails_blob_url(@homework.file, disposition: "attachment")  %></p>
 </body>
 </html>

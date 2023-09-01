@@ -14,7 +14,7 @@ end
 
 Given("I am in the main page") do
   visit root_path
-end
+end 
 
 When("I click on the panel {string}") do |panel_name|
     click_link panel_name
@@ -34,7 +34,7 @@ When("I put my password in the field password") do
 end
 
 And("I press the button to login") do
-  click_button 'login-button' # Assicurati che 'Login' sia l'identificativo corretto del pulsante
+  click_button 'login-button' 
 end
 
 Then("I should be in the school staff home page") do 

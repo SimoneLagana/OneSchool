@@ -331,7 +331,7 @@ class TeacherController < ApplicationController
     @classname=params[:classroom]
     @confirm=""
     if(params[:confirm].present?)
-      @confirm="email inviata al genitore!"
+      @confirm="email sent to the parent!"
     end
     @students= Student.where(student_class_code: @classname)
     
@@ -513,7 +513,7 @@ class TeacherController < ApplicationController
       redirect_to teacher_absence_url(classroom: params[:class_code])
       return
     end
-    puts(params[:weekday])
+    
     if params[:weekday]==""
       flash[:alert]="select a weekday"
       redirect_to teacher_absence_url(classroom: params[:class_code], subject: params[:subject_name])
@@ -639,6 +639,15 @@ class TeacherController < ApplicationController
       redirect_to teacher_homework_url(classroom: params[:class_code], subject: params[:subject_name])
       return
     end
+
+    today=DateTime.now
+    datehomework=DateTime.parse(params[:date])
+    if datehomework<today
+      flash[:alert]="the date should be a future date"
+      redirect_to teacher_homework_url(classroom: params[:class_code], subject: params[:subject_name])
+      return
+    end
+
     @subjects=Subject.where(CFprof: params[:CFprof], class_code: params[:class_code], name: params[:subject_name]).first
     weekday=@subjects.weekday
     time=@subjects.time

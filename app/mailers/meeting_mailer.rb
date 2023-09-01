@@ -3,6 +3,6 @@ class MeetingMailer < ApplicationMailer
         @text=text
         @student=student
         @teacher=teacher
-        mail(to: parent_mail, subject: 'Richiesta colloquio')
+        mail(to: parent_mail, subject: 'Meeting request')
     end
 end

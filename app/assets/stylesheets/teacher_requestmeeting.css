@@ -21,10 +21,13 @@ body{
 }
 
 .title-request{
-    font-size: 20px;
-    width: 100%;
+    background-color: aquamarine;
+    width: 250px;
+    border-radius: 5px;
+    font-size: 30px;
     text-align: center;
-    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 .request-container{
     display: flex;

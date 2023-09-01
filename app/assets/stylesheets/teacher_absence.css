@@ -55,10 +55,13 @@ body{
 }
 
 .title-absence{
-    font-size: 22px;
-    width: 100%;
+    background-color: lightblue;
+    width: 200px;
+    border-radius: 5px;
+    font-size: 30px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
 .absence-container{
     display: flex;
@@ -153,7 +156,7 @@ body{
     flex-direction: row;
     flex-wrap: nowrap;
     gap:20px;
-    max-width: 300px;
+    width: 250px;
     padding: 10px;
     border-radius: 10px;
     background-color: lightblue;

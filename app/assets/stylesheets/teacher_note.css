@@ -39,9 +39,12 @@ body{
 
 
 .note-title{
-    font-size: 22px;
-    width: 100%;
+    background-color: lightblue;
+    width: 270px;
+    border-radius: 5px;
+    font-size: 30px;
     text-align: center;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 .note-container{

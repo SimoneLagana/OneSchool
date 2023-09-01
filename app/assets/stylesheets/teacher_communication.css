@@ -35,11 +35,13 @@ body{
 
 
 .title-communication{
-    font-size: 22px;
-    width: 100%;
+    background-color: lightblue;
+    width: 270px;
+    border-radius: 5px;
+    font-size: 30px;
     text-align: center;
+    margin-top: 20px;
     margin-bottom: 20px;
-    margin-top: 30px;
 }
 .communication-container{
     display: flex;

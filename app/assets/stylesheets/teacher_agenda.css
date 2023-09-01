@@ -19,7 +19,7 @@ body{
     justify-content: center;
     padding-top: 80px;
 }
-
+ 
 .main-agenda{
     display:flex;
     flex-direction: column;

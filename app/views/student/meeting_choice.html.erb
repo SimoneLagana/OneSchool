@@ -23,8 +23,8 @@
         <% end %>
     </nav>
 
-    <table class ="student-absence-container-2">
-            <thead class="options-title">
+    <table class ="student-meeting-container-2">
+            <thead class="stud-options-title">
                 <tr>
                 <th class="option-elem">Teacher</th>
                 <th class="option-elem">Subject</th>
@@ -32,7 +32,7 @@
                 </tr>
             </thead>
 
-            <tbody class="tab-body">
+            <tbody class="stud-tab-body">
 
                 <% @student=Student.find_by(CF: params[:CF]) %>
                 <% @familystud = FamilyStudent.find_by(CFstudent: params[:CF]) %>
@@ -46,17 +46,17 @@
                 <% @unique_subjects.each do |unique_subject| %>
                     
                     <tr class = "option-student">
-                        <td class="tab-col">
+                        <td class="stud-tab-col">
                             <% @teacher = Teacher.find_by(CF: unique_subject[1]) %>
                             <%= @teacher.name%>
                             <%= @teacher.surname%>
                         </td>
 
-                        <td class="tab-col" id="subj-col">
+                        <td class="stud-tab-col" id="subj-col">
                             <%= unique_subject[0]%>
                         </td>
 
-                        <td class="tab-col">
+                        <td class="stud-tab-col">
                             <%= link_to student_meeting_manage_url(CF: params[:CF], CFprof: @teacher.CF), id:  @teacher.CF + "meeting_link" do %>
                                 
                                     Meeting

@@ -4,7 +4,12 @@ Given("there is a user with mail and password") do
     FactoryBot.create(:student, name: "Mario", surname: "Rossi", CF: "60", mail: "mario@rossi", password: "passw", school_code: "1", birthdate: DateTime.new(2001,2,3), student_class_code: "1A", student_school_code: "1")
     FactoryBot.create(:student, name: "Simone", surname: "Verdi", CF: "61", mail: "simone@verdi", password: "simonepas", school_code: "1", birthdate: DateTime.new(2008,2,3), student_class_code: "1A", student_school_code: "1")
     FactoryBot.create(:family, name: "Maria", surname: "Rossi", CF: "7", mail: "maria@Rossi", password: "samir", school_code: "1")
+    FactoryBot.create(:family, name: "Paolo", surname: "Verdi", CF: "8", mail: "paolo@verdi", password: "pas", school_code: "1")
+
     FactoryBot.create(:family_student, id: 1, CFfamily: "7", CFstudent: "60", school_code: "1")
+    FactoryBot.create(:family_student, id: 2, CFfamily: "7", CFstudent: "61", school_code: "1")
+    FactoryBot.create(:family_student, id: 3, CFfamily: "8", CFstudent: "61", school_code: "1")
+
     FactoryBot.create(:teacher, name: "Luigi", surname: "Colombo", CF: "40", mail: "luigi@colomboi", password: "pas", school_code: "1")
     FactoryBot.create(:subject, weekday: "martedì", time: "2", school_code: "1", CFprof: "40", class_code: "1A", name: "storia")
     FactoryBot.create(:meeting, id: 9, title: "Meeting con Enzo Esposito", date: DateTime.new(2023, 8, 30, 18, 0, 0), CFprof: "40", CFfamily: "7")
@@ -82,7 +87,7 @@ Given("there is a user with mail and password") do
   end
 
 
-  Given("I login as a parent") do 
+  Given("I login as a parent with more than a child") do 
     visit root_path
     click_link "Family"
     expect(current_path).to eq(family_login_path)
@@ -101,10 +106,12 @@ Given("there is a user with mail and password") do
     find("#" + @CF).click
    end
 
-   And("I am in the child home page") do
+   Then("I am in the child home page") do
     expect(current_path).to eq(family_home_path)
    end
 
    And("I should be in the child absences page") do
     expect(current_path).to eq(family_absences_path)
    end
+
+   

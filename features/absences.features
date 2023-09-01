@@ -37,12 +37,14 @@ Feature: Managing Absences
     When I search for an absence that already justified
     Then I should not have a button to justify it
 
-  Scenario:  Successful absence justification by a parent
-    Given I login as a parent
+  Scenario:  Successful absence justification by a parent with more than a child
+    Given I login as a parent with more than a child
     And I choose one of my children
-    And I am in the child home page
+    Then I am in the child home page
     When I select the panel "Absences"
     Then I should be in the child absences page
     When I search for an absence that is not justified
     And I select the corrisponding button to justify
     Then the absence should be justified
+
+  

@@ -1,4 +1,4 @@
-Feature: Teacher inserting absence
+Feature: Teacher manages homeworks
   Background: Successfull Teacher login
     Given there is a teacher and a student with mail and password  
 

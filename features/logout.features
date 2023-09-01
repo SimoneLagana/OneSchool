@@ -1,4 +1,4 @@
-Feature: Staff authentication
+Feature: Staff Logout
   Background: User presence
     Given I am a school staff user with email and password
 

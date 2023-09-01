@@ -1,0 +1,13 @@
+Feature: Teacher inserting absence
+  Background: Successfull Teacher login
+    Given there is a new user with mail and password  
+
+Scenario: Teacher seeing absences justification
+    Given I login as a teacher
+    And I am in the teacher home page
+    When I choose one of my Classrooms
+    Then I should be in the teacher classroom page
+    And when I click on the panel "Absences"
+    Then I should be in the teacher absence page
+    And I should see the absence that I previously inserted
+    And I can see if the absences are justified

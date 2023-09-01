@@ -1,0 +1,35 @@
+Feature: Teacher meeting test
+  Background: Successfull Teacher login
+    Given there is a new user with mail and password  
+
+  Scenario: Joining meeting
+    Given I login as a teacher user
+    And I am in the teacher user home page
+    When I click on the meeting panel "Meeting"
+    Then I should be in the teacher meeting page
+    And when I should see the meeting link
+
+  Scenario: Request meeting failure - 1
+    Given I login as a teacher user
+    And I am in the teacher user home page
+    Then I should see a panel with the text "Select a class"
+    When I select the classroom "1A"
+    Then I should be on the page "/teacher/classroom"
+    And I should see the text "Classroom: 1A" on the page
+    When I click on the panel "Request meeting"
+    Then I should be on the page "/teacher/requestmeeting"
+    When I click the submit button
+    Then I should see an error message containing "write text"
+
+  Scenario: Request meeting success
+    Given I login as a teacher user
+    And I am in the teacher user home page
+    Then I should see a panel with the text "Select a class"
+    When I select the classroom "1A"
+    Then I should be on the page "/teacher/classroom"
+    And I should see the text "Classroom: 1A" on the page
+    When I click on the request panel "Request meeting"
+    Then I should be on the page "/teacher/requestmeeting"
+    When I select the first student and write the text "Please book yourself tomorrow"
+    And I click the submit button
+    Then I should see a message containing "email sent to the parent!"

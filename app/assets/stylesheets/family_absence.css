@@ -39,12 +39,14 @@ body{
 
 .options-title{
     border-radius: 5px;
+    width: 380px;
 }
 
 .tab-body{
     border-radius: 5px;
     max-height: 500px;
     overflow-y: auto;
+    width: fit-content;
 }
 
 .student-absence-container-2{

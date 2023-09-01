@@ -31,7 +31,7 @@
                 <label class="request-label">Select the student to send his/her parent a meeting request</label>
                 <%= select_tag :CFstudent, options_for_select(@students.map { |student| ["#{student[:name]} #{student[:surname]}", student[:CF]] }), class: "request-field" %>
                 <label class="request-label-2">email text</label>
-                <%= form.text_area :text, size: "70x5", class: 'request-text' %>
+                <%= form.text_area :text, size: "70x5", id: 'request-text' %>
                 <%= form.submit "Send meeting request", class: "button-submit" %>
             <% end %>
             <% flash.each do |key, message| %>

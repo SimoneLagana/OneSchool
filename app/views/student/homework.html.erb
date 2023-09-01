@@ -51,11 +51,11 @@
                          
                          <%= form_with url: student_submit_url, class: 'form-s-homework', method: :post do |form| %>
                             <label class="label-s-field"> Insert other members names (optional)</label>
-                            <%= form.text_field :other, class: 'text-s-field' %>
+                            <%= form.text_field :other, class: 'text-s-field', id: 'other' %>
                             <label class="label-s-field">Insert text</label>
-                            <%= form.text_field :mail_text, class: 'text-s-field' %>
+                            <%= form.text_field :mail_text, class: 'text-s-field', id: 'mail-text' %>
                             <label class="label-s-field">Add file</label>
-                            <%= form.file_field :file, class: 'text-s-field-1'%> 
+                            <%= form.file_field :file, class: 'text-s-field-1', id: 'file' %> 
                             <%= form.submit "Submit", class: 's-button' %>
                             <%= hidden_field_tag :CF, @student.CF %>
                             <%= hidden_field_tag :CFprof, homework.CFprof %>

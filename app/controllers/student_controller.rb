@@ -13,7 +13,7 @@ class StudentController < ApplicationController
     else 
       $inClass = true
     end
-    puts $inClass
+    
   end
 
   def login
@@ -106,7 +106,7 @@ class StudentController < ApplicationController
   def absence
     @student=Student.find_by(CF: params[:CF])
     @absences=Absence.where(CFstudent: @student.CF)
-    puts $ofAge
+    
   end
 
   def ofAge
@@ -148,8 +148,6 @@ class StudentController < ApplicationController
     @student=Student.find_by(CF: params[:CF])
     @homeworks =Homework.where(class_code: @student.student_class_code, school_code: @student.school_code, delivered: false)
     @submitted_homeworks= Homework.where(class_code: @student.student_class_code, school_code: @student.school_code, delivered: true)
-    puts(@student.student_class_code)
-    puts("ciao")
     @subjects= [["Subject", nil]]+Subject.where(class_code: @student.student_class_code, school_code: @student.school_code).pluck(:name).uniq
     if(params[:subject].present?)
       @subject= params[:subject]
@@ -176,7 +174,6 @@ class StudentController < ApplicationController
     student_name= @student.name + @student.surname + names
     @text = params[:mail_text]
     @teacher=Teacher.find_by(CF: params[:CFprof])
-    puts(@teacher.mail)
     @homework=Homework.find_by(CFprof: @teacher.CF, school_code: @student.school_code, class_code: @student.student_class_code, date: params[:date], weekday: params[:weekday], time: params[:time], subject_name: params[:subject_name])
     weekday=@homework.weekday
     time=@homework.time
@@ -260,7 +257,7 @@ class StudentController < ApplicationController
     @today = Date.today
     @time_slots = []
 
-    # Crea un elenco di tutti i giorni della prossima settimana per ogni ora nell'intervallo
+    
     (@today..@today + 6).each do |day|
       (@start_hour..@end_hour).each do |hour|
         @iso = DateTime.new(day.year, day.month, day.day, hour, 0, 0, '+00:00')
@@ -289,7 +286,7 @@ class StudentController < ApplicationController
   end
 
   def create_link(teacher)
-    random_link = SecureRandom.hex(10) #creo una stringa random di 8 caratteri
+    random_link = SecureRandom.hex(10) 
     link="http://localhost:8000/#{random_link}"
   end
 

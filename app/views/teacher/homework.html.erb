@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= stylesheet_link_tag "teacher_homework.css" %>
     <%= javascript_include_tag('teacher.js') %>
 
-    <title>homework</title>
+    <title>Homework</title>
 </head>
 <body>
     <nav class="navbar">
@@ -22,7 +22,7 @@
         <% end %>
       </nav>
     <div class="home-homework">
-        <label class="title-homework"> homeworks </label>
+        <label class="title-homework"> Homeworks </label>
         <div class="whole-homework">
             
             <div class="homework-container">
@@ -32,16 +32,16 @@
                     <%= hidden_field_tag :CFprof, @teacher.CF %>
                     <%= hidden_field_tag :school_code, @teacher.school_code %>
                     <div class="homework-inner-form">
-                        <%= select_tag :subject_name, options_for_select(@subjects, @subject), class: "homework-field" %>
+                        <%= select_tag :subject_name, options_for_select(@subjects, @subject), id: "homework-field-subject" %>
                         <div class="sym">
                             <label class="homework-label-1"> Submission date  </label>
-                            <%= datetime_field_tag :date, class: 'homework-field', step: 900%>
+                            <%= datetime_field_tag :date, id: 'homework-field-date' %>
                         </div>
                     </div>
                     <label class="homework-label">Assignment name</label>
-                    <%= form.text_field :name, class: 'homework-field' %>
+                    <%= form.text_field :name, id: 'homework-field-name' %>
                     <label class="homework-label">Assignment description</label>
-                    <%= form.text_area :text, size: "70x5" %>
+                    <%= form.text_area :text, size: "70x5", id: 'text-area' %>
                     <%= hidden_field_tag :delivered, false %>
                     <%= form.submit "Save homework", class: "button-submit" %>
                     <% flash.each do |key, message| %>

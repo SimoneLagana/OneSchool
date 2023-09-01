@@ -124,14 +124,20 @@ function editpassword(CF, email) {
       <div class="popupMenu">
         <div id="closePopup">&times;</div>
           <form action="/admin/changepassword" method="post">
-            <input type="text" id="CF" name="CF" hidden value=${CF}>
+            <input type="hidden" id="CF" name="CF" value=${CF}>
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" disabled value=${email}><br>
+            <br>
+            <input type="email" id="email" name="email" disabled value=${email}>
+            <br>
             <label for="old_password">Insert old password</label>
-            <input type="password" id="old_password" name="old_password" required><br>
+            <br>
+            <input type="password" id="old_password" name="old_password" required>
+            <br>
             <label for="password">Insert new password</label>
-            <input type="password" id="password" name="password" required><br>
-            <input type="submit" value="Submit">
+            <br>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <input type="submit" class ="submitBtn" value="Submit">
           </form>
       </div>
     `;  

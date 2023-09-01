@@ -90,7 +90,7 @@ class TeacherController < ApplicationController
     @teacher_true = Teacher.find_by(name: @teacher.name, surname: @teacher.surname, school_code: @teacher.school_code)
     @meeting = Meeting.where(CFprof: @teacher_true)
     $client_calendar= get_google_calendar_client(@teacher)
-    #@calendar_list = $client_calendar.list_calendar_lists
+    
 
     
 
@@ -165,7 +165,7 @@ class TeacherController < ApplicationController
               school_code: @teacher_true.school_code)
             if @commitment
               @commitment.save
-              #  puts("sas")
+            
             end
             new_date += 1.hour
           end
@@ -199,11 +199,11 @@ class TeacherController < ApplicationController
         ) 
       end
     rescue Google::Apis::AuthorizationError => e
-      # L'access token o il refresh token sono scaduti o non validi
+      
       flash[:error] = 'Your token has expired or is invalid. Please login again with Google.'
       redirect_to teacher_login_url
     rescue StandardError => e
-      # Altri errori possono essere gestiti qui
+     
       flash[:error] = 'An error occurred while connecting to Google Calendar.'
       redirect_to teacher_login_url
     end
@@ -269,10 +269,10 @@ class TeacherController < ApplicationController
                        ]
       }, 'primary': true
     }) 
-    # puts("mimomimo")
+    
     if $client_calendar
       $client_calendar.insert_event('6fb8a61d5cfb51e60783c32a6eb22acfaf8de8c8126dc7dbabb7da7568a85cc7@group.calendar.google.com', event)
-      # puts("ciao")
+      
       if !@warning
         flash[:notice] = 'Task was successfully added.'
       else
@@ -283,13 +283,13 @@ class TeacherController < ApplicationController
       return
     end
       
-       # Utilizzo un oggetto DateTime per la data iniziale
+       
     new_date = DateTime.parse(params[:date]).change(min: 0)
      
-    # puts new_date
+    
     num = params[:hour].to_i
     for i in 1..num
-      puts new_date.inspect
+      
      @commitment = Commitment.new(
        title: params[:title],
        date: new_date,
@@ -298,7 +298,7 @@ class TeacherController < ApplicationController
        school_code: params[:school_code])
      if @commitment
        @commitment.save
-      #  puts("sas")
+      
      end
      new_date += 1.hour
     end      
@@ -309,8 +309,8 @@ class TeacherController < ApplicationController
     @teacher=Teacher.find_by(CF: session[:CF])
     @meetings=Meeting.where(CFprof: @teacher.CF).order(date: :asc)
     token=generate_token(@teacher.name)
-    room="ssarekde"
-    random_link = SecureRandom.hex(10) #creo una stringa random di 8 caratteri
+  
+    random_link = SecureRandom.hex(10) 
     @link_teacher="http://localhost:8000/#{random_link}"
     
 
@@ -320,7 +320,7 @@ class TeacherController < ApplicationController
       payload = {
         iss: 'localhost',
         room: name,
-        exp: Time.now.to_i + 3600, # Scadenza del token (1 ora)
+        exp: Time.now.to_i + 3600, 
       }
       jwt = JWT.encode payload, 'la_tua_chiave_segreta', 'HS256'
       jwt
@@ -331,7 +331,7 @@ class TeacherController < ApplicationController
     @classname=params[:classroom]
     @confirm=""
     if(params[:confirm].present?)
-      @confirm="email inviata al genitore!"
+      @confirm="email sent to the parent!"
     end
     @students= Student.where(student_class_code: @classname)
     
@@ -427,7 +427,7 @@ class TeacherController < ApplicationController
       redirect_to teacher_grade_url(classroom: params[:class_code])
       return
     end
-    puts(params[:weekday])
+    
     if params[:weekday]==""
       flash[:alert]="select a weekday"
       redirect_to teacher_grade_url(classroom: params[:class_code], subject: params[:subject_name])
@@ -513,7 +513,7 @@ class TeacherController < ApplicationController
       redirect_to teacher_absence_url(classroom: params[:class_code])
       return
     end
-    puts(params[:weekday])
+    
     if params[:weekday]==""
       flash[:alert]="select a weekday"
       redirect_to teacher_absence_url(classroom: params[:class_code], subject: params[:subject_name])
@@ -556,7 +556,7 @@ class TeacherController < ApplicationController
       redirect_to teacher_absence_url(classroom: params[:class_code])
     end
     
-    # puts(cfstudente)
+    
     
     
   end
@@ -639,6 +639,15 @@ class TeacherController < ApplicationController
       redirect_to teacher_homework_url(classroom: params[:class_code], subject: params[:subject_name])
       return
     end
+
+    today=DateTime.now
+    datehomework=DateTime.parse(params[:date])
+    if datehomework<today
+      flash[:alert]="the date should be a future date"
+      redirect_to teacher_homework_url(classroom: params[:class_code], subject: params[:subject_name])
+      return
+    end
+
     @subjects=Subject.where(CFprof: params[:CFprof], class_code: params[:class_code], name: params[:subject_name]).first
     weekday=@subjects.weekday
     time=@subjects.time

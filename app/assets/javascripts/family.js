@@ -24,7 +24,7 @@ function editpassword(CF, email) {
             <input type="hidden" id="CF" name="CF" value=${CF}>
             <label for="email">Email:</label>
             <br>
-            <input type="email" id="email" name="email" value=${email}>
+            <input type="email" id="email" name="email" disabled value=${email}>
             <br>
             <label for="old_password">Inserisci vecchia password:</label>
             <br>

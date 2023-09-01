@@ -31,8 +31,7 @@ class FamilyController < ApplicationController
         redirect_to family_choose_url(CF: @family.CF)
       else
         @studentCF = @studrel[0]
-        puts @studentCF
-        puts "hhhhhhhhhhhhh"
+        
         $onlyChild = true
         redirect_to family_home_url(CF: @family.CF, CFstudent: @studentCF)
       end
@@ -55,15 +54,12 @@ class FamilyController < ApplicationController
 
   def choose_student
     @family=Family.find_by(CF: params[:CF])
-    puts "choose"
+    
   end
 
   def meeting_choice
     @family=Family.find_by(CF: params[:CF])
     @student=Student.find_by(CF: params[:CFstudent])
-    puts "home"
-    puts params[:CF]
-    puts params[:CFstudent]
   end
 
 
@@ -80,7 +76,7 @@ class FamilyController < ApplicationController
     @today = Date.today
     @time_slots = []
 
-    # Crea un elenco di tutti i giorni della prossima settimana per ogni ora nell'intervallo
+   
     (@today..@today + 6).each do |day|
       (@start_hour..@end_hour).each do |hour|
         @iso = DateTime.new(day.year, day.month, day.day, hour, 0, 0, '+00:00')
@@ -104,7 +100,7 @@ class FamilyController < ApplicationController
     @my_meeting = Meeting.where(CFprof: params[:CFprof]).where(CFfamily: params[:CF]).pluck(:date)
     @my_meeting.each do |toiso|
       @my_iso = toiso.strftime("%Y-%m-%d %H:%M:%S %z")
-      puts @my_iso
+      
       @iso_meeting << @my_iso
     end
   end
@@ -115,16 +111,14 @@ class FamilyController < ApplicationController
 
 
  def create_link(teacher)
-    random_link = SecureRandom.hex(10) #creo una stringa random di 8 caratteri
+    random_link = SecureRandom.hex(10) 
     link="http://localhost:8000/#{random_link}"
   end
 
  
 
   def add_family_meeting
-    # @day = params[:day]
-    # @month = params[:month]
-    # @time = params[:time]
+    
     @teacher = Teacher.find_by(CF: params[:CFprof])
     @family = Family.find_by(CF: params[:CF])
     @title = "Meeting con " + @family.name + " " + @family.surname
@@ -160,8 +154,6 @@ class FamilyController < ApplicationController
   def grades
     @family=Family.find_by(CF: params[:CF])
     @student=Student.find_by(CF: params[:CFstudent])
-    puts "grades"
-    puts @family.CF
   end
 
   def absences

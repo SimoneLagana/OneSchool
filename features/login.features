@@ -32,4 +32,3 @@ Feature: Staff authentication
     And I press the button to login
     Then I should be in the staff login page
     And I should get the alert "Credenziali non valide."
-    

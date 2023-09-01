@@ -49,21 +49,15 @@ class SchoolStaffController < ApplicationController
 
 
   def staff_manage
-    # @types= ["Teacher","Student","Family"]
-    # @schools=[]
-    # @classes = []
-    # @option="index"
-    # @type=""
-    # @staff = SchoolStaff.find_by(CF: "55")
     @teachers = []
     @students = []
     @families = []
 
     $typo = params[:type]
-    puts $typo
+    
 
     $classroom = params[:classroom]
-    puts $classroom
+    
     
     @staff = SchoolStaff.find_by(CF: params[:CF])
     @type = User.pluck(:type).uniq
@@ -97,8 +91,7 @@ class SchoolStaffController < ApplicationController
     end
   end
   def insert
-    puts $typo
-    puts $classroom
+    
     @staffs = SchoolStaff.find_by(CF: params[:CF])
     @name = params[:name]
     @surname = params[:surname]
@@ -116,7 +109,7 @@ class SchoolStaffController < ApplicationController
         FamilyStudent.create(CFfamily: @family_CF, CFstudent: @CFis, school_code: @staffs.school_code)
       end
     elsif($typo == "Student")
-      puts "ciao!"
+      
       Student.create(name: @name, surname: @surname, CF: @CFis, mail: @mail, password: @password, school_code: @staffs.school_code, birthdate: @birthdate, student_class_code: $classroom, student_school_code: @staffs.school_code)
     end
   end
@@ -126,16 +119,16 @@ class SchoolStaffController < ApplicationController
     if @type == "Teacher"
       @teachers = Teacher.where(school_code: "1").uniq
       render 'staff_manage'
-      puts @teachers.inspect
+      
     elsif @type == "Student"
       @students = Student.where(school_code: "1").uniq
       render 'staff_manage'
-      puts @students.inspect
+      
 
     else
       @families = Family.where(school_code: "1").uniq
       render 'staff_manage'
-      puts @families.inspect
+      
     end  
   end
   def delete
@@ -257,7 +250,7 @@ class SchoolStaffController < ApplicationController
   end
   def search_communication
     @ret_comm = Communication.where('lower(title) = ? AND school_code = ?', params[:search].downcase, params[:school])
-    puts @ret_comm.inspect
+    
     if @ret_comm.exists?
       render "communications"
     else

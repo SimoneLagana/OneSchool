@@ -21,7 +21,7 @@ class Teacher < User
           #  return registered_user
           
           school_code=Teacher.where(CF: cf).pluck(:school_code).uniq.first.to_s
-          puts(school_code)
+          
           user = Teacher.new(
               provider: auth.provider, 
               uid: auth.uid, 
@@ -37,7 +37,7 @@ class Teacher < User
           user.expires_at = auth.credentials.expires_at
           user.refresh_token = auth.credentials.refresh_token
           user.save
-          puts user
+          
           
           user
         end

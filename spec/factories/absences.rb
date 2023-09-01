@@ -7,7 +7,7 @@ FactoryBot.define do
       school_code { "1" }
       class_code {"1A"}
       subject_name {"storia"}
-      weekday {"lunedì"}
+      weekday {"martedì"}
       time {"1"}
       justified {false}
     end
@@ -19,7 +19,7 @@ FactoryBot.define do
       school_code { "1" }
       class_code {"1A"}
       subject_name {"storia"}
-      weekday {"lunedì"}
+      weekday {"martedì"} 
       time {"1"}
       justified {true}
     end
@@ -31,7 +31,7 @@ FactoryBot.define do
       school_code { "1" }
       class_code {"1A"}
       subject_name {"storia"}
-      weekday {"lunedì"}
+      weekday {"martedì"}
       time {"1"}
       justified {false}
     end
@@ -43,7 +43,7 @@ FactoryBot.define do
       school_code { "1" }
       class_code {"1A"}
       subject_name {"storia"}
-      weekday {"lunedì"}
+      weekday {"martedì"}
       time {"1"}
       justified {true}
     end

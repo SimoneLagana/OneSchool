@@ -129,6 +129,39 @@ body{
     text-align: center;
     margin-bottom: 20px;
 }
+
+#homework-field-name{
+    width: 220px;
+    height: 20px;
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#homework-field-date{
+    width: 220px;
+    height: 20px;
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#homework-field-subject{
+    width: 220px;
+    height: 20px;
+    font-size: 18px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 .homework-field{
     width: 220px;
     height: 20px;

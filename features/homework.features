@@ -1,0 +1,90 @@
+Feature: Teacher manages homeworks
+  Background: Successfull Teacher login
+    Given there is a teacher and a student with mail and password  
+
+  Scenario: Teacher class error
+    Given I have an account and I am logged in as a teacher
+    And I am on my teacher home page
+    When I click on the button "Go to class"
+    Then I should be again in the teacher homepage
+    And I should see this error message "select a class!"
+
+  Scenario: Teacher insert homework failure -1
+    Given I have an account and I am logged in as a teacher
+    And I am on my teacher home page
+    Then I should see the select with the text "Select a class"
+    When I select my classroom
+    Then I should be on the class page "/teacher/classroom"
+    And I should see the class name on the page
+    When I click on the homework panel "Assignments"
+    Then I should be on the homework page "/teacher/homework"
+    When I click the homework submit button
+    Then I should see the error message containing "insert subject!"
+
+  Scenario: Teacher gives the wrong date (yesterday)
+    Given I have an account and I am logged in as a teacher
+    And I am on my teacher home page
+    Then I should see the select with the text "Select a class"
+    When I select my classroom
+    Then I should be on the class page "/teacher/classroom"
+    And I should see the class name on the page
+    When I click on the homework panel "Assignments"
+    Then I should be on the homework page "/teacher/homework"
+    When I fill in the creation with subject, name "First assignment", and description
+    And I fill in the form with yesterday's date
+    And I click the homework submit button
+    Then I should see the date's error message containing "the date should be a future date"
+
+Scenario: Teacher successfully assigns homework
+    Given I have an account and I am logged in as a teacher
+    And I am on my teacher home page
+    Then I should see the select with the text "Select a class"
+    When I select my classroom
+    Then I should be on the class page "/teacher/classroom"
+    And I should see the class name on the page
+    When I click on the homework panel "Assignments"
+    Then I should be on the homework page "/teacher/homework"
+    When I fill in the creation with subject, name "First assignment", and description
+    And I fill in the form with tomorrow's date
+    And I click the homework submit button
+    Then I should see on the screen "First assignment"
+
+
+Scenario: Student sees homework in class agenda
+    Given I have an account and I am logged in as a student
+    And I am in my classroom home page
+    When I click on the agenda panel 'Agenda'
+    Then I should be in the class agenda page
+    And I should be able to se my due homework
+
+
+Scenario: Student tries to submit homework
+    Given I have an account and I am logged in as a student
+    And I am in my classroom home page
+    When I click on the assignment panel 'Homeworks'
+    Then I should see the due homework and the submitted homeworks
+    When I fill in the other members for the homework "Luigi verdi"
+    And I forget to fill the mail's text
+    Then I should see the message on the screen "insert text"
+
+Scenario: Student fails to upload file in homework
+    Given I have an account and I am logged in as a student
+    And I am in my classroom home page
+    When I click on the assignment panel 'Homeworks'
+    Then I should see the due homework and the submitted homeworks
+    When I fill in the other members for the homework "Luigi verdi"
+    And I fill the mail's text with "I submit your homework"
+    And I submit the homework form
+    Then I should see the file error message on the screen "insert file"
+
+Scenario: Student uploads and submits homework
+    Given I have an account and I am logged in as a student
+    And I am in my classroom home page
+    When I click on the assignment panel 'Homeworks'
+    Then I should see the due homework and the submitted homeworks
+    When I fill in the other members for the homework "Luigi verdi"
+    And I fill the mail's text with "I submit your homework"
+    And I upload a file
+    And I submit the homework form
+    Then I should see within the submitted homeworks the title of my homework
+

@@ -1,0 +1,17 @@
+Feature: Staff Logout
+  Background: User presence
+    Given I am a school staff user with email and password
+
+  Scenario: School staff logout
+    Given I am in the app main page
+    When I click on the main panel "Schoolstaff"
+    Then I should be in the staff's login page
+    When I insert my correct mail and password
+    And I press the right button to login
+    Then I should be on my the school staff's home page
+    When I click on the profile panel
+    Then I should be on my profile page
+    And I should see my email displayed
+    When I click on the logout button
+    Then I should be on the main page
+   

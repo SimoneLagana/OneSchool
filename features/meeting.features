@@ -3,9 +3,6 @@ Feature: Managing Meetings in Family Dashboard
   Background: Successful Family Login
     Given there is a user with email and password
    
-    
-    
- 
 
 Scenario:  Successful meeting book
     Given I login in a family account
@@ -19,7 +16,6 @@ Scenario:  Successful meeting book
     When I book a meeting on "03" "09" at "19"
     Then I shoud have that meeting in the booked meeting panel
     
-
 Scenario:  Successful meeting cancellation
   Given I login in a family account
     And I am on the family page to choose a student
@@ -33,3 +29,4 @@ Scenario:  Successful meeting cancellation
     Then that meeting should not exist anymore
     And I should have the possibility to book that meeting again
     
+

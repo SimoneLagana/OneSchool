@@ -8,15 +8,15 @@
     <title>Document</title>
 </head>
 <body>
-    <nav class="navbar">
-        <%= link_to student_home_url(CF: params[:CF]) do %>
-            <div class="profile">
-                home
+<nav class="navbar" id = "absencenav">
+        <%= link_to student_home_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: "link-profile no-underline" do %>
+            <div class="writ">
+                OneSchool
             </div>
         <% end %>
 
 
-        <%= link_to student_profile_url(CF: params[:CF]) do %>
+        <%= link_to student_profile_url(CF: params[:CF],  CFstudent: params[:CFstudent]), class: "link-profile no-underline" do %>
             <div class="profile">
                 Profile
             </div>
@@ -58,8 +58,9 @@
 
                         <td class="stud-tab-col">
                             <%= link_to student_meeting_manage_url(CF: params[:CF], CFprof: @teacher.CF), id:  @teacher.CF + "meeting_link" do %>
-                                
-                                    Meeting
+                                <button class="button-submit">
+                                    meeting
+                                </button>
                             <% end %>
                         </td>
                         

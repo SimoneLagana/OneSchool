@@ -21,15 +21,21 @@ function editpassword(CF, email) {
       <div class="popupMenu">
         <div id="closePopup">&times;</div>
           <form action="/family/changepassword" method="post">
-            <input type="text" id="CF" name="CF" value=${CF}>
-            <label for="email">Email</label>
+            <input type="hidden" id="CF" name="CF" value=${CF}>
+            <label for="email">Email:</label>
+            <br>
             <input type="email" id="email" name="email" value=${email}>
-
-            <label for="old_password">Inserisci vecchia password</label>
+            <br>
+            <label for="old_password">Inserisci vecchia password:</label>
+            <br>
             <input type="password" id="old_password" name="old_password" required>
-            <label for="password">Inserisci nuova password</label>
+            <br>
+            <label for="password">Inserisci nuova password:</label>
+            <br>
             <input type="password" id="password" name="password" required>
-            <input type="submit" value="Submit">
+            <br>
+            <br>
+            <input type="submit" class ="submitBtn" value="Submit">
           </form>
       </div>
     `;  

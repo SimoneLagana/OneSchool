@@ -3,59 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <%= stylesheet_link_tag "family_grades.css" %>
+
+    <title>Grades</title>
 </head>
 <body>
-    <nav class="navbar">
-        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
-            <div class="profile">
-                home
+    <nav class="navbar-family">
+        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: "link-profile no-underline"  do %>
+            <div class="writ">
+                OneSchool
             </div>
         <% end %>
 
         <% if $onlyChild == false%>
-            <%= link_to family_choose_url(CF: params[:CF]) do %>
+            <%= link_to family_choose_url(CF: params[:CF]), class: "link-profile no-underline"  do %>
                 <div class="profile">
                     Change student
                 </div>
             <% end %>
         <%end%>
 
-        <%= link_to family_profile_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+        <%= link_to family_profile_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: "link-profile no-underline"  do %>
             <div class="profile">
                 Profile
             </div>
         <% end %>
     </nav>
 
-    <div class="panel">
-          
-        <table>
-            <thead>
-                
-            </thead>
-
-            <tbody>
-
+    <div class="">
+          <div class="family-grade-container" >
+          <label class ="family-title-grade" >Inserted grades</label>
                 <% @family = Family.find_by(CF: params[:CF]) %>
                 <% @student = Student.find_by(CF: params[:CFstudent])%>
                 <% @grades = Grade.where(CFstudent: @student.CF)%>
+                                <% @grades.each do |grade| %>
 
-
-                <% @grades.each do |grade| %>
-                    <tr>
-                        <td>
+        <div class="family-grade">
+        <div class="family-value-container">
                         <%= grade.value %>
-                        <br>
-                        </td>
-                        
-                        <td><%= grade.subject_name %></td>
-                    </tr>
-                    <td><%= grade.date.strftime("%Y-%m-%d") %></td>
+                        </div>
+                        <div class=family-grade-field-container>
+                        <label class="family-grade-label"><%= grade.subject_name%></label>
+                        <label class="family-grade-label"><%= name=@student.name %>
+                        <%= surname=@student.surname %> </label>
+                    <label class="family-grade-label"><%= grade.date.strftime("%Y/%m/%d") %></label>
+</div>
+</div>
+                    
                     
                 <% end %>
-            </tbody>
-        </table>
     </div>
 
 </body>

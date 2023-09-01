@@ -10,14 +10,14 @@
 <body>
     <div id="popupcontainer"></div>
     <nav class="navbar">
-        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
-            <div class="profile">
-                Home
+        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]),class: 'link-profile no-underline'  do %>
+            <div class="writ">
+                OneSchool
             </div>
         <% end %>
 
         <% if $onlyChild == false%>
-            <%= link_to family_choose_url(CF: params[:CF]) do %>
+            <%= link_to family_choose_url(CF: params[:CF]),class: 'link-profile no-underline'  do %>
                 <div class="profile">
                     Change student
                 </div>
@@ -27,15 +27,15 @@
       </nav>
     <div class="home">
         <div class="main-panel">
-            <label class="profile-field"><%= @family.name %> </label>
-            <label class="profile-field"><%= @family.surname %> </label>
-            <label class="profile-field"><%= @family.CF %> </label>
-            <label class="profile-field"><%= @family.mail %> </label>
-            <label class="profile-field"><%= @family.school_code %> </label>
+            <label class="profile-field">Name: <%= @family.name %> </label>
+            <label class="profile-field">Surname: <%= @family.surname %> </label>
+            <label class="profile-field">CF: <%= @family.CF %> </label>
+            <label class="profile-field">Email: <%= @family.mail %> </label>
+            <label class="profile-field">SchoolCode: <%= @family.school_code %> </label>
             <div class="button-container">
-                <button class="profile-button" onclick="editpassword('<%= @family.CF%>', '<%= @family.mail%>')">Modifica password</button>
+                <button class="style-button" onclick="editpassword('<%= @family.CF%>', '<%= @family.mail%>')">Modifica password</button>
                 <%= form_tag family_checklogout_path, method: :delete do %>
-                    <%= submit_tag 'Logout', class: 'profile-button' %> 
+                    <%= submit_tag 'Logout', class: 'style-button' %> 
                 <% end %> 
             </div>
             

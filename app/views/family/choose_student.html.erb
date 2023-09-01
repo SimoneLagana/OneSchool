@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= javascript_include_tag('family.js') %>
-    <%= stylesheet_link_tag "family_choose.css" %>
+    <%= stylesheet_link_tag "family_choose_student.css" %>
 
     <title>Document</title>
 </head>
 <body>
     <nav class="navbar">
-        <%= link_to family_choose_url(CF: params[:CF]) do %>
+        <%= link_to family_choose_url(CF: params[:CF]), class: "link-profile no-underline" do %>
             <div class="profile">
-                home
+                Home
             </div>
         <% end %>
 
-         <%= link_to family_profile_url(CF: params[:CF]) do %>
+         <%= link_to family_profile_url(CF: params[:CF]), class: "link-profile no-underline" do %>
             <div class="profile">
                 Profile
             </div>
@@ -24,21 +24,22 @@
 
     </nav>
 
-    <label for="scelta">Seleziona un'opzione:</label>
-    <% @family = Family.find_by(CF: params[:CF]) %>
-    <% @family_students = FamilyStudent.select(:CFstudent, :CFfamily).where(CFfamily: @family.CF).distinct %>
-    
-    
+    <div class = "panel">
+        <label class = "label" for="scelta">Select a student </label>
+        <% @family = Family.find_by(CF: params[:CF]) %>
+        <% @family_students = FamilyStudent.select(:CFstudent, :CFfamily).where(CFfamily: @family.CF).distinct %>
         
-    
         
-        <% @family_students.each_with_index do |family_student, index| %>
-            <% @student = Student.find_by(CF: family_student[:CFstudent]) %>
-            <%= link_to family_home_url(CF: params[:CF], CFstudent: @student.CF), class: "student-link", id:  @student.CF,  "data-index": index do %>
-                <option value=<%= @student.CF %>> <%= "#{@student.name} #{@student.surname}" %> </option>
+            
+        
+            
+            <% @family_students.each_with_index do |family_student, index| %>
+                <% @student = Student.find_by(CF: family_student[:CFstudent]) %>
+                <%= link_to family_home_url(CF: params[:CF], CFstudent: @student.CF), class: "student-link", id:  @student.CF,  "data-index": index do %>
+                    <option class = "option" value=<%= @student.CF %>> <%= "#{@student.name} #{@student.surname}" %> </option>
+                <% end %>
             <% end %>
-        <% end %>
-
+    </div>
     
     
 

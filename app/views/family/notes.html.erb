@@ -4,37 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= javascript_include_tag('family.js') %>
-    <%= stylesheet_link_tag "news.css" %>
+    <%= stylesheet_link_tag "family_notes.css" %>
 
     <title>Document</title>
 </head>
 <body>
     <nav class="navbar">
-        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: "link-profile no-underline" do %>
             <div class="profile">
-                home
+                Home
             </div>
         <% end %>
 
         <% if $onlyChild == false%>
-            <%= link_to family_choose_url(CF: params[:CF]) do %>
+            <%= link_to family_choose_url(CF: params[:CF]), class: "link-profile no-underline" do %>
                 <div class="profile">
                     Change student
                 </div>
             <% end %>
         <%end%>
 
-        <%= link_to family_profile_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+        <%= link_to family_profile_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: "link-profile no-underline" do %>
             <div class="profile">
                 Profile
             </div>
         <% end %>
     </nav>
 
-    <div class="panel">
-          
-        <table>
-            <thead>
+
+    <div class="student-notes-title">Student notes</div>
+    <div class="notes-panel">
+        <div class="student-notes-body">  
+        <table class="notes-table">
+            <thead class="notes-table">
                 <tr>
                 <th> Code</th>
                 <th> Teacher</th>
@@ -62,10 +64,10 @@
                         <br>
                         </td>
 
-                        <td><%= note.date %></td>
+                        <td><%= note.date.strftime('%d/%m/%Y')  %></td>
 
-                        <td>
-                        <button class="profile-button" onclick="popup('<%= escape_javascript(note.description) %>');"> details </button>
+                        <td class="details-popup">
+                        <button class="button-submit" onclick="popup('<%= escape_javascript(note.description) %>');"> details </button>
 
                         </td>
 
@@ -92,6 +94,7 @@
 
             </tbody>
         </table>
+        </div>
     </div>
 
 </body>

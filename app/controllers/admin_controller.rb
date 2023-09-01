@@ -40,7 +40,7 @@ class AdminController < ApplicationController
         session.delete(:CF)
         cookies.delete(:admin_params)
         if admin.delete
-            puts("account eliminato con successo")
+            
             redirect_to root_path
         else
             redirect_to admin_profile_url
@@ -64,9 +64,9 @@ class AdminController < ApplicationController
 
     def upgradepassword
         @admin=Admin.find_by(CF: params[:CF])
-        puts("ciao")
+        
         @admin.update(password: $passk)
-        puts("fatta")
+        
         redirect_to admin_manage_url
     end
     

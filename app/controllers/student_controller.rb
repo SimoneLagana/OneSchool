@@ -257,7 +257,7 @@ class StudentController < ApplicationController
     @today = Date.today
     @time_slots = []
 
-    # Crea un elenco di tutti i giorni della prossima settimana per ogni ora nell'intervallo
+    
     (@today..@today + 6).each do |day|
       (@start_hour..@end_hour).each do |hour|
         @iso = DateTime.new(day.year, day.month, day.day, hour, 0, 0, '+00:00')
@@ -286,7 +286,7 @@ class StudentController < ApplicationController
   end
 
   def create_link(teacher)
-    random_link = SecureRandom.hex(10) #creo una stringa random di 8 caratteri
+    random_link = SecureRandom.hex(10) 
     link="http://localhost:8000/#{random_link}"
   end
 

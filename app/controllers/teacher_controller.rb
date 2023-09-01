@@ -90,7 +90,7 @@ class TeacherController < ApplicationController
     @teacher_true = Teacher.find_by(name: @teacher.name, surname: @teacher.surname, school_code: @teacher.school_code)
     @meeting = Meeting.where(CFprof: @teacher_true)
     $client_calendar= get_google_calendar_client(@teacher)
-    #@calendar_list = $client_calendar.list_calendar_lists
+    
 
     
 
@@ -309,21 +309,10 @@ class TeacherController < ApplicationController
     @teacher=Teacher.find_by(CF: session[:CF])
     @meetings=Meeting.where(CFprof: @teacher.CF).order(date: :asc)
     token=generate_token(@teacher.name)
-    room="ssarekde"
     random_link = SecureRandom.hex(10) 
     @link_teacher="http://localhost:8000/#{random_link}"
     
 
-  end
-
-  def generate_token(name)
-      payload = {
-        iss: 'localhost',
-        room: name,
-        exp: Time.now.to_i + 3600, 
-      }
-      jwt = JWT.encode payload, 'la_tua_chiave_segreta', 'HS256'
-      jwt
   end
 
   def requestmeeting

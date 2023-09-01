@@ -9,21 +9,21 @@
 </head>
 <body>
     <nav class="navbar-family">
-        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: "link-profile no-underline"  do %>
             <div class="writ">
                 OneSchool
             </div>
         <% end %>
 
         <% if $onlyChild == false%>
-            <%= link_to family_choose_url(CF: params[:CF]) do %>
+            <%= link_to family_choose_url(CF: params[:CF]), class: "link-profile no-underline"  do %>
                 <div class="profile">
                     Change student
                 </div>
             <% end %>
         <%end%>
 
-        <%= link_to family_profile_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
+        <%= link_to family_profile_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: "link-profile no-underline"  do %>
             <div class="profile">
                 Profile
             </div>
@@ -43,7 +43,7 @@
                         <%= grade.value %>
                         </div>
                         <div class=family-grade-field-container>
-                        <label class="family-grade-label"><%= grade.subject_name%</label>
+                        <label class="family-grade-label"><%= grade.subject_name%></label>
                         <label class="family-grade-label"><%= name=@student.name %>
                         <%= surname=@student.surname %> </label>
                     <label class="family-grade-label"><%= grade.date.strftime("%Y/%m/%d") %></label>

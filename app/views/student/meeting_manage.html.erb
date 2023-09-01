@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= javascript_include_tag('family.js') %>
+    <%= stylesheet_link_tag "student_meeting_manage.css" %>
     <title>Document</title>
 </head>
 <body>
     <nav class="navbar">
         <%= link_to student_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
-            <div class="profile">
-                home
+            <div class="writ">
+                OneSchool
             </div>
         <% end %>
 
@@ -22,35 +23,35 @@
     </nav>
 
     <div class= "container">
-        <p> Book a meeting </p>
+        <div class="title-absences">Book a meeting</div>
         <div id = "bookingPanel">
-            <table>
-            <thead>
+            <table class = "student-absence-container-2">
+            <thead class="options-title">
                 <tr>
-                <th>Giorno</th>
-                <th>Mese</th>
-                <th> Ora  </th>
-                <th> Select  </th>
+                <th class="tab-title">Giorno</th>
+                <th class="tab-title">Mese</th>
+                <th class="tab-title">  Ora  </th>
+                <th class="tab-title"> Select  </th>
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="tab-body">
 
                 <% @free_slots.each do |free| %>
-                    <tr>
-                        <td>
+                    <tr class = "option">
+                        <td class="tab-col">
                         <% @date = Date.parse(free)%>
                         <%= @date.day%>
                         <br>
                         </td> 
                         
-                        <td>
+                        <td class="tab-col">
                         <%= @date.month%>
                         <br>
                         </td> 
 
                         <% @time = Time.parse(free)%>
-                        <td>
+                        <td class="tab-col">
                         <%= @time.strftime('%H:%M')%>
                         <br>
                         </td> 
@@ -79,41 +80,41 @@
         </div>
     
 
-    <div class = "bookedPanel">
-        <p> Booked meeting </p>
-         <table>
-            <thead>
+    <div id = "bookedPanel">
+        <div class="titleee">Booked meetings</div>
+         <table class ="student-absence-container-2">
+            <thead class="options-title">
                 <tr>
-                <th>Giorno</th>
-                <th>Mese</th>
-                <th> Ora  </th>
-                <th> Go to link  </th>
-                <th> Delete meeting  </th>
+                <th class="tab-title">Giorno</th>
+                <th class="tab-title">Mese</th>
+                <th class="tab-title"> Ora  </th>
+                <th class="tab-title"> Go to link  </th>
+                <th class="tab-title"> Delete meeting  </th>
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="tab-body">
 
                 <% @iso_meeting.each do |meeting| %>
-                    <tr>
-                        <td>
+                    <tr class = "option">
+                        <td td class="tab-col">
                         <% @date = Date.parse(meeting)%>
                         <%= @date.day%>
                         <br>
                         </td> 
                         
-                        <td>
+                        <td td class="tab-col">
                         <%= @date.month%>
                         <br>
                         </td> 
 
                         <% @time = Time.parse(meeting)%>
-                        <td>
+                        <td td class="tab-col">
                         <%= @time.strftime('%H:%M')%>
                         <br>
                         </td> 
 
-                        <td>
+                        <td td class="tab-col">
                         <%@student=Student.find_by(CF: params[:CF])%>
                         <%@familystud = FamilyStudent.find_by(CFstudent: params[:CF])%>
                         <%@family = Family.find_by(CF: @familystud.CFfamily)%>
@@ -125,7 +126,7 @@
                         <br>
                         </td>  
 
-                        <td>
+                        <td td class="tab-col">
                         <%= form_with model: @student, url: delete_student_meeting_url, class: 'form-booked', method: :delete do |form| %>
                             <%= hidden_field_tag :CF, params[:CF] %>
                             <%= hidden_field_tag :CFprof, params[:CFprof] %>

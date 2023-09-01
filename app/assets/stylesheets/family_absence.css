@@ -39,33 +39,22 @@ body{
 
 .options-title{
     border-radius: 5px;
+    width: 380px;
 }
 
 .tab-body{
     border-radius: 5px;
     max-height: 500px;
     overflow-y: auto;
+    width: fit-content;
 }
 
-#teac-col{
-    padding-left: 20px;
-    padding-right: 10px;
-}
-
-#mat-col{
-    padding-left: 20px;
-}
-
-#dat-col{
-    padding-left: 20px;
-}
-
-.student-absences-container-2{
+.student-absence-container-2{
     display: flex;
     flex-direction: column;
     align-items: center;
     flex-wrap: nowrap;
-    width: 450px;
+    width: 390px;
     background-color: white;
     border-radius: 10px;
     padding-top: 10px;
@@ -116,11 +105,17 @@ body{
     height: 70px;
     position: fixed;
     top: 0;
-    display: flex;
+    /* display: flex; */
     flex-direction: row;
     width: 100%;
     flex-wrap: nowrap;
     justify-content: space-between;
+
+}
+
+#absencenav {
+    display: grid;
+    grid-template-columns: 82% 9% 9%;
 }
 
 .writ{

@@ -114,17 +114,7 @@ body{
 }
 
 
-.navbar{
-    background-color: rgb(172, 245, 255);
-    height: 70px;
-    position: fixed;
-    top: 0;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-}
+
 
 .writ{
     width: 300px;
@@ -178,4 +168,82 @@ body{
   .no-decoration{
     text-decoration: none;
     background: none;
+}
+
+.panel-container-family{
+    display: grid;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 30px;
+    grid-template-columns: 30% 30% 30%;
+
+}
+.navbar-family {
+    display: grid;
+    grid-template-columns: 82% 9% 9%;
+    background-color: rgb(172, 245, 255);
+    height: 70px;
+    position: fixed;
+    top: 0;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+.family-grade-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    width: 500px;
+    background-color: rgb(239, 243, 245);
+    border-radius: 0px 0px 10px 10px;
+    gap: 20px;
+    padding-bottom: 30px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+
+.family-grade-label{
+    width: 100%;
+    background-color: rgb(172, 245, 255);
+    text-align: left;
+}
+
+.family-title-grade{
+    font-weight: 200;
+    font-size: 25px;
+    background-color:  rgb(172, 245, 255);
+    border-radius: 10px 10px 0px 0px;
+    width: 500px;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+
+
+
+.family-grade{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap:20px;
+    max-width: 300px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgb(172, 245, 255);
+}
+
+.family-value-container{
+    font-size: 30px;
+    background-color:  rgb(172, 245, 255);
+}
+
+.family-grade-field-container{
+    display:flex;
+    flex-direction: column;
+    gap: 2px;
+    background-color: rgb(172, 245, 255);
 }

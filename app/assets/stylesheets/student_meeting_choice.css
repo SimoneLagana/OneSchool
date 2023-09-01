@@ -34,38 +34,47 @@ body{
 }
 
 .tab-title{
-    padding-right: 30px;
+    padding-right: 40px;
 }
 
-.options-title{
-    border-radius: 5px;
+.option-elem{
+    padding-left: 30px;
+    padding-right: 50px;
 }
 
-.tab-body{
+#subj-col{
+    padding-left: 10px;
+}
+
+.stud-options-title{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-evenly;
+    align-items: baseline;
+}
+
+.stud-tab-body{
     border-radius: 5px;
     max-height: 500px;
     overflow-y: auto;
+    width: 440px;
+    align-items: center;
+
+
 }
 
-#teac-col{
-    padding-left: 20px;
-    padding-right: 10px;
-}
-
-#mat-col{
-    padding-left: 20px;
-}
-
-#dat-col{
-    padding-left: 20px;
-}
-
-.student-absences-container-2{
+.student-meeting-container-2{
     display: flex;
     flex-direction: column;
     align-items: center;
     flex-wrap: nowrap;
-    width: 450px;
+    width: 490px;
     background-color: white;
     border-radius: 10px;
     padding-top: 10px;
@@ -96,12 +105,13 @@ body{
 }
 
 .button-submit{
-    margin-top: 18px;
+    margin-top: 10px;
 }
 
-.tab-col{
-    padding-left: 5px;
-    padding-right: 5px;
+.stud-tab-col{
+    padding-left: 30px;
+    padding-left: 10px;
+    padding-right: 30px;
 }
 
 
@@ -116,11 +126,17 @@ body{
     height: 70px;
     position: fixed;
     top: 0;
-    display: flex;
+    /* display: flex; */
     flex-direction: row;
     width: 100%;
     flex-wrap: nowrap;
     justify-content: space-between;
+
+}
+
+#absencenav {
+    display: grid;
+    grid-template-columns: 82% 9% 9%;
 }
 
 .writ{
@@ -157,6 +173,8 @@ body{
     margin-right: 100px;
 }
  
+
+
 .flash {
     padding: 10px;
     margin-bottom: 5px;
@@ -182,3 +200,24 @@ body{
     font-size: 24px;
     border-radius: 50%;
 }
+
+.option-student {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    width: 440px;
+    padding-top: 10px;
+    height: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-evenly;
+    align-items: baseline;
+}
+
+#Oneschool {
+    width: 200px;
+}
+
+    

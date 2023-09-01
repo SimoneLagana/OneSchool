@@ -1,0 +1,51 @@
+.notes-panel{
+    height: 400px;
+    background-color: rgb(172, 245, 255);
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width:400px;
+    margin-left: 5%;
+    margin-top: 0;
+    border-radius: 10px;
+    padding-top: 30px;
+    margin-top: 50px;
+
+}
+
+.student-notes-body{
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.form-booked-note-s{
+    align-items: center;
+}
+.student-notes-title{
+background-color:  rgb(172, 245, 255);
+width: 200px;
+border-radius: 5px;
+font-size: 30px;
+text-align: center;
+margin-left: 70px;
+}
+
+.details-popup{
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 17px;
+}
+
+.navbar{
+    background-color: rgb(172, 245, 255);
+    height: 70px;
+    position: fixed;
+    top: 0;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 82% 9% 9%;
+}

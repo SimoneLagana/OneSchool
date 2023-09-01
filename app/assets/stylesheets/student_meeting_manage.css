@@ -6,10 +6,11 @@
  
 body{
     display:flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     height:100%;
+    
 }
 
 .s-absence-panel{
@@ -23,7 +24,9 @@ body{
     font-size: 30px;
     text-align: center;
     margin-bottom: 20px;
+    justify-self: center;
 }
+
 .form-absence{
     display:flex;
     flex-direction: column;
@@ -33,39 +36,40 @@ body{
     gap: 10px;
 }
 
-.tab-title{
-    padding-right: 30px;
+.man-tab-title{
+    padding-right: 40px;
 }
 
-.options-title{
-    border-radius: 5px;
+.man-options-title{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-evenly;
+    align-items: baseline;
+    
 }
 
-.tab-body{
+.man-tab-body{
     border-radius: 5px;
-    max-height: 500px;
+    max-height: 400px;
     overflow-y: auto;
+    width: 440px;
+    align-items: center;
+
+
 }
 
-#teac-col{
-    padding-left: 20px;
-    padding-right: 10px;
-}
-
-#mat-col{
-    padding-left: 20px;
-}
-
-#dat-col{
-    padding-left: 20px;
-}
-
-.student-absences-container-2{
+.student-meetmanage-container-2{
     display: flex;
     flex-direction: column;
     align-items: center;
     flex-wrap: nowrap;
-    width: 450px;
+    width: 490px;
     background-color: white;
     border-radius: 10px;
     padding-top: 10px;
@@ -96,10 +100,10 @@ body{
 }
 
 .button-submit{
-    margin-top: 18px;
+    margin-top: 10px;
 }
 
-.tab-col{
+.man-tab-col{
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -116,11 +120,17 @@ body{
     height: 70px;
     position: fixed;
     top: 0;
-    display: flex;
+    /* display: flex; */
     flex-direction: row;
     width: 100%;
     flex-wrap: nowrap;
     justify-content: space-between;
+
+}
+
+#absencenav {
+    display: grid;
+    grid-template-columns: 82% 9% 9%;
 }
 
 .writ{
@@ -181,4 +191,50 @@ body{
     cursor: pointer;
     font-size: 24px;
     border-radius: 50%;
+}
+
+.man-option {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-evenly;
+    align-items: baseline;
+}
+
+#Oneschool {
+    width: 200px;
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: 50%, 50%;
+    align-items: center;
+    padding-bottom: 40px;
+    padding-top: 100px;
+}
+
+#man-bookingPanel {
+    float: left;
+    margin-bottom: 70px;
+}
+    
+#bookedPanel {
+    float: right
+}
+
+.titleee {
+    background-color: rgb(172, 245, 255);
+    width: 250px;
+    border-radius: 5px;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }

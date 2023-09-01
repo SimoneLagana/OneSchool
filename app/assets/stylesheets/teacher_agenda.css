@@ -24,17 +24,26 @@ body{
     display:flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin-top: 20px;
     gap: 20px;
     align-items: center;
     padding-bottom: 20px;
+    width: 500px;
+    max-height: 500px;
+    overflow-y: auto;
+    background-color: rgb(239, 243, 245);
+    border-radius: 0px 0px 10px 10px;
+    padding-top: 20px;
 }
 
 .title-agenda{
-    margin-top:20px;
-    font-size: 20px;
-    width: 100%;
+    font-weight: 200;
+    font-size: 25px;
+    background-color:  aquamarine;
+    padding-bottom: 10px;
+    border-radius: 10px 10px 0px 0px;
+    width: 500px;
     text-align: center;
+    padding-top: 10px;
 }
 .insert-container{
     display: flex;

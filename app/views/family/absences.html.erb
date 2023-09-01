@@ -3,62 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%= stylesheet_link_tag "family_absence.css" %>
     <title>Document</title>
+    
+
 </head>
 <body>
-    <nav class="navbar">
-        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]) do %>
-            <div class="profile">
-                home
+    <nav class="navbar" id = "absencenav">
+        <%= link_to family_home_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: "link-profile no-underline" do %>
+            <div class="writ">
+                OneSchool
             </div>
         <% end %>
 
         <% if $onlyChild == false%>
-            <%= link_to family_choose_url(CF: params[:CF]) do %>
+            <%= link_to family_choose_url(CF: params[:CF]), class: "link-profile no-underline" do %>
                 <div class="profile">
                     Change student
                 </div>
             <% end %>
         <%end%>
 
-        <%= link_to family_profile_url(CF: params[:CF],  CFstudent: params[:CFstudent]) do %>
+        <%= link_to family_profile_url(CF: params[:CF], CFstudent: params[:CFstudent]), class: "link-profile no-underline" do %>
             <div class="profile">
                 Profile
             </div>
         <% end %>
     </nav>
 
-    <div class="panel">
+    <div class="title-absences">Student absences</div>
+    <div class= "s-absence-panel">
           
-        <table>
-            <thead>
+        <table class="student-absence-container-2">
+            <thead class="options-title">
                 <tr>
-                <th> Date</th>
-                <th> Subject</th>
-                <th> Teacher</th>
-                <th> Justify</th>
+                <th class="tab-title"> Date</th>
+                <th class="tab-title"> Subject</th>
+                <th class="tab-title"> Teacher</th>
+                <th class="tab-title"> Justify</th>
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="tab-body">
 
                 <% @absences.each do |absence| %>
                     <tr>
-                        <td><%= absence.date %></td>
+                        <td class="tab-col"><%= absence.date.strftime('%d/%m/%Y') %></td>
 
-                        <td><%= absence.subject_name %></td>
+                        <td class="tab-col"><%= absence.subject_name %></td>
 
                         <% @teacher = Teacher.find_by(CF: absence.CFprof)%>
-                        <td>
+
+                        <td class="tab-col">
                         <%= @teacher.name %>
                         <%= @teacher.surname %>
                         <br>
                         </td>
 
+                         <td class="tab-col">
+                         <div class="just" id="<%= absence.id %>just">
+                        <%= absence.justified %>
+                        </div>
+                        <br>
+                        </td>
                         
 
                         <% @justif = absence.justified %>
-                        <td>
+                        <td class="tab-col">
                         <% if !@justif %>
                             <%= form_with model: @family, url: family_justify_url, class: 'form-booked', method: :post do |form| %>
                                 <%= hidden_field_tag :CF, params[:CF] %>
@@ -88,6 +99,6 @@
             </tbody>
         </table>
     </div>
-
+    </div>
 </body>
 </html>
